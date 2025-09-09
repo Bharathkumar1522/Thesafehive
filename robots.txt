@@ -1,0 +1,7 @@
+# The SafeHive robots.txt
+# Location: https://thesafehive.com/robots.txt
+
+User-agent: *
+Allow: /
+
+Sitemap: https://thesafehive.com/sitemap.xml
