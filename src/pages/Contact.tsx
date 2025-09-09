@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import emailjs from 'emailjs-com';
+import emailjs from "@emailjs/browser";
 import { Mail, MessageSquare, Send } from 'lucide-react';
+import { FAQItem } from '../components/ui/FAQItem';
+import { CTASection } from '../components/ui/CTASection';
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID_OWNER = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_OWNER;
@@ -18,6 +20,27 @@ const Contact = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: "When will your products be available?",
+      answer: "We're currently curating and testing products that meet our standards. Sign up for our newsletter to be the first to know when they launch!"
+    },
+    {
+      question: "What makes a product \"chemical-free\"?",
+      answer: "We use \"chemical-free\" to describe products free from synthetic, harmful chemicals like parabens, phthalates, and artificial fragrances."
+    },
+    {
+      question: "Do you offer consultations?",
+      answer: "Not at the moment, but we may add personalized consultations soon. For now, check out our blog!"
+    },
+    {
+      question: "Can I contribute to your blog?",
+      answer: "Absolutely! If you're passionate about clean living and have writing samples, reach out to us via this form."
+    }
+  ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -59,6 +82,10 @@ const Contact = () => {
     }
   };
 
+  const toggleFaq = (index: number) => {
+    setActiveFaq(activeFaq === index ? null : index);
+  };
+
   return (
     <div className="pt-16">
       {/* Hero Section */}
@@ -74,7 +101,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section id="contact-form" className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
@@ -217,35 +244,33 @@ const Contact = () => {
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Frequently Asked Questions</h2>
 
-            <div className="space-y-6">
-              <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-bold text-xl text-gray-900 mb-2">When will your products be available?</h3>
-                <p className="text-gray-700">
-                  We're currently curating and testing products that meet our standards. Sign up for our newsletter to be the first to know when they launch!
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-bold text-xl text-gray-900 mb-2">What makes a product "chemical-free"?</h3>
-                <p className="text-gray-700">
-                  We use "chemical-free" to describe products free from synthetic, harmful chemicals like parabens, phthalates, and artificial fragrances.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-bold text-xl text-gray-900 mb-2">Do you offer consultations?</h3>
-                <p className="text-gray-700">
-                  Not at the moment, but we may add personalized consultations soon. For now, check out our blog!
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="font-bold text-xl text-gray-900 mb-2">Can I contribute to your blog?</h3>
-                <p className="text-gray-700">
-                  Absolutely! If you're passionate about clean living and have writing samples, reach out to us via this form.
-                </p>
-              </div>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <FAQItem
+                  key={index}
+                  question={faq.question}
+                  answer={faq.answer}
+                  isOpen={activeFaq === index}
+                  onClick={() => toggleFaq(index)}
+                />
+              ))}
             </div>
           </div>
         </div>
       </section>
+
+      {/* CTA Section */}
+      <CTASection 
+        title="Still have questions?"
+        description="Reach out to us anytime — we’re happy to assist."
+        secondaryAction={{
+          text: 'Get in touch',
+          to: '#contact-form',
+          icon: <MessageSquare className="h-5 w-5" />,
+          variant: 'secondary'
+        }}
+      />
+
     </div>
   );
 };

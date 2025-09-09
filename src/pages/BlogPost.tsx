@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Tag, Share2 } from 'lucide-react';
-import ShareModal from '../components/ShareModal';
+import ShareModal from '../components/ui/modals/ShareModal';
 import { fetchBlogBySlug } from '../services/contentfulService';
 import { renderRichText } from '../utils/renderRichText';
 import { BlogPost as BlogPostType } from '../types/blog';
