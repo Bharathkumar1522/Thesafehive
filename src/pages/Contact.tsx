@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import emailjs from 'emailjs-com';
+import emailjs from "@emailjs/browser";
 import { Mail, MessageSquare, Send } from 'lucide-react';
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
