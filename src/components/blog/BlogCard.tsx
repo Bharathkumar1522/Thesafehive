@@ -2,7 +2,7 @@ import { Share2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BlogPost } from '../../types/blog';
-import ShareModal from '../ShareModal';
+import ShareModal from '../ui/modals/ShareModal';
 import Img from '../ui/image';
 
 interface BlogCardProps {
