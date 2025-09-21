@@ -11,6 +11,7 @@ import AboutCTA from '../components/layout/AboutCTA';
 import BlogCard from '../components/blog/BlogCard';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { SimpleBlogPost, ContentfulEntry } from '../types/blog';
+import { CoreValuesGrid } from '../components/CoreValueCard';
 
 const LifestyleCarousel = lazy(() => import('../components/layout/SafeLivingCarousel'));
 
@@ -323,50 +324,28 @@ const Home = () => {
           >
             Our Core Values
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
+          <CoreValuesGrid
+            values={[
               {
                 icon: Leaf,
                 title: 'Sustainability',
-                description:
-                  'We are committed to sustainable practices that minimize environmental impact and preserve our planet for future generations.',
+                description: 'We are committed to sustainable practices that minimize environmental impact and preserve our planet for future generations.',
                 color: 'green',
               },
               {
                 icon: Heart,
                 title: 'Health-Focused',
-                description:
-                  'Your wellbeing is our priority. We promote products and practices that support holistic health and chemical-free living.',
+                description: 'Your wellbeing is our priority. We promote products and practices that support holistic health and chemical-free living.',
                 color: 'yellow',
               },
               {
                 icon: Shield,
                 title: 'Transparency',
-                description:
-                  "We believe in complete honesty about what goes into products and how they're made. No hidden ingredients, no secrets.",
+                description: "We believe in complete honesty about what goes into products and how they're made. No hidden ingredients, no secrets.",
                 color: 'blue',
               },
-            ].map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300"
-              >
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  className={`bg-${value.color}-100 w-16 h-16 rounded-full flex items-center justify-center mb-6`}
-                >
-                  <value.icon className={`h-8 w-8 text-${value.color}-600`} />
-                </motion.div>
-                <h3 className="text-xl font-heading font-bold text-gray-900 mb-4">{value.title}</h3>
-                <p className="text-gray-700">{value.description}</p>
-              </motion.div>
-            ))}
-          </div>
+            ]}
+          />
         </div>
       </motion.section>
 

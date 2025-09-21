@@ -11,6 +11,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { CoreValuesGrid } from "../components/CoreValueCard";
 
 /** Cloudinary helper: build responsive URLs with f_auto,q_auto and width */
 const cld = (publicUrl: string, w: number) => {
@@ -145,99 +146,80 @@ const About = () => {
       {/* Mission Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-heading font-bold text-gray-900 mb-6">Our Mission</h2>
-              <p className="text-lg text-gray-700 mb-6 text-justify">
-                At Safe Hive, our mission is to connect consumers with{" "}
-                <strong>trusted, natural, and safe chemical products</strong>. We
-                understand that in today’s market, it’s not easy to find products you
-                can truly trust—labels can be misleading, and harmful ingredients often
-                go unnoticed. That’s why we set out with a simple but powerful goal:
-                to make it easier for people to choose products that are at least
-                somewhat harm‑less, if not entirely safe.
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-4xl font-heading font-bold text-gray-900 mb-9 text-center">Our Mission</h2>
+            
+            <div className="space-y-6 mb-6">
+              <p className="text-lg text-center text-gray-700">
+              We make choosing safe products simple. By partnering with ethical brands that value sustainability and well-being, we bring you trusted options. Beyond shopping, we share resources and guidance so you can make confident, informed decisions for yourself and your family.
               </p>
-              <p className="text-lg text-gray-700 mb-6 text-justify">
-                By partnering with ethical brands that prioritize transparency,
-                sustainability, and well‑being, we promote health and conscious living
-                in everyday life. Our platform offers effortless shopping—label‑clear,
-                vibrant choices with zero compromise, just a click away.
-              </p>
-              <p className="text-lg text-gray-700 text-justify mb-8">
-                Beyond products, we’re here to support and educate. Through helpful
-                resources, guides, and responsive customer support, we empower shoppers
-                to better understand product safety and usage, so they can make
-                confident, informed decisions for themselves and their families.
-              </p>
+            </div>
+            <p className="text-lg text-gray-700 px-4 text-center">
+            <strong>At Safe Hive, our mission is to help people find products they can trust—safe, natural, and transparent.</strong>
+            </p>
+            <div className="text-center mt-8">
               <Link
                 to="/blog"
-                className="inline-block mt-4 px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition"
+                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition"
               >
-                <span className="flex items-center">
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Learn More in Our Blog
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </span>
+                <BookOpen className="mr-2 h-5 w-5" />
+                Learn More in Our Blog
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
-
-            {/* Values Cards */}
-            <div className="bg-yellow-50 p-8 rounded-2xl shadow-2xl">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  {
-                    icon: <Users className="h-10 w-10 text-green-600 mb-4" />,
-                    title: "Community",
-                    text:
-                      "Building a supportive network of like‑minded individuals committed to chemical‑free living.",
-                  },
-                  {
-                    icon: <Award className="h-10 w-10 text-yellow-600 mb-4" />,
-                    title: "Quality & Safety",
-                    text:
-                      "Setting the highest standards for safety, purity, and effectiveness.",
-                  },
-                  {
-                    icon: <ShieldCheck className="h-10 w-10 text-blue-600 mb-4" />,
-                    title: "Transparency",
-                    text:
-                      "Clear, honest information about every product, ingredient, and process.",
-                  },
-                  {
-                    icon: <Leaf className="h-10 w-10 text-green-600 mb-4" />,
-                    title: "Sustainability",
-                    text:
-                      "Minimizing environmental impact through eco‑friendly practices.",
-                  },
-                  {
-                    icon: <HeartHandshake className="h-10 w-10 text-purple-600 mb-4" />,
-                    title: "Trust",
-                    text:
-                      "Building lasting relationships with customers and partners.",
-                  },
-                  {
-                    icon: <ShoppingCart className="h-10 w-10 text-pink-600 mb-4" />,
-                    title: "Accessibility",
-                    text:
-                      "Making safe, natural products easy to discover and buy.",
-                  },
-                ].map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    whileHover={{ scale: 1.05, rotate: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-white p-6 rounded-xl shadow-lg"
-                  >
-                    {item.icon}
-                    <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-700">{item.text}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold text-gray-900 mb-4">Our Values</h2>
+            <p className="text-lg text-gray-700">
+              These core principles guide everything we do at Safe Hive
+            </p>
+          </div>
+          <CoreValuesGrid
+            values={[
+              {
+                icon: Users,
+                title: "Community",
+                description: "Building a supportive network of like‑minded individuals committed to chemical‑free living.",
+                color: 'green'
+              },
+              {
+                icon: Award,
+                title: "Quality & Safety",
+                description: "Setting the highest standards for safety, purity, and effectiveness.",
+                color: 'yellow'
+              },
+              {
+                icon: ShieldCheck,
+                title: "Transparency",
+                description: "Clear, honest information about every product, ingredient, and process.",
+                color: 'blue'
+              },
+              {
+                icon: Leaf,
+                title: "Sustainability",
+                description: "Minimizing environmental impact through eco‑friendly practices.",
+                color: 'green'
+              },
+              {
+                icon: HeartHandshake,
+                title: "Trust",
+                description: "Building lasting relationships with customers and partners.",
+                color: 'purple'
+              },
+              {
+                icon: ShoppingCart,
+                title: "Convenience",
+                description: "Making safe, quality products easily accessible to everyone.",
+                color: 'blue'
+              }
+            ]}
+          />
         </div>
       </section>
 
