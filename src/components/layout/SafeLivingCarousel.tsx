@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Img from '../ui/image';
 
@@ -8,6 +8,32 @@ const INTRINSIC_H_SM = 256; // h-64 -> 64 * 4 = 256px
 
 const LifestyleCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const onTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    touchEndX.current = null;
+    touchStartX.current = e.changedTouches[0].clientX;
+  };
+
+  const onTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const deltaX = touchStartX.current - touchEndX.current;
+    const threshold = 50; // px
+    if (deltaX > threshold) {
+      // swipe left -> next
+      nextSlide();
+    } else if (deltaX < -threshold) {
+      // swipe right -> prev
+      prevSlide();
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   // Lifestyle images showcasing safe, healthy, and happy living
   const lifestyleImages = [
@@ -88,7 +114,12 @@ const LifestyleCarousel = () => {
   return (
     <div className="relative max-w-6xl mx-auto">
       {/* Main Carousel */}
-      <div className="overflow-hidden rounded-2xl shadow-2xl">
+      <div
+        className="overflow-hidden rounded-2xl shadow-2xl"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -141,14 +172,14 @@ const LifestyleCarousel = () => {
       {/* Navigation Buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/50 text-transparent hover:text-black focus:text-black p-3 rounded-full transition-all duration-300 z-20"
+        className="hidden md:inline-flex absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/50 text-transparent hover:text-black focus:text-black p-3 rounded-full transition-all duration-300 z-20"
         aria-label="Previous image"
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/50 text-transparent hover:text-black focus:text-black p-3 rounded-full transition-all duration-300 z-20"
+        className="hidden md:inline-flex absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/50 text-transparent hover:text-black focus:text-black p-3 rounded-full transition-all duration-300 z-20"
         aria-label="Next image"
       >
         <ChevronRight className="h-6 w-6" />

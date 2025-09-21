@@ -277,14 +277,14 @@ const Home = () => {
 
                 <button
                   onClick={() => instanceRef.current?.prev()}
-                  className="absolute top-1/2 -translate-y-1/2 left-4 z-10 p-3 bg-white/20 hover:bg-white/80 text-white hover:text-black rounded-full transition-all duration-300 backdrop-blur-sm"
+                  className="hidden md:inline-flex absolute top-1/2 -translate-y-1/2 left-4 z-10 p-3 bg-white/20 hover:bg-white/80 text-white hover:text-black rounded-full transition-all duration-300 backdrop-blur-sm"
                   aria-label="Previous slide"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <button
                   onClick={() => instanceRef.current?.next()}
-                  className="absolute top-1/2 -translate-y-1/2 right-4 z-10 p-3 bg-white/20 hover:bg-white/80 text-white hover:text-black rounded-full transition-all duration-300 backdrop-blur-sm"
+                  className="hidden md:inline-flex absolute top-1/2 -translate-y-1/2 right-4 z-10 p-3 bg-white/20 hover:bg-white/80 text-white hover:text-black rounded-full transition-all duration-300 backdrop-blur-sm"
                   aria-label="Next slide"
                 >
                   <ChevronRight className="w-6 h-6" />
