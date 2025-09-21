@@ -11,7 +11,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { CoreValuesGrid } from "../components/CoreValueCard";
+import { CoreValuesGrid } from "../components/ui/CoreValueCard";
 
 /** Cloudinary helper: build responsive URLs with f_auto,q_auto and width */
 const cld = (publicUrl: string, w: number) => {
