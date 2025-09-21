@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface LegalPageProps {
   title: string;
   children: React.ReactNode;
