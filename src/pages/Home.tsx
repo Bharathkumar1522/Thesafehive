@@ -11,7 +11,7 @@ import AboutCTA from '../components/layout/AboutCTA';
 import BlogCard from '../components/blog/BlogCard';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { SimpleBlogPost, ContentfulEntry } from '../types/blog';
-import { CoreValuesGrid } from '../components/CoreValueCard';
+import { CoreValuesGrid } from '../components/ui/CoreValueCard';
 
 const LifestyleCarousel = lazy(() => import('../components/layout/SafeLivingCarousel'));
 
