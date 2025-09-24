@@ -10,23 +10,24 @@ import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Learn from './pages/learn';
+import { Page } from './types/navigation';
+// Vercel Analytics
+import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
+
 
 // Lazy-loaded policy/legal pages
 const CookiePolicy = lazy(() => import('./pages/cookie-policy'));
 const PrivacyPolicy = lazy(() => import('./pages/privacy-policy'));
 const TermsOfService = lazy(() => import('./pages/terms-of-service'));
 
- 
-
-// Vercel Analytics
-import { SpeedInsights } from '@vercel/speed-insights/react';
-import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = () => setIsLoggedIn(true);
   const handleLogout = () => setIsLoggedIn(false);
+  const [currentPage, setCurrentPage] = useState<Page>('home');
 
   return (
     <Router>
@@ -37,7 +38,7 @@ function App() {
           <Suspense fallback={<div className="p-6 text-center">Loading...</div>}>
             <Routes>
               {/* Core */}
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home setCurrentPage={setCurrentPage} />} />
               <Route path="/about" element={<About />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
