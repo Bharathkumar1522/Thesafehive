@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, Suspense, lazy } from 'react';
-import { ArrowRight, Leaf, Heart, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Leaf, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createClient } from 'contentful';
@@ -9,7 +9,6 @@ import { useKeenSlider } from 'keen-slider/react';
 import BlogCard from '../components/blog/BlogCard';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { SimpleBlogPost, ContentfulEntry } from '../types/blog';
-import { CoreValuesGrid } from '../components/ui/CoreValueCard';
 import Button from '../components/ui/Button';
 import { ComingSoonCTA } from "../components/layout/ComingSoonCTA";
 import { DiscoverMissionCTA } from "../components/layout/DiscoverOurMissionCTA";
