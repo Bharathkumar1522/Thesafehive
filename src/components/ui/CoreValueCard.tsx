@@ -64,7 +64,7 @@ export const CoreValueCard: React.FC<CoreValueCardProps> = ({
 };
 
 interface CoreValuesGridProps {
-  values: Array<{
+  values: ReadonlyArray<{
     icon: LucideIcon;
     title: string;
     description: string;
