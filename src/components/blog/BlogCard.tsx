@@ -1,19 +1,21 @@
 import { Share2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BlogPost } from '../../types/blog';
+import { BlogPost, SimpleBlogPost } from '../../types/blog';
 import ShareModal from '../ui/modals/ShareModal';
 import Img from '../ui/image';
 
 interface BlogCardProps {
-  post: BlogPost;
+  post: SimpleBlogPost | BlogPost;
   variant?: 'default' | 'slider';
   /** Optional explicit intrinsic size for the image (caller can pass for CLS safety) */
   imgW?: number;
   imgH?: number;
+  /** If true, load image with high priority (eager) -- useful for current/adjacent slides */
+  priority?: boolean;
 }
 
-const BlogCard = ({ post, variant = 'default', imgW, imgH }: BlogCardProps) => {
+const BlogCard = ({ post, variant = 'default', imgW, imgH, priority = false }: BlogCardProps) => {
   const [showShareModal, setShowShareModal] = useState(false);
 
   const handleShare = (e: React.MouseEvent) => {
@@ -52,6 +54,7 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH }: BlogCardProps) => {
             alt={post.title || 'Blog cover image'}
             w={sliderW}
             h={sliderH}
+            eager={priority}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
 
@@ -59,14 +62,17 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH }: BlogCardProps) => {
             {category}
           </span>
 
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 text-white">
-            <h3 className="text-3xl font-bold mb-2 line-clamp-2">{post.title}</h3>
-            <p className="text-lg line-clamp-2">{post.excerpt}</p>
-            {post.description && (
-              <p className="text-sm mt-2 text-white/80 line-clamp-2">{post.description}</p>
-            )}
+          {/* Stronger overlay for readability */}
+          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/50 to-transparent p-6 text-white">
+            <h3 className="text-3xl font-bold mb-2 line-clamp-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]  text-white/90">
+              {post.title}
+            </h3>
+            <p className="text-lg line-clamp-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">{post.excerpt}</p>
+            {/* {post.description && (
+              <p className="text-sm mt-2 text-white/90 line-clamp-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">{post.description}</p>
+            )} */}
             <div className="mt-4 flex items-center justify-between text-sm">
-              <span className="text-white/70">{readTime}</span>
+              <span className="text-white/80 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">{readTime}</span>
               <button
                 onClick={handleShare}
                 className="flex items-center text-white hover:text-green-200 transition-colors"

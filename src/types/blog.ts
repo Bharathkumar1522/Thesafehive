@@ -71,6 +71,7 @@ export interface SimpleBlogPost {
   imageUrl: string;
   date: string;
   category: string;
+  readtime?: string;
 }
 
 // Contentful entry interface
