@@ -147,7 +147,7 @@ export function ComingSoonCTA() {
           </div>
         </motion.div>
         {/* Bottom decorative element */}
-        <motion.div
+        {/* <motion.div
           className="flex justify-center mt-20"
           initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -158,7 +158,7 @@ export function ComingSoonCTA() {
             <Leaf className="w-6 h-6 text-[#4CAF50]" />
             <div className="w-12 h-px bg-gradient-to-l from-transparent to-gray-300" />
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
