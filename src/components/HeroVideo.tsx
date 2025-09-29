@@ -1,72 +1,88 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 interface HeroVideoProps {
   src: string;
   className?: string;
+  title?: string;
+  autoplay?: boolean;
+  controls?: boolean;
 }
 
-const HeroVideo = memo(({ src, className = '' }: HeroVideoProps) => {
-  const isYouTube = src.includes("youtube.com") || src.includes("youtu.be");
-  const isDrive = src.includes("drive.google.com");
-  const isDirectVideo =
-    src.endsWith(".mp4") || src.endsWith(".webm") || src.includes("cloudinary");
+const HeroVideo = memo(({ 
+  src, 
+  className = '', 
+  title = 'Video player',
+  autoplay = true,
+  controls = true
+}: HeroVideoProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  
+  // Extract video ID from various YouTube URL formats
+  const getYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
 
-  const containerClasses = `mt-6 w-full max-w-3xl mx-auto aspect-video rounded-xl overflow-hidden shadow-lg ${className}`;
+  // Check if the URL is from YouTube
+  const isYouTube = src.includes('youtube.com') || src.includes('youtu.be');
+  const videoId = isYouTube ? getYouTubeId(src) : null;
+  
+  // Handle video load events
+  const handleLoad = () => {
+    setIsLoading(false);
+    setHasError(false);
+  };
 
-  if (isYouTube) {
-    const videoId = src.includes("embed")
-      ? src.split("/embed/")[1]
-      : src.split("youtu.be/")[1]?.split("?")[0] || "";
+  const handleError = () => {
+    setIsLoading(false);
+    setHasError(true);
+    console.error('Error loading video');
+  };
 
+  // YouTube iframe parameters
+  const youTubeParams = new URLSearchParams({
+    autoplay: autoplay ? '1' : '0',
+    mute: '1',
+    rel: '0',
+    showinfo: '0',
+    loop: '1',
+    controls: controls ? '1' : '0',
+    enablejsapi: '1',
+    modestbranding: '1',
+    playsinline: '1',
+    disablekb: '1',
+    cc_load_policy: '0',
+    iv_load_policy: '3',
+    origin: window.location.origin
+  });
+
+  // Generate YouTube embed URL
+  const youTubeUrl = videoId 
+    ? `https://www.youtube.com/embed/${videoId}?${youTubeParams.toString()}`
+    : '';
+
+  // Handle direct video sources
+  if (!isYouTube) {
     return (
-      <div className={containerClasses}>
-        <iframe
-          className="w-full h-full"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&loop=1&playlist=${videoId}`}
-          title="YouTube Video"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer"
-          width="100%"
-          height="100%"
-        />
-      </div>
-    );
-  }
-
-  if (isDrive) {
-    const fileId = src.match(/[-\w]{25,}/)?.[0];
-    return (
-      <div className={containerClasses}>
-        <iframe
-          className="w-full h-full"
-          src={`https://drive.google.com/file/d/${fileId}/preview`}
-          allow="autoplay"
-          allowFullScreen
-          title="Drive Video"
-          loading="lazy"
-          referrerPolicy="no-referrer"
-          width="100%"
-          height="100%"
-        />
-      </div>
-    );
-  }
-
-  if (isDirectVideo) {
-    return (
-      <div className={containerClasses}>
+      <div className={`relative w-full max-w-2xl mx-auto rounded-xl overflow-hidden shadow-lg ${className}`}>
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+            <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+          </div>
+        )}
         <video
-          className="w-full h-full object-cover"
-          autoPlay
+          className={`w-full h-full object-cover ${isLoading ? 'invisible' : 'visible'}`}
+          autoPlay={autoplay}
           muted
-          controls
           loop
           playsInline
-          preload="none"
-          width="100%"
-          height="100%"
+          controls={controls}
+          onLoadedData={handleLoad}
+          onError={handleError}
+          title={title}
         >
           <source src={src} type="video/mp4" />
           Your browser does not support the video tag.
@@ -75,7 +91,33 @@ const HeroVideo = memo(({ src, className = '' }: HeroVideoProps) => {
     );
   }
 
-  return null;
+  // Handle YouTube videos
+  return (
+    <div className={`relative aspect-video w-full max-w-2xl mx-auto rounded-xl overflow-hidden shadow-lg ${className}`}>
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+          <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+        </div>
+      )}
+      {hasError ? (
+        <div className="h-full w-full flex items-center justify-center bg-gray-100 text-gray-600">
+          Failed to load video
+        </div>
+      ) : (
+        <iframe
+          className={`w-full h-full ${isLoading ? 'invisible' : 'visible'}`}
+          src={youTubeUrl}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          loading="lazy"
+          onLoad={handleLoad}
+          onError={handleError}
+          frameBorder="0"
+        />
+      )}
+    </div>
+  );
 });
 
 HeroVideo.displayName = 'HeroVideo';

@@ -212,7 +212,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
       <ComingSoonCTA />
 
       {/* Wellness Tips Carousel */}
-      <section className="py-16 md:py-24 bg-white bg-gray-50">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-green-50 to-white">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
