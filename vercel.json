@@ -1,29 +1,30 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/:path*",
+      "has": [{ "type": "header", "key": "accept", "value": "text/html" }],
+      "destination": "/"
+    }
   ],
   "headers": [
-
     {
-      "source": "/(.*)\\.(?:js|css|mjs|map|woff2|woff|ttf|eot|png|jpg|jpeg|gif|webp|avif|svg)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-
-    {
-      "source": "/static/(.*)",
+      "source": "/:path*\\.(?:js|css|mjs|map|woff2|woff|ttf|eot|png|jpg|jpeg|gif|webp|avif|svg)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/assets/(.*)",
+      "source": "/static/:path*",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
-
+    {
+      "source": "/assets/:path*",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
 
     {
       "source": "/",
@@ -32,26 +33,22 @@
       ]
     },
     {
-      "source": "/(.*)",
-      "has": [
-        { "type": "header", "key": "accept", "value": "text/html" }
-      ],
+      "source": "/:path*",
+      "has": [{ "type": "header", "key": "accept", "value": "text/html" }],
       "headers": [
         { "key": "Cache-Control", "value": "no-cache" }
       ]
     },
 
-
     {
-      "source": "/api/(.*)",
+      "source": "/api/:path*",
       "headers": [
         { "key": "Cache-Control", "value": "public, s-maxage=60, stale-while-revalidate=600" }
       ]
     },
 
-
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "headers": [
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
