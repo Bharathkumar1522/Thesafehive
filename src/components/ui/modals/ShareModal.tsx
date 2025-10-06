@@ -5,9 +5,6 @@ import {
   Check, 
   Share2,
   MessageCircle,
-  Instagram,
-  Facebook,
-  Linkedin,
   Twitter,
   Mail,
   ExternalLink
@@ -36,7 +33,6 @@ const ShareModal: React.FC<ShareModalProps> = ({
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy link:', err);
     }
@@ -48,65 +44,32 @@ const ShareModal: React.FC<ShareModalProps> = ({
       icon: copied ? Check : Copy,
       color: 'bg-gray-100 hover:bg-gray-200 text-gray-700',
       action: handleCopyLink,
-      label: copied ? 'Copied!' : 'Copy Link'
+      label: 'Copy'
     },
     {
       name: 'WhatsApp',
       icon: MessageCircle,
       color: 'bg-green-100 hover:bg-green-200 text-green-700',
       action: () => {
-        const text = `${title}\n\n${description}\n\n${url}`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        window.open(`https://wa.me/?text=${encodeURIComponent(`${title}\n\n${url}`)}`, '_blank');
       },
       label: 'WhatsApp'
     },
     {
-      name: 'Facebook',
-      icon: Facebook,
-      color: 'bg-blue-100 hover:bg-blue-200 text-blue-700',
-      action: () => {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-      },
-      label: 'Facebook'
-    },
-    {
-      name: 'Twitter/X',
+      name: 'Twitter',
       icon: Twitter,
-      color: 'bg-gray-100 hover:bg-gray-200 text-gray-700',
+      color: 'bg-blue-50 hover:bg-blue-100 text-blue-400',
       action: () => {
-        const text = `${title}\n\n${description}`;
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank');
       },
-      label: 'Twitter/X'
-    },
-    {
-      name: 'LinkedIn',
-      icon: Linkedin,
-      color: 'bg-blue-100 hover:bg-blue-200 text-blue-600',
-      action: () => {
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
-      },
-      label: 'LinkedIn'
-    },
-    {
-      name: 'Instagram',
-      icon: Instagram,
-      color: 'bg-pink-100 hover:bg-pink-200 text-pink-600',
-      action: () => {
-        // Instagram doesn't support direct URL sharing, so we copy the link
-        handleCopyLink();
-        alert('Link copied! You can paste it in your Instagram story or bio.');
-      },
-      label: 'Instagram'
+      label: 'Twitter'
     },
     {
       name: 'Email',
       icon: Mail,
       color: 'bg-gray-100 hover:bg-gray-200 text-gray-700',
       action: () => {
-        const subject = encodeURIComponent(title);
-        const body = encodeURIComponent(`${description}\n\nRead more: ${url}`);
-        window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
+        window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${url}\n\n${description || ''}`)}`);
       },
       label: 'Email'
     },
@@ -160,7 +123,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
         {/* Share Options */}
         <div className="p-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {shareOptions.map((option) => (
               <button
                 key={option.name}

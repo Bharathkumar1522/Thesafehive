@@ -7,6 +7,7 @@ interface ActionProps {
   icon: ReactNode;
   secondaryIcon?: ReactNode;
   variant?: 'primary' | 'secondary';
+  className?: string;
 }
 
 interface CTASectionProps {
@@ -18,11 +19,12 @@ interface CTASectionProps {
 }
 
 const ActionButton: React.FC<{ action: ActionProps }> = ({ action }) => {
-  const buttonClasses = (variant: 'primary' | 'secondary' = 'primary') => {
+  const buttonClasses = (variant: 'primary' | 'secondary' = 'primary', className?: string) => {
     const base = 'inline-flex items-center px-8 py-4 font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1';
-    return variant === 'primary'
-      ? `${base} bg-white text-green-600 hover:bg-gray-100`
-      : `${base} bg-transparent text-white border-2 border-white hover:bg-white hover:text-green-600`;
+    const variantClass = variant === 'primary'
+      ? 'bg-white text-green-600 hover:bg-gray-100'
+      : 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-green-600';
+    return `${base} ${variantClass} ${className || ''}`.trim();
   };
 
   // Check if it's an anchor link (starts with #)
@@ -40,7 +42,7 @@ const ActionButton: React.FC<{ action: ActionProps }> = ({ action }) => {
     return (
       <a 
         href={action.to} 
-        className={buttonClasses(action.variant)}
+        className={buttonClasses(action.variant, action.className)}
       >
         {content}
       </a>
@@ -50,7 +52,7 @@ const ActionButton: React.FC<{ action: ActionProps }> = ({ action }) => {
   return (
     <Link 
       to={action.to} 
-      className={buttonClasses(action.variant)}
+      className={buttonClasses(action.variant, action.className)}
     >
       {content}
     </Link>

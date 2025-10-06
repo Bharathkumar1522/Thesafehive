@@ -191,13 +191,13 @@ export function DiscoverMissionCTA({ setCurrentPage }: DiscoverMissionCTAProps) 
               <Button
                 to="/about"
                 size="md"
-                className="bg-gradient-to-r from-[#4CAF50] to-[#66BB6A] hover:from-[#45a049] hover:to-[#5da85d] text-white px-6 py-2.5 text-base rounded-2xl shadow-2xl hover:shadow-[#4CAF50]/40 transition-all duration-300 transform hover:scale-105 group"
+                className="gtm-cta-discover-mission bg-gradient-to-r from-[#4CAF50] to-[#66BB6A] hover:from-[#45a049] hover:to-[#5da85d] text-white px-6 py-2.5 text-base rounded-2xl shadow-2xl hover:shadow-[#4CAF50]/40 transition-all duration-300 transform hover:scale-105 group"
               >
                 Discover Our Mission
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
             </motion.div>
-          </motion.div>
+            </motion.div>
         </div>
       </div>
     </section>

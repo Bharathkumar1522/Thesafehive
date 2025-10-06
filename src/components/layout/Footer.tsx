@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Leaf, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Leaf, Mail, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,15 +19,12 @@ const Footer = () => {
               Helping individuals and families choose safe, non-toxic alternatives for everyday life.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-500 hover:text-green-600 transition-colors" aria-label="Instagram">
-                <Instagram className="h-5 w-5" />
-              </a>
-          {/*    <a href="#" className="text-gray-500 hover:text-green-600 transition-colors" aria-label="Facebook">
-                <Facebook className="h-5 w-5" />
-              </a> */}
-            {/*  <a href="#" className="text-gray-500 hover:text-green-600 transition-colors" aria-label="Twitter">
-                <Twitter className="h-5 w-5" /> 
-              </a> */}
+              <a href="https://www.instagram.com/thesafehive" target="_blank" rel="noopener noreferrer" className="gtm-social-instagram text-gray-500 hover:text-green-600 transition-colors" aria-label="Instagram">
+              <Instagram className="h-5 w-5" />
+            </a>
+            <a href="https://www.linkedin.com/company/thesafehive" target="_blank" rel="noopener noreferrer" className="gtm-social-linkedin text-gray-500 hover:text-green-600 transition-colors ml-4" aria-label="LinkedIn">
+              <Linkedin className="h-5 w-5" />
+            </a>
             </div>
           </div>
 

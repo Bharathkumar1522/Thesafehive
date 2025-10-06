@@ -254,7 +254,8 @@ export default function Learn() {
           text: 'Contact Us',
           to: '/contact',
           icon: <MessageSquare className="h-5 w-5" />,
-          variant: 'secondary'
+          variant: 'secondary',
+          className: 'gtm-cta-learn-contact'
         }}
       />
     </div>
