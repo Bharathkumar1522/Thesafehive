@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import emailjs from "@emailjs/browser";
-import { Mail, MessageSquare, Send } from 'lucide-react';
+import { MessageSquare, Send, Instagram } from 'lucide-react';
 import { FAQItem } from '../components/ui/FAQItem';
 import { CTASection } from '../components/ui/CTASection';
 
@@ -8,7 +8,6 @@ const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID_OWNER = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_OWNER;
 const TEMPLATE_ID_USER = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_USER;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +19,6 @@ const Contact = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
-
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const faqs = [
@@ -105,40 +103,48 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
+              
               {/* Contact Info */}
               <div className="md:col-span-2">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Get In Touch</h2>
                 <p className="text-gray-700 mb-8">
                   We're here to answer any questions you might have about our mission, or chemical-free living in general, or anything about us.
                 </p>
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-green-100 p-3 rounded-full">
-                      <Mail className="h-6 w-6 text-green-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">Email Us</h3>
-                      <p className="text-gray-700">thesafehive2025@gmail.com</p>
-                      <p className="text-gray-600 text-sm mt-1">We'll respond within 24–48 hours. Thank you for your patience.</p>
-                    </div>
-                  </div>
 
+                <div className="space-y-6">
+                  {/* Send Message Info */}
                   <div className="flex items-start space-x-4">
                     <div className="bg-green-100 p-3 rounded-full">
                       <MessageSquare className="h-6 w-6 text-green-600" />
                     </div>
                     <div>
+                      <h3 className="font-medium text-gray-900">Send Message to Us</h3>
+                      <p className="text-gray-600 text-sm mt-1">
+                        Use the form to send us your questions, feedback, or collaboration ideas. We'll get back to you within 24–48 hours.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Follow Us */}
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-green-100 p-3 rounded-full">
+                      <Instagram className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div>
                       <h3 className="font-medium text-gray-900">Follow Us</h3>
-                      <div className="mt-2 space-y-1">
-                        <a href="#" className="block text-green-600 hover:text-green-700 transition-colors">Instagram</a>
-                       {/* <a href="#" className="block text-green-600 hover:text-green-700 transition-colors">Facebook</a> */}
-                      {/*  <a href="#" className="block text-green-600 hover:text-green-700 transition-colors">Twitter</a> */}
-                      </div>
+                      <a
+                        href="https://www.instagram.com/thesafehive"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-green-600 hover:text-green-700 transition-colors mt-1 font-medium"
+                      >
+                        Follow us on Instagram
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-            
+
               {/* Contact Form */}
               <div className="md:col-span-3 bg-gray-50 rounded-xl p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
@@ -242,7 +248,9 @@ const Contact = () => {
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+              Frequently Asked Questions
+            </h2>
 
             <div className="space-y-4">
               {faqs.map((faq, index) => (
@@ -270,7 +278,6 @@ const Contact = () => {
           variant: 'secondary'
         }}
       />
-
     </div>
   );
 };
