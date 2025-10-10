@@ -75,10 +75,8 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH, priority = false }: B
               <span className="text-white/80 drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">{readTime}</span>
               <button
                 onClick={handleShare}
-                className="gtm-blog-share flex items-center text-white hover:text-green-200 transition-colors"
-                title="Share blog post"
-                data-post-title={post.title}
-                data-post-slug={post.slug}
+                className="flex items-center text-white hover:text-green-200 transition-colors"
+                title="Copy blog link"
               >
                 <Share2 className="h-4 w-4 mr-1" />
                 Share
@@ -109,18 +107,14 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH, priority = false }: B
             <div className="flex justify-between items-center mt-4">
               <Link
                 to={`/blog/${post.slug}`}
-                className="gtm-blog-read-more text-green-600 font-medium text-sm hover:underline"
-                data-post-title={post.title}
-                data-post-slug={post.slug}
+                className="text-green-600 font-medium text-sm hover:underline"
               >
                 Read This
               </Link>
               <button
                 onClick={handleShare}
-                className="gtm-blog-share flex items-center text-gray-500 hover:text-green-600 text-sm transition-colors p-2 -m-2 rounded-lg hover:bg-green-50"
-                title="Share blog post"
-                data-post-title={post.title}
-                data-post-slug={post.slug}
+                className="flex items-center text-gray-500 hover:text-green-600 text-sm transition-colors p-2 -m-2 rounded-lg hover:bg-green-50"
+                title="Copy blog link"
               >
                 <Share2 className="h-4 w-4 mr-1" />
                 Share
