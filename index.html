@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TheSafeHive - Chemical-Free Living</title>
 
-    <!-- Google Tag Manager (nonce-aware) -->
+    <!-- Google Tag Manager (nonce-aware; hash will allow this exact block) -->
     <script>
       (function(w,d,s,l,i){
         w[l]=w[l]||[];
@@ -15,11 +15,9 @@
             dl=l!='dataLayer'?'&l='+l:'';
         j.async=true;
         j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-
-        // Propagate CSP nonce to GTM-injected script if present
+        // propagate CSP nonce if present
         var n=d.querySelector('[nonce]');
         if(n){ j.setAttribute('nonce', n.nonce || n.getAttribute('nonce')); }
-
         f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-5CWK48R8');
     </script>
@@ -38,8 +36,7 @@
   <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CWK48R8"
-              height="0" width="0" style="display:none;visibility:hidden"></iframe>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CWK48R8" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
 
