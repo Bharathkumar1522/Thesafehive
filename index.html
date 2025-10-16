@@ -5,25 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TheSafeHive - Chemical-Free Living</title>
 
-    <!-- Google Tag Manager (hash-based CSP safe) -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'GTM-5CWK48R8');
-    </script>
-    <!-- End Google Tag Manager -->
+    <!-- ✅ Google Tag Manager (CSP-safe external script) -->
+    <script src="/initGTM.js" defer></script>
 
-    <!-- Favicon -->
+    <!-- ✅ Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png" />
 
-    <!-- Fonts & preloads -->
+    <!-- ✅ Fonts & Preloads -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -45,22 +33,23 @@
       fetchpriority="high"
     />
   </head>
+
   <body>
-    <!-- Google Tag Manager (noscript) -->
+    <!-- ✅ Google Tag Manager (noscript fallback) -->
     <noscript>
       <iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-5CWK48R8"
         height="0"
         width="0"
         style="display:none;visibility:hidden"
-        title="GTM"
+        title="Google Tag Manager"
       ></iframe>
     </noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
+    <!-- ✅ React App Root -->
     <div id="root"></div>
 
-    <!-- Main App -->
+    <!-- ✅ Main App Entry -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
