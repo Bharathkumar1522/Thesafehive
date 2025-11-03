@@ -59,9 +59,6 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
       const posts: SimpleBlogPost[] = entries.items.map((item: ContentfulEntry) => {
         const fields = item.fields || {};
         const coverImage = fields.coverImage;
-        // const imageAsset = Array.isArray(coverImage)
-        //   ? coverImage[0]?.fields?.file?.url
-        //   : coverImage?.fields?.file?.url;
         const imageAsset = coverImage?.[0]?.fields?.file?.url;
 
         const rawUrl = imageAsset ? `https:${imageAsset}` : '';
@@ -98,70 +95,74 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
   return (
     <div className="pt-16">
       {/* =======================
-          HERO (no motion -> fixes LCP render delay)
+          HERO SECTION (Optimized — No Animations)
          ======================= */}
       <section className="relative bg-gradient-to-b from-green-50 to-white">
-        <div className="container mx-auto px-4 pt-24 pb-16 md:pt-48 md:pb-32 flex flex-col items-center text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-gray-900 mb-6 leading-tight"
+        <div className="container mx-auto px-4 pt-20 md:pt-28 lg:pt-32 pb-12 md:pb-16 lg:pb-20 flex flex-col items-center text-center">
+          <h1
+            className="font-heading font-extrabold text-gray-900 tracking-tight leading-[1.15] mb-4
+                       max-w-3xl
+                       text-[clamp(1.75rem,5vw,2.5rem)]
+                       md:text-[clamp(2rem,3.8vw,3rem)]
+                       lg:text-[clamp(2.25rem,3vw,3.25rem)]"
           >
-            You Deserve Products That <span className="text-green-600">Protect You</span>
-          </motion.h1>
+            What’s in your everyday product matters
+            <span className="block mt-1 text-green-600">
+              Let’s Find Out Together
+            </span>
+          </h1>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg md:text-xl text-gray-700 max-w-2xl mb-8"
+          <p
+            className="text-gray-700 max-w-2xl
+                       text-[15px] sm:text-base md:text-lg lg:text-xl
+                       leading-relaxed md:leading-[1.75] mb-8"
           >
-            Join our community dedicated to chemical-free and eco-conscious living. Discover wellness tips, natural alternatives, and soon, our curated products.
-          </motion.p>
+            We uncover hidden toxins in everyday essentials and empower you to live clean,
+            conscious, and harm-free. Join our community.
+          </p>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 mb-12"
-          >
-            <Button to="/about">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
+            <Link
+              to="/about"
+              className="group inline-flex items-center justify-center px-8 py-3
+                         bg-green-600 text-white font-medium rounded-xl
+                         hover:bg-green-700 transition-all duration-200
+                         text-base md:text-lg"
+            >
               Discover Our Mission
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+
             <Link
               to="/blog"
-              className="group px-8 py-3 bg-white text-green-600 font-medium rounded-xl border border-green-600 hover:bg-green-50 hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+              className="group inline-flex items-center justify-center px-8 py-3
+                         bg-white text-green-600 font-medium rounded-xl border border-green-600
+                         hover:bg-green-50 hover:shadow-md
+                         transition-all duration-200
+                         text-base md:text-lg"
             >
-              <span className="flex items-center">
-                Read Wellness Tips
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </span>
+              Read Wellness Tips
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Decorative leaves: CSS-only spin, gated by prefers-reduced-motion */}
+        {/* Decorative leaves (large screens only) */}
         <div
-          className="hidden md:block absolute top-1/4 left-16 text-green-500 opacity-20 motion-safe:animate-[spin_20s_linear_infinite]"
+          className="hidden lg:block absolute top-1/4 left-16 text-green-500 opacity-20"
           aria-hidden="true"
         >
           <Leaf className="h-16 w-16" />
         </div>
         <div
-          className="hidden md:block absolute bottom-1/4 right-16 text-yellow-500 opacity-20 motion-safe:animate-[spin_25s_linear_infinite_reverse]"
+          className="hidden lg:block absolute bottom-1/4 right-16 text-yellow-500 opacity-20"
           aria-hidden="true"
         >
           <Leaf className="h-16 w-16" />
         </div>
-        {/* Bottom decorative element with animation */}
-        <motion.div 
-          className="absolute bottom-8 left-0 right-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
+
+        {/* Bottom decorative flourish */}
+        <div className="absolute bottom-8 left-0 right-0">
           <div className="flex justify-center">
             <div className="flex items-center gap-4 text-gray-400">
               <div className="w-12 h-px bg-gradient-to-r from-transparent to-gray-300" />
@@ -169,7 +170,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
               <div className="w-12 h-px bg-gradient-to-l from-transparent to-gray-300" />
             </div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Safe, Healthy & Happy Living Carousel */}
@@ -197,7 +198,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg text-gray-700 max-w-2xl mx-auto"
             >
-              Discover the joy of chemical-free living through beautiful moments of wellness, family time, and natural harmony.
+              Discover the joy of harm-free living through beautiful moments of wellness, family time, and natural harmony.
             </motion.p>
           </div>
           <ErrorBoundary fallback={<p className="text-center text-red-500">Something went wrong in the carousel.</p>}>
@@ -311,48 +312,6 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
           )}
         </motion.div>
       </section>
-
-      {/* Core Values */}
-      {/* <motion.section
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.3 }}
-        className="py-16 md:py-24 bg-gray-50"
-      >
-        <div className="container mx-auto px-4">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl font-heading font-bold text-center text-gray-900 mb-12"
-          >
-            Our Core Values
-          </motion.h2>
-          <CoreValuesGrid
-            values={[
-              {
-                icon: Leaf,
-                title: 'Sustainability',
-                description: 'We are committed to sustainable practices that minimize environmental impact and preserve our planet for future generations.',
-                color: 'green',
-              },
-              {
-                icon: Heart,
-                title: 'Health-Focused',
-                description: 'Your wellbeing is our priority. We promote products and practices that support holistic health and chemical-free living.',
-                color: 'yellow',
-              },
-              {
-                icon: Shield,
-                title: 'Transparency',
-                description: "We believe in complete honesty about what goes into products and how they're made. No hidden ingredients, no secrets.",
-                color: 'blue',
-              },
-            ]}
-          />
-        </div>
-      </motion.section> */}
 
       {/* About CTA */}
       <DiscoverMissionCTA setCurrentPage={setCurrentPage} />
