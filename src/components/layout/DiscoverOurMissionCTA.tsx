@@ -155,7 +155,7 @@ export function DiscoverMissionCTA({ setCurrentPage }: DiscoverMissionCTAProps) 
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              Learn how we're building a safer, chemical-free world for you and your family.
+              In our busy lives, it’s hard to research every product - so we do it for you, uncovering hidden toxins. Learn how we curate safer, harm-free products for your family.
             </motion.p>
 
             {/* Mission highlights */}
