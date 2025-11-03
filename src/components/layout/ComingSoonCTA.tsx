@@ -106,7 +106,7 @@ export function ComingSoonCTA() {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          We're curating the safest, most effective chemical-free products just for you. Stay tuned!
+          We're curating the safest, most effective harm-free and natural products just for you. Stay tuned!
         </motion.p>
 
         <motion.div
