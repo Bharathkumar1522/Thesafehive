@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, AlertTriangle, Lightbulb, Send, Trophy, Star } from 'lucide-react';
-import DetectiveGame from './DetectiveGame';
+import DetectiveGame from './DetectiveGame.tsx';
 
 interface DarkSideProps {
     onBack: () => void;

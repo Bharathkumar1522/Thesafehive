@@ -117,7 +117,7 @@ export default function EmailForm({ onClose }: EmailFormProps) {
                                     id="name"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full pl-11 pr-4 py-3 border-2 border-[#59a75c]/20 rounded-lg focus:border-[#59a75c] focus:outline-none transition-colors bg-white"
+                                    className="w-full pl-11 pr-4 py-3 border-2 border-[#59a75c]/20 rounded-lg focus:border-[#59a75c] focus:outline-none transition-colors bg-white text-gray-900"
                                     placeholder="Enter your name"
                                     disabled={isSubmitting}
                                 />
@@ -136,7 +136,7 @@ export default function EmailForm({ onClose }: EmailFormProps) {
                                     id="email"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full pl-11 pr-4 py-3 border-2 border-[#59a75c]/20 rounded-lg focus:border-[#59a75c] focus:outline-none transition-colors bg-white"
+                                    className="w-full pl-11 pr-4 py-3 border-2 border-[#59a75c]/20 rounded-lg focus:border-[#59a75c] focus:outline-none transition-colors bg-white text-gray-900"
                                     placeholder="your@email.com"
                                     disabled={isSubmitting}
                                 />
@@ -152,7 +152,7 @@ export default function EmailForm({ onClose }: EmailFormProps) {
                                 id="comment"
                                 value={formData.comment}
                                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                                className="w-full p-4 border-2 border-[#59a75c]/20 rounded-lg focus:border-[#59a75c] focus:outline-none transition-colors bg-white min-h-[100px] resize-y"
+                                className="w-full p-4 border-2 border-[#59a75c]/20 rounded-lg focus:border-[#59a75c] focus:outline-none transition-colors bg-white min-h-[100px] resize-y text-gray-900"
                                 placeholder="Share your thoughts..."
                                 disabled={isSubmitting}
                             />

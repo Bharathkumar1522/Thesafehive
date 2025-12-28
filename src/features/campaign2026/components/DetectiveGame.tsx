@@ -56,7 +56,7 @@ export default function DetectiveGame({ case: caseData, onBack }: DetectiveGameP
                         <div className="flex items-center justify-between">
                             <div>
                                 <div className="text-[#59a75c] text-sm font-mono mb-1">{caseData.id}</div>
-                                <h1 className="text-3xl font-bold">{caseData.title}</h1>
+                                <h1 className="text-3xl font-bold text-[#59a75c]">{caseData.title}</h1>
                                 <p className="text-gray-400 mt-1">{caseData.subtitle}</p>
                             </div>
                             <div className="text-right">

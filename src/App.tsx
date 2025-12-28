@@ -1,7 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
+import MainLayout from './components/layout/MainLayout';
 import ScrollToTop from './utils/ScrollToTop';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -35,35 +34,36 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen bg-neutral-50">
-        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-        <main className="flex-grow">
-          <Suspense fallback={<div className="p-6 text-center">Loading...</div>}>
-            <Routes>
-              {/* Core */}
-              <Route path="/" element={<Home setCurrentPage={setCurrentPage} />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/learn" element={<Learn />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login onLogin={handleLogin} />} />
 
-              {/* Legal Pages */}
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/cookie-policy" element={<CookiePolicy />} />
-
-              {/* Campaign 2026 */}
-              <Route path="/campaign-2026" element={<Campaign2026 />} />
-
-              {/* Optional 404 */}
-              {/* <Route path="*" element={<NotFound />} /> */}
-            </Routes>
+      <Routes>
+        {/* Campaign Route (No Navbar/Footer) */}
+        <Route path="/campaign-2026" element={
+          <Suspense fallback={<div className="bg-black min-h-screen text-white flex items-center justify-center">Loading...</div>}>
+            <Campaign2026 />
           </Suspense>
-        </main>
-        <Footer />
-      </div>
+        } />
+
+        {/* Main Site Routes (With Navbar/Footer) */}
+        <Route element={<MainLayout isLoggedIn={isLoggedIn} onLogout={handleLogout} />}>
+          {/* Core */}
+          <Route path="/" element={<Home setCurrentPage={setCurrentPage} />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+
+          {/* Legal Pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
+
+          {/* Optional 404 */}
+          {/* <Route path="*" element={<NotFound />} /> */}
+        </Route>
+      </Routes>
+
       <SpeedInsights />
       <Analytics />
     </Router>
