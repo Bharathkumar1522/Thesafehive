@@ -9,7 +9,7 @@ import { useKeenSlider } from 'keen-slider/react';
 import BlogCard from '../components/blog/BlogCard';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { SimpleBlogPost, ContentfulEntry } from '../types/blog';
-import Button from '../components/ui/Button';
+// import Button from '../components/ui/Button';
 import { ComingSoonCTA } from "../components/layout/ComingSoonCTA";
 import { DiscoverMissionCTA } from "../components/layout/DiscoverOurMissionCTA";
 import type { Page } from '../types/navigation';
@@ -298,11 +298,10 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
                   <button
                     key={idx}
                     onClick={() => instanceRef.current?.moveToIdx(idx)}
-                    className={`rounded-full transition ${
-                      currentSlide === idx
+                    className={`rounded-full transition ${currentSlide === idx
                         ? 'bg-green-600 w-3 h-3 md:scale-125 shadow'
                         : 'bg-gray-300 w-2.5 h-2.5 md:w-3 md:h-3'
-                    }`}
+                      }`}
                     aria-label={`Go to slide ${idx + 1}`}
                     aria-current={currentSlide === idx ? 'true' : 'false'}
                   />

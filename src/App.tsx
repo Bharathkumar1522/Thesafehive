@@ -19,7 +19,10 @@ import { Analytics } from '@vercel/analytics/react';
 // Lazy-loaded policy/legal pages
 const CookiePolicy = lazy(() => import('./pages/cookie-policy'));
 const PrivacyPolicy = lazy(() => import('./pages/privacy-policy'));
+
 const TermsOfService = lazy(() => import('./pages/terms-of-service'));
+
+const Campaign2026 = lazy(() => import('./features/campaign2026/Campaign2026Container'));
 
 
 function App() {
@@ -50,6 +53,9 @@ function App() {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
+
+              {/* Campaign 2026 */}
+              <Route path="/campaign-2026" element={<Campaign2026 />} />
 
               {/* Optional 404 */}
               {/* <Route path="*" element={<NotFound />} /> */}
