@@ -2,6 +2,8 @@
    Import Google Fonts FIRST
    ========================= */
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap');
 
 /* Tailwind layers */
 @tailwind base;
@@ -20,13 +22,24 @@
     url("/fonts/Inter-Var.woff") format("woff");
   font-weight: 100 900;
   font-style: normal;
-  font-display: swap; /* avoids FOIT */
+  font-display: swap;
+  /* avoids FOIT */
 }
 
 /* System fallbacks via CSS var so Tailwind can reference it */
 :root {
   --font-sans: "InterVar", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-               "Apple Color Emoji", "Segoe UI Emoji";
+    "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* Campaign 2026 Variables */
+  --color-primary: 89 167 92;
+  /* #59a75c */
+  --color-secondary: 12 64 35;
+  /* #0C4023 */
+  --color-accent: 212 165 66;
+  /* #d4a542 */
+  --color-dark: 12 12 14;
+  /* #0C0C0E */
 }
 
 /* Rendering polish */
@@ -35,7 +48,8 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-synthesis-weight: none; /* crisper bolds for variable fonts */
+  font-synthesis-weight: none;
+  /* crisper bolds for variable fonts */
   overflow-x: hidden;
 }
 
@@ -49,31 +63,74 @@ html {
   }
 
   /* Headings: Nunito (set in tailwind.config as font-heading) */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading text-gray-900 tracking-tight;
   }
-  h1 { @apply font-extrabold; }
-  h2, h3 { @apply font-bold; }
+
+  h1 {
+    @apply font-extrabold;
+  }
+
+  h2,
+  h3 {
+    @apply font-bold;
+  }
 
   /* Links: clear hover + focus styles */
-  a { @apply text-green-600 underline-offset-2; }
-  a:hover { @apply text-green-700; }
-  a:focus-visible { @apply outline-none ring-2 ring-green-500 ring-offset-2 ring-offset-white; }
+  a {
+    @apply text-green-600 underline-offset-2;
+  }
+
+  a:hover {
+    @apply text-green-700;
+  }
+
+  a:focus-visible {
+    @apply outline-none ring-2 ring-green-500 ring-offset-2 ring-offset-white;
+  }
 
   /* Media defaults prevent CLS for images you size via attrs */
-  img, svg, video, canvas { @apply align-middle; }
-  img { @apply block max-w-full h-auto; }
+  img,
+  svg,
+  video,
+  canvas {
+    @apply align-middle;
+  }
+
+  img {
+    @apply block max-w-full h-auto;
+  }
 
   /* Forms & buttons – consistent focus ring */
-  button, [role="button"], input, select, textarea {
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
   }
 
   /* Dark mode basics (Tailwind darkMode: "class") */
-  .dark body { @apply bg-gray-900 text-gray-100; }
-  .dark a { @apply text-green-400; }
-  .dark a:hover { @apply text-green-300; }
-  .dark a:focus-visible { @apply ring-green-400 ring-offset-gray-900; }
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  .dark a {
+    @apply text-green-400;
+  }
+
+  .dark a:hover {
+    @apply text-green-300;
+  }
+
+  .dark a:focus-visible {
+    @apply ring-green-400 ring-offset-gray-900;
+  }
 }
 
 /* =========================
@@ -91,9 +148,33 @@ html {
 /* =========================
    Prose (if using @tailwindcss/typography)
    ========================= */
-.prose { @apply text-gray-700; }
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+.prose {
+  @apply text-gray-700;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
   @apply font-heading text-gray-900;
 }
-.prose a { @apply text-green-600 no-underline; }
-.prose a:hover { @apply underline text-green-700; }
+
+.prose a {
+  @apply text-green-600 no-underline;
+}
+
+.prose a:hover {
+  @apply underline text-green-700;
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .text-stroke-sm {
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.1);
+  }
+}
