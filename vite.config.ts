@@ -18,6 +18,14 @@ export default defineConfig({
     // Keep lucide-react out of pre-bundling to save some dev build time
     exclude: ['lucide-react'],
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+      },
+    },
+  },
   build: {
     chunkSizeWarningLimit: 800, // raise from default 500 KB to reduce noise
     rollupOptions: {
