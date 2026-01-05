@@ -120,7 +120,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
               onMouseEnter={() => prefetch('/learn')}
               onFocus={() => prefetch('/learn')}
             >
-              Learn
+              Hub
             </NavLink>
           </li>
           <li>
