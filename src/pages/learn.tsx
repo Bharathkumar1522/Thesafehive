@@ -14,7 +14,7 @@ export default function Learn() {
               Interactive Learning Hub
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
-              Learn About <span className="text-green-600">Chemical Safety</span>
+              Curious About <span className="text-green-600">Chemical Safety</span>
             </h1>
             <p className="text-xl text-gray-700 mb-12">Pick a game to practice safe‑living knowledge.</p>
 
