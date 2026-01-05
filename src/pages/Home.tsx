@@ -33,6 +33,17 @@ const cf = (url: string, w: number, h: number) => `${url}?fm=webp&w=${w}&h=${h}&
 const SLIDER_W = 1000;
 const SLIDER_H = 600;
 
+/* ===============================
+   🔧 HERO FONT SIZE CONTROLS
+   Edit these anytime in one place
+   =============================== */
+const HERO_TITLE_SIZE = {
+  primary:
+    "text-[clamp(1.4rem,3.8vw,2.1rem)] md:text-[clamp(1.6rem,3vw,2.4rem)] lg:text-[clamp(1.85rem,2.4vw,2.7rem)]",
+  secondary:
+    "text-[clamp(1.6rem,4.4vw,2.3rem)] md:text-[clamp(1.85rem,3.4vw,2.7rem)] lg:text-[clamp(2.05rem,2.7vw,3rem)]",
+};
+
 const Home = ({ setCurrentPage }: HomePageProps) => {
   const [blogPosts, setBlogPosts] = useState<SimpleBlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,15 +110,11 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
          ======================= */}
       <section className="relative bg-gradient-to-b from-green-50 to-white">
         <div className="container mx-auto px-4 pt-20 md:pt-28 lg:pt-32 pb-12 md:pb-16 lg:pb-20 flex flex-col items-center text-center">
-          <h1
-            className="font-heading font-extrabold text-gray-900 tracking-tight leading-[1.15] mb-4
-                       max-w-3xl
-                       text-[clamp(1.75rem,5vw,2.5rem)]
-                       md:text-[clamp(2rem,3.8vw,3rem)]
-                       lg:text-[clamp(2.25rem,3vw,3.25rem)]"
-          >
-            What’s in your everyday product matters
-            <span className="block mt-1 text-green-600">
+          <h1 className="font-heading font-extrabold text-gray-900 tracking-tight leading-[1.15] mb-4 max-w-3xl">
+            <span className={`block ${HERO_TITLE_SIZE.primary}`}>
+              From guesswork to grounded facts.
+            </span>
+            <span className={`block mt-1 text-green-600 ${HERO_TITLE_SIZE.secondary}`}>
               Let’s Find Out Together
             </span>
           </h1>
@@ -117,8 +124,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
                        text-[15px] sm:text-base md:text-lg lg:text-xl
                        leading-relaxed md:leading-[1.75] mb-8"
           >
-            We uncover hidden toxins in everyday essentials and empower you to live clean,
-            conscious, and harm-free. Join our community.
+            We don’t just sell products. We verify them. TheSafeHive uses the proprietary SVA-1 Algorithm to screen thousands of ingredients against global toxicity databases.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
@@ -141,7 +147,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
                          transition-all duration-200
                          text-base md:text-lg"
             >
-              Read Wellness Tips
+              Read Blogs
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </div>
@@ -198,7 +204,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg text-gray-700 max-w-2xl mx-auto"
             >
-              Discover the joy of harm-free living through beautiful moments of wellness, family time, and natural harmony.
+              Discover the joy of harm-free living, secured by data. Experience wellness and natural harmony backed by algorithmic verification—ensuring every moment is safe, genuine, and free from hidden toxins.
             </motion.p>
           </div>
           <ErrorBoundary fallback={<p className="text-center text-red-500">Something went wrong in the carousel.</p>}>
@@ -228,7 +234,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
               transition={{ duration: 0.6 }}
               className="text-3xl md:text-4xl font-heading font-bold text-gray-900"
             >
-              Wellness Tips
+              Blogs
             </motion.h2>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
