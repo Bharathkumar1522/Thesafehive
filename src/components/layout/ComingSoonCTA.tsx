@@ -106,7 +106,7 @@ export function ComingSoonCTA() {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          We're curating the safest, most effective harm-free and natural products just for you. Stay tuned!
+          We are actively developing TheSafeHive Safety Graph to bring you the safest choices. We are working to identify the top 1% of products that pass our strict 'SVA-1 Protocol' for our marketplace.
         </motion.p>
 
         <motion.div
@@ -121,7 +121,7 @@ export function ComingSoonCTA() {
             className="gtm-cta-get-notified bg-gradient-to-r from-[#4CAF50] to-[#66BB6A] hover:from-[#45a049] hover:to-[#5da85d] text-white px-6 py-2.5 text-base rounded-2xl shadow-2xl hover:shadow-[#4CAF50]/40 transition-all duration-300 transform hover:scale-105 group border-2 border-white/20"
           >
             <Bell className="w-5 h-5 mr-3 group-hover:animate-pulse" />
-            Get Notified
+            Stay Tuned
             <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
         </motion.div>
@@ -135,7 +135,7 @@ export function ComingSoonCTA() {
         >
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-[#4CAF50] rounded-full"></div>
-            <span>Chemical-Free Guarantee</span>
+            <span>Toxic-Free Guarantee</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-[#4CAF50] rounded-full"></div>
