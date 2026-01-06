@@ -358,7 +358,7 @@ const About = () => {
             <SectionHeader
               title="How We Compute Safety"
               highlight="The SVA-1 Architecture"
-              subtitle="TTheSafeHive runs an automated, auditable compliance pipeline. SVA-1 combines AI-assisted processing with defined evaluation rules to assess product safety consistently."
+              subtitle="TheSafeHive runs an automated, auditable compliance pipeline. SVA-1 combines AI-assisted processing with defined evaluation rules to assess product safety consistently."
             />
           </motion.div>
 
