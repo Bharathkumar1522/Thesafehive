@@ -124,7 +124,7 @@ const Home = ({ setCurrentPage }: HomePageProps) => {
                        text-[15px] sm:text-base md:text-lg lg:text-xl
                        leading-relaxed md:leading-[1.75] mb-8"
           >
-            We don’t just sell products. We verify them. TheSafeHive uses the proprietary SVA-1 Algorithm to screen thousands of ingredients against global toxicity databases.
+            We don’t just sell products. We verify them. TheSafeHive uses the proprietary SVA-1 to screen thousands of ingredients against global toxicity databases.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
