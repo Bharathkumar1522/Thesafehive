@@ -139,7 +139,7 @@ export function ComingSoonCTA() {
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-[#4CAF50] rounded-full"></div>
-            <span>Lab-Tested Safety</span>
+            <span>Evidence-Led Verification</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-[#4CAF50] rounded-full"></div>
