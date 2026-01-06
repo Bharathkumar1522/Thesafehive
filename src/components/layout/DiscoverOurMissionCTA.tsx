@@ -80,7 +80,7 @@ export function DiscoverMissionCTA({ setCurrentPage }: DiscoverMissionCTAProps) 
             <div className="grid grid-cols-2 gap-4">
               {[
                 { icon: Heart, label: "Family Safety", color: "from-red-500/10 to-red-400/5", iconColor: "text-red-500" },
-                { icon: Shield, label: "Chemical-Free", color: "from-[#4CAF50]/10 to-[#4CAF50]/5", iconColor: "text-[#4CAF50]" },
+                { icon: Shield, label: "Toxic-Free", color: "from-[#4CAF50]/10 to-[#4CAF50]/5", iconColor: "text-[#4CAF50]" },
                 { icon: Leaf, label: "Eco-Conscious", color: "from-green-500/10 to-green-400/5", iconColor: "text-green-600" },
                 { icon: Users, label: "Community", color: "from-blue-500/10 to-blue-400/5", iconColor: "text-blue-500" }
               ].map((item, index) => (
