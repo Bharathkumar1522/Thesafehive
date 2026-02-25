@@ -1,6 +1,13 @@
+// productsortinggame.tsx — brand-aligned drag-and-drop sorting game
 import React, { useState } from "react";
 import { RotateCcw, Leaf, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Product, sortingProducts } from "./data";
+
+const VANILLA = "#FAF5E4";
+const SAGE = "#A2CB8B";
+const TERRACOTTA = "#B85C38";
+const CHARCOAL = "#22211F";
 
 export default function ProductSortingGame() {
   const [products, setProducts] = useState<Product[]>(sortingProducts);
@@ -28,13 +35,9 @@ export default function ProductSortingGame() {
     else setHarmfulZone((z) => [...z, { ...draggedItem, correct }]);
     setDraggedItem(null);
   };
-  const handleDrop = (e: React.DragEvent, zone: "safe" | "harmful") => {
-    e.preventDefault();
-    commitDrop(zone);
-  };
+  const handleDrop = (e: React.DragEvent, zone: "safe" | "harmful") => { e.preventDefault(); commitDrop(zone); };
   const handleTouchStart = (product: Product) => setDraggedItem(product);
   const handleZoneTouch = (zone: "safe" | "harmful") => commitDrop(zone);
-
   const reset = () => {
     setProducts(sortingProducts);
     setSafeZone([]);
@@ -43,88 +46,174 @@ export default function ProductSortingGame() {
     setDraggedItem(null);
   };
 
+  const allSorted = products.length === 0;
+
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Product Sorting Challenge</h2>
-        <p className="text-lg text-gray-700">Drag products to the correct zone (or tap → tap on mobile).</p>
-        <div className="mt-4">
-          <span className="text-xl font-bold text-green-600">Score: {sortingScore}</span>
-          <button onClick={reset} className="ml-4 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
-            <RotateCcw className="h-4 w-4 inline mr-2" /> Reset
+    <div className="max-w-4xl mx-auto space-y-6">
+      {/* ── Header ──────────────────────────────────────────────────── */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h2
+            className="font-display tracking-widest leading-none mb-1"
+            style={{ fontSize: "clamp(1.6rem,4vw,2.8rem)", color: CHARCOAL }}
+          >
+            SORTING <span style={{ color: TERRACOTTA }}>CHALLENGE</span>
+          </h2>
+          <p className="font-light text-sm" style={{ color: "rgba(34,33,31,0.50)" }}>
+            Drag products to the correct zone — or tap a card, then tap a zone on mobile.
+          </p>
+        </div>
+        <div className="flex items-center gap-4 flex-shrink-0">
+          <div className="text-center">
+            <div className="font-display text-2xl tracking-widest" style={{ color: TERRACOTTA }}>{sortingScore}</div>
+            <div className="font-mono text-[9px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.32)" }}>Score</div>
+          </div>
+          <button
+            onClick={reset}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs tracking-widest uppercase transition-all duration-200 hover:opacity-80"
+            style={{ background: "rgba(34,33,31,0.07)", color: "rgba(34,33,31,0.54)", border: "1px solid rgba(34,33,31,0.10)" }}
+          >
+            <RotateCcw className="h-3.5 w-3.5" /> Reset
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-        {/* Products */}
-        <div className="bg-gray-50 p-4 md:p-6 rounded-xl">
-          <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Products to Sort</h3>
-          <div className="space-y-3">
-            {products.map((p) => (
-              <div
-                key={p.name}
-                draggable
-                onDragStart={(e) => handleDragStart(e, p)}
-                onClick={() => handleTouchStart(p)}
-                className="p-4 rounded-lg cursor-move bg-white hover:bg-gray-100 border-2 border-gray-200 text-center font-medium"
-              >
-                <div className="text-sm text-gray-600 mb-1">{p.type}</div>
-                <div>{p.name}</div>
+      {/* ── Game grid ───────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+        {/* Products to sort */}
+        <div
+          className="rounded-2xl p-4 border"
+          style={{ background: "rgba(255,255,255,0.55)", borderColor: "rgba(34,33,31,0.08)" }}
+        >
+          <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center gap-2" style={{ color: "rgba(34,33,31,0.36)" }}>
+            <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: TERRACOTTA }} />
+            Products to Sort
+          </h3>
+          <div className="space-y-2 min-h-[200px]">
+            <AnimatePresence>
+              {products.map((p) => (
+                <motion.div
+                  key={p.name}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e as unknown as React.DragEvent, p)}
+                  onClick={() => handleTouchStart(p)}
+                  className="group px-4 py-3 rounded-xl cursor-grab active:cursor-grabbing border-2 transition-all duration-200 hover:-translate-y-0.5"
+                  style={{
+                    background: draggedItem?.name === p.name ? "rgba(184,92,56,0.10)" : "rgba(255,255,255,0.90)",
+                    borderColor: draggedItem?.name === p.name ? TERRACOTTA : "rgba(34,33,31,0.07)",
+                    boxShadow: draggedItem?.name === p.name ? `0 0 0 3px rgba(184,92,56,0.20)` : "0 2px 8px rgba(0,0,0,0.04)",
+                  }}
+                >
+                  <div className="font-mono text-[9px] tracking-widest uppercase mb-0.5" style={{ color: "rgba(34,33,31,0.34)" }}>{p.type}</div>
+                  <div className="font-light text-sm" style={{ color: CHARCOAL }}>{p.name}</div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {allSorted && (
+              <div className="py-8 text-center">
+                <p className="font-display text-xl tracking-widest" style={{ color: TERRACOTTA }}>ALL SORTED!</p>
+                <p className="font-light text-sm mt-1" style={{ color: "rgba(34,33,31,0.44)" }}>Final score: {sortingScore}</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
-        {/* Safe Zone */}
+        {/* Safe zone */}
         <div
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, "safe")}
           onTouchEnd={() => handleZoneTouch("safe")}
-          className="bg-green-50 border-2 border-dashed border-green-300 p-6 rounded-xl min-h-[300px]"
+          className="rounded-2xl p-4 border-2 border-dashed transition-all duration-300 min-h-[280px]"
+          style={{
+            background: "rgba(162,203,139,0.08)",
+            borderColor: draggedItem ? SAGE : "rgba(162,203,139,0.38)",
+          }}
         >
-          <h3 className="text-lg font-bold text-green-800 mb-4 text-center flex items-center justify-center">
-            <Leaf className="h-5 w-5 mr-2" /> Safe Products
+          <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center justify-center gap-2" style={{ color: "#3A7A28" }}>
+            <Leaf className="h-3.5 w-3.5" strokeWidth={1.5} />
+            Safe Products
           </h3>
           <div className="space-y-2">
-            {safeZone.map((p) => (
-              <div
-                key={p.name}
-                className={`p-3 rounded-lg text-center font-medium ${
-                  p.correct ? "bg-green-200 border-2 border-green-400" : "bg-red-200 border-2 border-red-400"
-                }`}
-              >
-                <div className="text-xs mb-1">{p.type}</div>
-                <div className="text-sm">{p.name}</div>
-                {p.correct ? <CheckCircle2 className="h-4 w-4 mx-auto mt-1" /> : <XCircle className="h-4 w-4 mx-auto mt-1" />}
+            <AnimatePresence>
+              {safeZone.map((p) => (
+                <motion.div
+                  key={p.name}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl border"
+                  style={{
+                    background: p.correct ? "rgba(162,203,139,0.20)" : "rgba(184,92,56,0.10)",
+                    borderColor: p.correct ? "rgba(162,203,139,0.50)" : "rgba(184,92,56,0.30)",
+                  }}
+                >
+                  {p.correct
+                    ? <CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0" style={{ color: "#5A8A3C" }} strokeWidth={1.5} />
+                    : <XCircle className="h-3.5 w-3.5 flex-shrink-0" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
+                  }
+                  <div>
+                    <div className="font-mono text-[8px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.36)" }}>{p.type}</div>
+                    <div className="font-light text-xs" style={{ color: CHARCOAL }}>{p.name}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {safeZone.length === 0 && (
+              <div className="py-8 text-center">
+                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: "rgba(162,203,139,0.55)" }}>Drop safe items here</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
-        {/* Harmful Zone */}
+        {/* Harmful zone */}
         <div
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, "harmful")}
           onTouchEnd={() => handleZoneTouch("harmful")}
-          className="bg-red-50 border-2 border-dashed border-red-300 p-6 rounded-xl min-h-[300px]"
+          className="rounded-2xl p-4 border-2 border-dashed transition-all duration-300 min-h-[280px]"
+          style={{
+            background: "rgba(184,92,56,0.05)",
+            borderColor: draggedItem ? TERRACOTTA : "rgba(184,92,56,0.28)",
+          }}
         >
-          <h3 className="text-lg font-bold text-red-800 mb-4 text-center flex items-center justify-center">
-            <AlertTriangle className="h-5 w-5 mr-2" /> Harmful Products
+          <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center justify-center gap-2" style={{ color: TERRACOTTA }}>
+            <AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.5} />
+            Harmful Products
           </h3>
           <div className="space-y-2">
-            {harmfulZone.map((p) => (
-              <div
-                key={p.name}
-                className={`p-3 rounded-lg text-center font-medium ${
-                  p.correct ? "bg-red-200 border-2 border-red-400" : "bg-green-200 border-2 border-green-400"
-                }`}
-              >
-                <div className="text-xs mb-1">{p.type}</div>
-                <div className="text-sm">{p.name}</div>
-                {p.correct ? <CheckCircle2 className="h-4 w-4 mx-auto mt-1" /> : <XCircle className="h-4 w-4 mx-auto mt-1" />}
+            <AnimatePresence>
+              {harmfulZone.map((p) => (
+                <motion.div
+                  key={p.name}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl border"
+                  style={{
+                    background: p.correct ? "rgba(184,92,56,0.10)" : "rgba(162,203,139,0.15)",
+                    borderColor: p.correct ? "rgba(184,92,56,0.30)" : "rgba(162,203,139,0.45)",
+                  }}
+                >
+                  {p.correct
+                    ? <CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
+                    : <XCircle className="h-3.5 w-3.5 flex-shrink-0" style={{ color: "#5A8A3C" }} strokeWidth={1.5} />
+                  }
+                  <div>
+                    <div className="font-mono text-[8px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.36)" }}>{p.type}</div>
+                    <div className="font-light text-xs" style={{ color: CHARCOAL }}>{p.name}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {harmfulZone.length === 0 && (
+              <div className="py-8 text-center">
+                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: "rgba(184,92,56,0.40)" }}>Drop harmful items here</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

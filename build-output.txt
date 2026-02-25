@@ -1,0 +1,27 @@
+[36mvite v6.4.1 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 18 modules transformed.
+[31m✗[39m Build failed in 818ms
+[31merror during build:
+[31m[vite:esbuild] Transform failed with 1 error:
+D:/Projects @All/Freelance/Safehive/TheSafeHive/src/pages/About.tsx:95:50: ERROR: Expected "}" but found "s"[31m
+file: [36mD:/Projects @All/Freelance/Safehive/TheSafeHive/src/pages/About.tsx:95:50[31m
+[33m
+[33mExpected "}" but found "s"[33m
+93 |        title: 'Education and Transparency',
+94 |        description:
+95 |          'TheSafeHive helps people understand what's inside products, why ingredients matter, and where scientific certainty or uncertainty exists.',
+   |                                                    ^
+96 |      },
+97 |    ], []);
+[31m
+    at failureErrorWithLog (D:\Projects @All\Freelance\Safehive\TheSafeHive\node_modules\esbuild\lib\main.js:1467:15)
+    at D:\Projects @All\Freelance\Safehive\TheSafeHive\node_modules\esbuild\lib\main.js:736:50
+    at responseCallbacks.<computed> (D:\Projects @All\Freelance\Safehive\TheSafeHive\node_modules\esbuild\lib\main.js:603:9)
+    at handleIncomingPacket (D:\Projects @All\Freelance\Safehive\TheSafeHive\node_modules\esbuild\lib\main.js:658:12)
+    at Socket.readFromStdout (D:\Projects @All\Freelance\Safehive\TheSafeHive\node_modules\esbuild\lib\main.js:581:7)
+    at Socket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)[39m

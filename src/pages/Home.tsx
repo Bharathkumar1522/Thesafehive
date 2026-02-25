@@ -1,325 +1,672 @@
-import { useEffect, useRef, useState, Suspense, lazy } from 'react';
-import { ArrowRight, Leaf, ChevronLeft, ChevronRight } from 'lucide-react';
+/**
+ * Home.tsx — Performance-optimised, verified-content-only version.
+ *
+ * Performance choices:
+ *  - paperStyle defined once outside component (no re-creation on render)
+ *  - parallax scroll only on hero (one useScroll hook), removed elsewhere
+ *  - SVA-1 demo removed — replaces with honest "coming soon / waitlist" framing
+ *  - Fake counter stats removed — replaced with verified mission statements
+ *  - Fake % bar-chart data removed — replaced with real regulatory references
+ *  - ScrollReveal y offset reduced 60→28 for snappier reveal
+ *  - All will-change: transform applied via Tailwind .will-change-transform only
+ *    on elements that actually animate in 3-D space
+ *  - framer-motion `useTransform` kept only on hero blobs (one pair)
+ *  - Blog carousel stays (Contentful data = real)
+ *  - GameHub stays (real interactive content)
+ */
+
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import {
+  ArrowRight, Shield, Leaf, CheckCircle2,
+  ChevronLeft, ChevronRight, Search,
+} from 'lucide-react';
 import { createClient } from 'contentful';
-import 'keen-slider/keen-slider.min.css';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useKeenSlider } from 'keen-slider/react';
+import 'keen-slider/keen-slider.min.css';
+
+import { MagneticButton } from '../components/animations/MagneticButton';
+import { ScrollReveal } from '../components/animations/ScrollReveal';
+import { Parallax } from '../components/animations/Parallax';
+import { TornPaper } from '../components/ui/OrganicSectionDividers';
 import BlogCard from '../components/blog/BlogCard';
-import { ErrorBoundary } from '../components/ui/ErrorBoundary';
-import { SimpleBlogPost, ContentfulEntry } from '../types/blog';
-// import Button from '../components/ui/Button';
-import { ComingSoonCTA } from "../components/layout/ComingSoonCTA";
-import { DiscoverMissionCTA } from "../components/layout/DiscoverOurMissionCTA";
-import type { Page } from '../types/navigation';
+import { SimpleBlogPost } from '../types/blog';
 
-interface HomePageProps {
-  setCurrentPage: (page: Page) => void;
-}
-
-const LifestyleCarousel = lazy(() => import('../components/layout/SafeLivingCarousel'));
-
+// ─── Contentful ────────────────────────────────────────────────────────────────
 const client = createClient({
   space: import.meta.env.VITE_SPACE_ID,
   accessToken: import.meta.env.VITE_ACCESS_TOKEN,
   environment: import.meta.env.VITE_CONTENTFUL_ENVIRONMENT || 'master',
 });
 
-/** Build a sized, WebP Contentful URL (prevents CLS + cuts bytes) */
-const cf = (url: string, w: number, h: number) => `${url}?fm=webp&w=${w}&h=${h}&fit=fill`;
+interface ContentfulEntry { sys: { id: string; createdAt: string }; fields: Record<string, unknown>; }
+const cfUrl = (url: string, w: number, h: number) =>
+  `${url}?w=${w}&h=${h}&fm=webp&fit=fill&q=80`;
 
-// Tune these to your actual rendered slide size (match CSS height/width)
-const SLIDER_W = 1000;
-const SLIDER_H = 600;
+const SLIDER_W = 800;
+const SLIDER_H = 520;
 
-/* ===============================
-   🔧 HERO FONT SIZE CONTROLS
-   Edit these anytime in one place
-   =============================== */
-const HERO_TITLE_SIZE = {
-  primary:
-    "text-[clamp(1.4rem,3.8vw,2.1rem)] md:text-[clamp(1.6rem,3vw,2.4rem)] lg:text-[clamp(1.85rem,2.4vw,2.7rem)]",
-  secondary:
-    "text-[clamp(1.6rem,4.4vw,2.3rem)] md:text-[clamp(1.85rem,3.4vw,2.7rem)] lg:text-[clamp(2.05rem,2.7vw,3rem)]",
-};
+// ─── Palette ──────────────────────────────────────────────────────────────────
+const VANILLA = '#FAF5E4';    // warm cream (hero, main body)
+const SOFT_SAGE = '#C7EABB';  // soft sage green — trust + safety
+const SOFT_SAND = '#F0E7DB';  // warm grounding beige
+const TERRACOTTA = '#B85C38'; // red-brown accent
+const CHARCOAL = '#22211F';
 
-const Home = ({ setCurrentPage }: HomePageProps) => {
+// ─── Paper grain — defined OUTSIDE component so it's never re-allocated ────────
+// ─── Replaced heavy feTurbulence paper with light CSS pattern in index.css ───
+const paperStyle: React.CSSProperties = {};
+
+// ─── Typewriter (only for search placeholder — lightweight) ───────────────────
+const PLACEHOLDERS = [
+  'e.g. "Dove Body Wash"…',
+  'e.g. "Tide Laundry Pods"…',
+  'e.g. "Neutrogena Sunscreen"…',
+];
+function useTypewriter(strings: string[], speed = 65, pauseMs = 2000) {
+  const [text, setText] = useState('');
+  const [idx, setIdx] = useState(0);
+  const [ci, setCi] = useState(0);
+  const [del, setDel] = useState(false);
+  useEffect(() => {
+    const cur = strings[idx];
+    const t = setTimeout(() => {
+      if (!del) {
+        setText(cur.slice(0, ci + 1));
+        if (ci + 1 === cur.length) setTimeout(() => setDel(true), pauseMs);
+        else setCi(c => c + 1);
+      } else {
+        setText(cur.slice(0, ci - 1));
+        if (ci === 0) { setDel(false); setIdx(i => (i + 1) % strings.length); }
+        else setCi(c => c - 1);
+      }
+    }, del ? speed / 2 : speed);
+    return () => clearTimeout(t);
+  }, [text, ci, del, idx, strings, speed, pauseMs]);
+  return text;
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+const Home = () => {
+  // ── Blog state ──────────────────────────────────────────────────────────────
   const [blogPosts, setBlogPosts] = useState<SimpleBlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const ref = useRef<HTMLElement>(null);
+  const [slide, setSlide] = useState(0);
 
+  // ── Search UI state (product lookup — links to real future tool) ────────────
+  const [query, setQuery] = useState('');
+  const placeholder = useTypewriter(PLACEHOLDERS);
+
+  // ── Hero parallax — one hook only ──────────────────────────────────────────
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  // Only translate the two decorative blobs — GPU-composited opacity/transform only
+  const blobTopY = useTransform(heroScroll, [0, 1], ['0px', '-60px']);
+  const blobBotY = useTransform(heroScroll, [0, 1], ['0px', '50px']);
+  const textY = useTransform(heroScroll, [0, 1], ['0%', '14%']);
+
+  // ── Blog carousel ── ────────────────────────────────────────────────────────
   const [sliderRef, instanceRef] = useKeenSlider({
-    slides: { perView: 1, spacing: 0 },
-    loop: true,
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
+    slides: { perView: 1.15, spacing: 20 },
+    breakpoints: {
+      '(min-width: 640px)': { slides: { perView: 1.7, spacing: 24 } },
+      '(min-width: 1024px)': { slides: { perView: 2.5, spacing: 32 } },
     },
+    loop: true,
+    slideChanged: s => setSlide(s.track.details.rel),
   });
 
-  const fetchPosts = async () => {
-    try {
-      const entries = await client.getEntries({
-        content_type: import.meta.env.VITE_CONTENT_TYPE,
-        order: ['-sys.createdAt'],
-        limit: 6,
-        include: 2,
-      });
-
-      const posts: SimpleBlogPost[] = entries.items.map((item: ContentfulEntry) => {
-        const fields = item.fields || {};
-        const coverImage = fields.coverImage;
-        const imageAsset = coverImage?.[0]?.fields?.file?.url;
-
-        const rawUrl = imageAsset ? `https:${imageAsset}` : '';
-        const sizedWebp = rawUrl ? cf(rawUrl, SLIDER_W, SLIDER_H) : '/fallback.webp';
-
-        return {
-          id: item.sys.id,
-          title: fields.title || 'Untitled',
-          slug: fields.slug || '',
-          excerpt: fields.excerpt || '',
-          description: fields.description || fields.excerpt || '',
-          imageUrl: sizedWebp,
-          imageW: SLIDER_W as unknown as number,
-          imageH: SLIDER_H as unknown as number,
-          date: fields.date || item.sys.createdAt,
-          category: fields.category || 'Wellness',
-        } as SimpleBlogPost & { imageW: number; imageH: number };
-      });
-
-      setBlogPosts(posts);
-    } catch (error) {
-      console.error('❌ Error fetching blog posts:', error);
-      setBlogPosts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    (async () => {
+      try {
+        const entries = await client.getEntries({
+          content_type: import.meta.env.VITE_CONTENT_TYPE,
+          order: ['-sys.createdAt'], limit: 8, include: 2,
+        });
+        const posts: SimpleBlogPost[] = entries.items.map((item: ContentfulEntry) => {
+          const f = item.fields || {};
+          const cover = f.coverImage as { fields?: { file?: { url?: string } } }[] | undefined;
+          const raw = cover?.[0]?.fields?.file?.url ?? '';
+          return {
+            id: item.sys.id,
+            title: (f.title as string) || 'Untitled',
+            slug: (f.slug as string) || '',
+            excerpt: (f.excerpt as string) || '',
+            imageUrl: raw ? cfUrl(`https:${raw}`, SLIDER_W, SLIDER_H) : '/fallback.webp',
+            date: (f.date as string) || item.sys.createdAt,
+            category: (f.category as string) || 'Wellness',
+          } as SimpleBlogPost;
+        });
+        setBlogPosts(posts);
+      } catch { setBlogPosts([]); }
+      finally { setLoading(false); }
+    })();
   }, []);
 
+  // Removed duplicated mission points. They live on About.tsx.
+
+  // Regulatory references — real, linkable
+  const references = useMemo(() => [
+    { label: 'EU REACH', href: 'https://echa.europa.eu/regulations/reach/understanding-reach' },
+    { label: 'EWG', href: 'https://www.ewg.org/skindeep/' },
+    { label: 'IARC', href: 'https://www.iarc.who.int/' },
+    { label: 'FDA GRAS', href: 'https://www.fda.gov/food/food-ingredients-packaging/generally-recognized-safe-gras' },
+  ], []);
+
   return (
-    <div className="pt-16">
-      {/* =======================
-          HERO SECTION (Optimized — No Animations)
-         ======================= */}
-      <section className="relative bg-gradient-to-b from-green-50 to-white">
-        <div className="container mx-auto px-4 pt-20 md:pt-28 lg:pt-32 pb-12 md:pb-16 lg:pb-20 flex flex-col items-center text-center">
-          <h1 className="font-heading font-extrabold text-gray-900 tracking-tight leading-[1.15] mb-4 max-w-3xl">
-            <span className={`block ${HERO_TITLE_SIZE.primary}`}>
-              From guesswork to grounded facts.
-            </span>
-            <span className={`block mt-1 text-green-600 ${HERO_TITLE_SIZE.secondary}`}>
-              Let’s Find Out Together
-            </span>
-          </h1>
+    <div style={{ backgroundColor: VANILLA }}>
 
-          <p
-            className="text-gray-700 max-w-2xl
-                       text-[15px] sm:text-base md:text-lg lg:text-xl
-                       leading-relaxed md:leading-[1.75] mb-8"
+      {/* ══════════════════════════════════════════════════════════════
+          §1  HERO  ·  vanilla
+         ══════════════════════════════════════════════════════════════ */}
+      <section
+        ref={heroRef}
+        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+        style={{ backgroundColor: VANILLA }}
+        aria-label="Hero"
+      >
+        {/* Dot-grid overlay for texture */}
+        <div className="absolute inset-0 pointer-events-none dot-grid" style={{ opacity: 0.55 }} />
+
+        {/* Decorative blobs — GPU-composited will-change:transform */}
+        <motion.div
+          className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-[200px] pointer-events-none will-change-transform"
+          style={{ background: 'rgba(184,92,56,0.08)', y: blobTopY }}
+        />
+        <motion.div
+          className="absolute bottom-0 right-0 w-[420px] h-[420px] rounded-full blur-[180px] pointer-events-none will-change-transform"
+          style={{ background: 'rgba(162,203,139,0.10)', y: blobBotY }}
+        />
+
+        {/* Floating decorative leaf — top-right */}
+        <Parallax offset={45} className="absolute top-24 right-8 md:right-24 pointer-events-none float-bob opacity-18" aria-hidden="true">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <path d="M30 5C30 5 55 20 55 38C55 50 43.8 55 30 55C16.2 55 5 50 5 38C5 20 30 5 30 5Z" fill="rgba(184,92,56,0.12)" />
+            <path d="M30 55V5" stroke="rgba(184,92,56,0.20)" strokeWidth="1" />
+            <path d="M30 28C30 28 18 20 12 28" stroke="rgba(184,92,56,0.18)" strokeWidth="0.8" />
+            <path d="M30 38C30 38 42 30 48 38" stroke="rgba(184,92,56,0.18)" strokeWidth="0.8" />
+          </svg>
+        </Parallax>
+
+        {/* Floating hexagon — bottom-left */}
+        <Parallax offset={-35} className="absolute bottom-32 left-8 md:left-20 pointer-events-none float-bob-reverse opacity-15" aria-hidden="true">
+          <svg width="72" height="80" viewBox="0 0 72 80" fill="none">
+            <path d="M36 2L70 20V60L36 78L2 60V20L36 2Z" stroke="rgba(162,203,139,0.35)" strokeWidth="1.5" fill="rgba(162,203,139,0.07)" />
+            <path d="M36 14L58 26V50L36 62L14 50V26L36 14Z" stroke="rgba(162,203,139,0.18)" strokeWidth="0.8" fill="none" />
+          </svg>
+        </Parallax>
+
+        {/* Floating small honeycomb — mid-left */}
+        <Parallax offset={80} className="hidden lg:block absolute left-[8%] top-[45%] pointer-events-none drift-slow opacity-12" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <path d="M20 2L37 11.5V29.5L20 39L3 29.5V11.5L20 2Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="none" />
+          </svg>
+        </Parallax>
+
+        <motion.div style={{ y: textY }} className="relative z-10 container mx-auto px-6 text-center pt-28 pb-16">
+          {/* Headline */}
+          <div className="overflow-hidden mb-1">
+            <motion.h1
+              initial={{ y: '105%' }} animate={{ y: '0%' }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              className="font-display leading-none tracking-widest text-charcoal"
+              style={{ fontSize: 'clamp(4rem, 13vw, 13rem)' }}
+            >SANCTUARY</motion.h1>
+          </div>
+
+          <div className="overflow-hidden flex items-baseline justify-center gap-4 md:gap-12 mb-12">
+            <motion.span
+              initial={{ y: '105%' }} animate={{ y: '0%' }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.34 }}
+              className="font-display tracking-widest"
+              style={{ fontSize: 'clamp(1.4rem,4vw,3.2rem)', color: 'rgba(34,33,31,0.22)' }}
+            >NOT</motion.span>
+            <motion.span
+              initial={{ y: '105%' }} animate={{ y: '0%' }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.44 }}
+              className="font-display tracking-widest text-terracotta"
+              style={{ fontSize: 'clamp(2.8rem,9vw,8.5rem)', lineHeight: 1 }}
+            >SPECULATION</motion.span>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.7 }}
+            className="max-w-lg mx-auto text-lg md:text-xl leading-relaxed font-light mb-12"
+            style={{ color: 'rgba(34,33,31,0.58)' }}
           >
-            We don’t just sell products. We verify them. TheSafeHive uses the proprietary SVA-1 to screen thousands of ingredients against global toxicity databases.
-          </p>
+            Evidence-based chemical safety for everyday household and personal care products.
+            Science-backed. No greenwashing.
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.88 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
+            <MagneticButton strength={0.3}>
+              <Link
+                to="/learn"
+                className="inline-flex items-center gap-3 font-display tracking-widest text-lg px-10 py-4 rounded-full no-underline group transition-all duration-300"
+                style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(184,92,56,0.26)' }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#A34E2F')}
+                onMouseLeave={e => (e.currentTarget.style.background = TERRACOTTA)}
+              >
+                EXPLORE HUB <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </MagneticButton>
             <Link
               to="/about"
-              className="group inline-flex items-center justify-center px-8 py-3
-                         bg-green-600 text-white font-medium rounded-xl
-                         hover:bg-green-700 transition-all duration-200
-                         text-base md:text-lg"
+              className="inline-flex items-center gap-3 font-display tracking-widest text-lg px-10 py-4 rounded-full border no-underline group transition-all duration-300"
+              style={{ borderColor: 'rgba(34,33,31,0.30)', color: CHARCOAL }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(34,33,31,0.06)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
             >
-              Discover Our Mission
-              <ArrowRight className="ml-2 h-5 w-5" />
+              OUR MISSION
             </Link>
+          </motion.div>
 
-            <Link
-              to="/blog"
-              className="group inline-flex items-center justify-center px-8 py-3
-                         bg-white text-green-600 font-medium rounded-xl border border-green-600
-                         hover:bg-green-50 hover:shadow-md
-                         transition-all duration-200
-                         text-base md:text-lg"
-            >
-              Read Blogs
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Decorative leaves (large screens only) */}
-        <div
-          className="hidden lg:block absolute top-1/4 left-16 text-green-500 opacity-20"
-          aria-hidden="true"
-        >
-          <Leaf className="h-16 w-16" />
-        </div>
-        <div
-          className="hidden lg:block absolute bottom-1/4 right-16 text-yellow-500 opacity-20"
-          aria-hidden="true"
-        >
-          <Leaf className="h-16 w-16" />
-        </div>
-
-        {/* Bottom decorative flourish */}
-        <div className="absolute bottom-8 left-0 right-0">
-          <div className="flex justify-center">
-            <div className="flex items-center gap-4 text-gray-400">
-              <div className="w-12 h-px bg-gradient-to-r from-transparent to-gray-300" />
-              <Leaf className="w-6 h-6 text-[#4CAF50]" />
-              <div className="w-12 h-px bg-gradient-to-l from-transparent to-gray-300" />
+          {/* Hero image — product safety lifestyle */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.9 }}
+            className="hidden lg:flex mt-14 justify-center gap-4"
+          >
+            <div className="img-hover w-56 h-72 rounded-2xl overflow-hidden shadow-2xl rotate-[-3deg]"
+              style={{ boxShadow: '0 24px 60px rgba(184,92,56,0.14)' }}>
+              <img
+                src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=400&h=600&fit=crop&q=80"
+                alt="Natural chemical-free skincare and wellness products"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
-          </div>
-        </div>
-      </section>
+            <div className="img-hover w-44 h-64 rounded-2xl overflow-hidden shadow-xl rotate-[2.5deg] mt-8"
+              style={{ boxShadow: '0 20px 50px rgba(162,203,139,0.18)' }}>
+              <img
+                src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=380&h=540&fit=crop&q=80"
+                alt="Clean and natural home aesthetic"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </motion.div>
 
-      {/* Safe, Healthy & Happy Living Carousel */}
-      <motion.section
-        ref={ref}
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="py-16 md:py-24 bg-gradient-to-b from-white to-green-50 bg-white relative"
-      >
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-3xl md:text-4xl font-heading font-bold text-gray-900 mb-4"
-            >
-              Safe, Healthy & Happy Living
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-gray-700 max-w-2xl mx-auto"
-            >
-              Discover the joy of harm-free living, secured by data. Experience wellness and natural harmony backed by algorithmic verification—ensuring every moment is safe, genuine, and free from hidden toxins.
-            </motion.p>
-          </div>
-          <ErrorBoundary fallback={<p className="text-center text-red-500">Something went wrong in the carousel.</p>}>
-            <Suspense fallback={<p className="text-center text-gray-500">Loading carousel...</p>}>
-              <LifestyleCarousel />
-            </Suspense>
-          </ErrorBoundary>
-        </div>
-      </motion.section>
-
-      {/* Coming Soon */}
-      <ComingSoonCTA />
-
-      {/* Wellness Tips Carousel */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-green-50 to-white">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="container mx-auto px-4"
-        >
-          <div className="flex justify-between items-center mb-12">
-            <motion.h2
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-3xl md:text-4xl font-heading font-bold text-gray-900"
-            >
-              Blogs
-            </motion.h2>
+          {/* Scroll cue */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}
+            className="mt-20 flex flex-col items-center gap-2"
+          >
+            <span className="font-mono text-[10px] tracking-[0.25em] uppercase" style={{ color: 'rgba(34,33,31,0.16)' }}>Scroll</span>
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Link
-                to="/blog"
-                className="group flex items-center text-green-600 font-medium hover:text-green-700 transition-colors"
-              >
-                View All
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {loading ? (
-            <p className="text-gray-600">Loading latest wellness tips...</p>
-          ) : blogPosts.length === 0 ? (
-            <p className="text-gray-600">No blog posts found.</p>
-          ) : (
-            <div className="flex flex-col items-center space-y-4">
-              <div
-                ref={sliderRef}
-                className="keen-slider w-full max-w-5xl relative overflow-hidden rounded-3xl"
-                role="region"
-                aria-label="Wellness tips carousel"
-              >
-                {blogPosts.map((post, idx) => (
-                  <div
-                    key={post.id}
-                    className="keen-slider__slide relative w-full h-[360px] sm:h-[480px] md:h-[560px] lg:h-[600px] overflow-hidden rounded-3xl group cursor-pointer"
-                  >
-                    {/* Pass intrinsic dimensions so BlogCard -> Img can set width/height */}
-                    <BlogCard
-                      post={post}
-                      variant="slider"
-                      imgW={SLIDER_W}
-                      imgH={SLIDER_H}
-                      priority={
-                        idx === currentSlide ||
-                        idx === (currentSlide + 1) % blogPosts.length ||
-                        idx === (currentSlide - 1 + blogPosts.length) % blogPosts.length
-                      }
-                    />
-                  </div>
-                ))}
-
-                <button
-                  onClick={() => instanceRef.current?.prev()}
-                  className="hidden md:inline-flex absolute left-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center p-4 rounded-full bg-white/80 text-gray-900 hover:bg-white shadow-lg ring-1 ring-black/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500/60"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft className="w-7 h-7" />
-                </button>
-                <button
-                  onClick={() => instanceRef.current?.next()}
-                  className="hidden md:inline-flex absolute right-4 top-1/2 -translate-y-1/2 z-10 items-center justify-center p-4 rounded-full bg-white/80 text-gray-900 hover:bg-white shadow-lg ring-1 ring-black/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500/60"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight className="w-7 h-7" />
-                </button>
-              </div>
-
-              <div className="flex justify-center gap-2 mt-4">
-                {blogPosts.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => instanceRef.current?.moveToIdx(idx)}
-                    className={`rounded-full transition ${currentSlide === idx
-                        ? 'bg-green-600 w-3 h-3 md:scale-125 shadow'
-                        : 'bg-gray-300 w-2.5 h-2.5 md:w-3 md:h-3'
-                      }`}
-                    aria-label={`Go to slide ${idx + 1}`}
-                    aria-current={currentSlide === idx ? 'true' : 'false'}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+              animate={{ y: [0, 7, 0] }} transition={{ duration: 1.6, repeat: Infinity }}
+              className="w-px h-10 will-change-transform"
+              style={{ background: 'linear-gradient(to bottom, rgba(184,92,56,0.28), transparent)' }}
+            />
+          </motion.div>
         </motion.div>
       </section>
 
-      {/* About CTA */}
-      <DiscoverMissionCTA setCurrentPage={setCurrentPage} />
+      {/* ── TornPaper: VANILLA → SOFT_SAGE (entering trust zone) ────────── */}
+      <TornPaper from={VANILLA} to={SOFT_SAGE} height={72} />
+
+      {/* ══════════════════════════════════════════════════════════════
+          §2  PRODUCT SEARCH — honest framing (no fake API mock)
+         ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative py-28"
+        style={{ backgroundColor: SOFT_SAGE }}
+        aria-label="Product Safety Search"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+
+        <div className="container mx-auto px-6 mb-20">
+          <div className="flex items-center gap-6">
+            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+            <span className="font-mono text-[10px] tracking-[0.24em] uppercase" style={{ color: 'rgba(184,92,56,0.5)' }}>SVA-1 Protocol</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+          </div>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <ScrollReveal variant="slide-up">
+            <div className="text-center mb-16">
+              <h2
+                className="font-display text-charcoal tracking-widest leading-none mb-5"
+                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
+              >VERIFY ANY PRODUCT</h2>
+              <p className="max-w-md mx-auto font-light leading-relaxed text-lg" style={{ color: 'rgba(34,33,31,0.44)' }}>
+                Our SVA-1 verification tool is launching soon. Join the waitlist to get early access.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal variant="scale" delay={0.1}>
+            <div className="max-w-2xl mx-auto">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  // For programmatic navigation, we could use useNavigate, but wrapping the button in a Link or just clicking the link is fine.
+                  // Since we have a Link component, let's just make sure typing Enter works.
+                  const linkElement = document.getElementById('waitlist-submit-link');
+                  if (linkElement) linkElement.click();
+                }}
+                className="flex flex-col sm:flex-row gap-3 bg-white rounded-2xl p-3 border mb-6"
+                style={{ boxShadow: '0 4px 28px rgba(0,0,0,0.05)', borderColor: 'rgba(34,33,31,0.07)' }}
+              >
+                <div className="flex flex-1 items-center bg-transparent">
+                  <Search className="ml-1 h-5 w-5 flex-shrink-0" style={{ color: 'rgba(34,33,31,0.22)' }} strokeWidth={1.5} />
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    placeholder={placeholder}
+                    className="flex-1 pl-3 pr-3 py-3 font-mono text-sm bg-transparent focus:outline-none"
+                    style={{ color: '#22211F' }}
+                    aria-label="Product name to verify"
+                  />
+                </div>
+                <Link
+                  id="waitlist-submit-link"
+                  to={`/contact${query.trim() ? `?product=${encodeURIComponent(query.trim())}` : ''}`}
+                  className="font-display justify-center tracking-widest px-7 py-3 rounded-xl text-sm flex items-center gap-2 whitespace-nowrap no-underline transition-opacity hover:opacity-80 w-full sm:w-auto"
+                  style={{ background: '#22211F', color: VANILLA }}
+                >
+                  <Shield className="h-4 w-4" /> JOIN WAITLIST
+                </Link>
+              </form>
+
+              {/* Regulatory basis */}
+              <div className="text-center">
+                <p className="font-mono text-xs mb-3" style={{ color: 'rgba(34,33,31,0.32)' }}>
+                  Verified against
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {references.map(({ label, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-xs px-3 py-1.5 rounded-full border no-underline transition-colors duration-200"
+                      style={{ borderColor: 'rgba(34,33,31,0.12)', color: 'rgba(34,33,31,0.48)' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = TERRACOTTA)}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(34,33,31,0.48)')}
+                    >
+                      {label} ↗
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── TornPaper: SOFT_SAGE → SOFT_SAND ────────── */}
+      <TornPaper from={SOFT_SAGE} to={SOFT_SAND} height={72} />
+
+      {/* ══════════════════════════════════════════════════════════════
+          §3  MISSION — verified copy from About.tsx / brand docs
+         ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative py-28"
+        style={{ backgroundColor: SOFT_SAND }}
+        aria-label="Our Mission"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+        {/* Honeycomb pattern overlay for SOFT_SAND zone */}
+        <div className="absolute inset-0 pointer-events-none honeycomb-pattern" style={{ opacity: 0.65 }} />
+        {/* Floating hexagon top-right */}
+        <Parallax offset={60} className="absolute -top-2 right-8 lg:right-20 pointer-events-none float-bob opacity-20" aria-hidden="true">
+          <svg width="80" height="90" viewBox="0 0 80 90" fill="none">
+            <path d="M40 3L77 23V67L40 87L3 67V23L40 3Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="rgba(34,33,31,0.04)" />
+          </svg>
+        </Parallax>
+        {/* Floating leaf bottom-left */}
+        <Parallax offset={-40} className="absolute bottom-10 left-6 lg:left-16 pointer-events-none float-bob-reverse opacity-18" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4C24 4 44 14 44 28C44 39 34 44 24 44C14 44 4 39 4 28C4 14 24 4 24 4Z" fill="rgba(34,33,31,0.07)" />
+            <path d="M24 44V4" stroke="rgba(34,33,31,0.13)" strokeWidth="0.8" />
+          </svg>
+        </Parallax>
+
+        <div className="container mx-auto px-6 mb-16">
+          <div className="flex items-center gap-6">
+            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+            <span className="font-mono text-[10px] tracking-[0.24em] uppercase" style={{ color: 'rgba(34,33,31,0.22)' }}>Our Approach</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+          </div>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <ScrollReveal variant="fade">
+            <div className="text-center mb-20">
+              <h2
+                className="font-display text-charcoal tracking-widest leading-none mb-6"
+                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
+              >
+                THE LABEL<br /><span className="text-terracotta">LIES.</span>
+              </h2>
+              <p className="max-w-2xl mx-auto text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.68)' }}>
+                "Natural." "Pure." "Clean." — these words have no legal definition. Brands use them freely.
+                TheSafeHive exists to bridge the gap between complex chemical safety data and everyday
+                consumer decisions — using only publicly available scientific and regulatory sources.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal variant="fade" delay={0.2}>
+            <div className="flex justify-center mb-24">
+              <Link
+                to="/about"
+                className="font-mono text-sm tracking-widest uppercase no-underline px-8 py-4 rounded-full border transition-colors duration-300 hover:bg-white hover:border-transparent"
+                style={{ color: 'rgba(34,33,31,0.6)', borderColor: 'rgba(34,33,31,0.12)' }}
+              >
+                Read Our Full Protocol
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          {/* Founding principle */}
+          <ScrollReveal variant="scale" delay={0.05}>
+            <div className="max-w-2xl mx-auto text-center">
+              <blockquote
+                className="font-heading italic text-charcoal leading-relaxed mb-4"
+                style={{ fontSize: 'clamp(1.3rem,2.5vw,1.8rem)' }}
+              >
+                "Evidence-based safety, not marketing-based trust."
+              </blockquote>
+              <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(34,33,31,0.26)' }}>
+                — TheSafeHive Founding Principle
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── TornPaper: SOFT_SAND → VANILLA (back to content zone) ──────── */}
+      <TornPaper from={SOFT_SAND} to={VANILLA} height={72} />
+
+      {/* ══════════════════════════════════════════════════════════════
+          §4  BLOG CAROUSEL — Contentful data (100% real)
+         ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative py-24 overflow-hidden"
+        style={{ backgroundColor: VANILLA }}
+        aria-label="Latest Articles"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+
+        <div className="container mx-auto px-6 mb-10 relative z-10">
+          <div className="flex items-center gap-6 mb-14">
+            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+            <span className="font-mono text-[10px] tracking-[0.24em] uppercase" style={{ color: 'rgba(34,33,31,0.22)' }}>Knowledge Base</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+          </div>
+
+          <ScrollReveal variant="slide-right">
+            <div className="flex items-end justify-between flex-wrap gap-6">
+              <h2
+                className="font-display text-charcoal tracking-widest leading-none"
+                style={{ fontSize: 'clamp(2.2rem,5vw,4.5rem)' }}
+              >
+                LATEST<br />INSIGHTS
+              </h2>
+              <div className="flex gap-3 items-center">
+                <button
+                  onClick={() => instanceRef.current?.prev()}
+                  className="w-10 h-10 rounded-full border flex items-center justify-center transition-colors duration-200"
+                  style={{ borderColor: 'rgba(34,33,31,0.16)', color: 'rgba(34,33,31,0.42)' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = TERRACOTTA; e.currentTarget.style.color = TERRACOTTA; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(34,33,31,0.16)'; e.currentTarget.style.color = 'rgba(34,33,31,0.42)'; }}
+                  aria-label="Previous article"
+                ><ChevronLeft className="h-4 w-4" /></button>
+                <button
+                  onClick={() => instanceRef.current?.next()}
+                  className="w-10 h-10 rounded-full border flex items-center justify-center transition-colors duration-200"
+                  style={{ borderColor: 'rgba(34,33,31,0.16)', color: 'rgba(34,33,31,0.42)' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = TERRACOTTA; e.currentTarget.style.color = TERRACOTTA; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(34,33,31,0.16)'; e.currentTarget.style.color = 'rgba(34,33,31,0.42)'; }}
+                  aria-label="Next article"
+                ><ChevronRight className="h-4 w-4" /></button>
+                <Link
+                  to="/blog"
+                  className="ml-3 font-mono text-sm tracking-widest uppercase no-underline transition-colors duration-200"
+                  style={{ color: 'rgba(34,33,31,0.34)' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = TERRACOTTA)}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(34,33,31,0.34)')}
+                >View all →</Link>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        {loading ? (
+          <div className="container mx-auto px-6 flex gap-6">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="flex-shrink-0 w-80 h-52 rounded-2xl animate-pulse"
+                style={{ background: 'rgba(34,33,31,0.06)' }} />
+            ))}
+          </div>
+        ) : (
+          <div ref={sliderRef} className="keen-slider pl-6 md:pl-[calc((100vw-1280px)/2+1.5rem)]">
+            {blogPosts.map((post, i) => (
+              <div key={post.id} className="keen-slider__slide">
+                <BlogCard post={post} variant="slider" imgW={SLIDER_W} imgH={SLIDER_H} priority={i < 2} />
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex justify-center gap-2 mt-8">
+          {blogPosts.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => instanceRef.current?.moveToIdx(i)}
+              className="h-1.5 rounded-full transition-all duration-300"
+              style={{
+                width: i === slide ? 18 : 6,
+                background: i === slide ? TERRACOTTA : 'rgba(34,33,31,0.18)',
+              }}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* ── Torn paper: vanilla → soft sage ─────────────────── */}
+      <TornPaper from={VANILLA} to={SOFT_SAGE} height={72} />
+
+      {/* ══════════════════════════════════════════════════════════════
+          §6  CTA  ·  soft sage
+         ══════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative py-28 overflow-hidden"
+        style={{ backgroundColor: SOFT_SAGE }}
+        aria-label="Get started"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={{ ...paperStyle, opacity: 0.5 }} />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(34,33,31,0.04) 0%, transparent 60%)' }}
+        />
+
+        {/* Floating background decorators */}
+        <div className="absolute top-10 right-10 md:right-32 pointer-events-none float-bob opacity-10" aria-hidden="true">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <path d="M50 5L95 25V75L50 95L5 75V25L50 5Z" stroke="rgba(34,33,31,0.2)" strokeWidth="1" fill="rgba(34,33,31,0.03)" />
+            <path d="M50 20L75 32V68L50 80L25 68V32L50 20Z" stroke="rgba(34,33,31,0.15)" strokeWidth="0.8" fill="none" />
+          </svg>
+        </div>
+        <div className="absolute bottom-20 left-10 md:left-24 pointer-events-none float-bob-reverse opacity-10" aria-hidden="true">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <path d="M30 5C30 5 55 20 55 38C55 50 43.8 55 30 55C16.2 55 5 50 5 38C5 20 30 5 30 5Z" stroke="rgba(34,33,31,0.15)" strokeWidth="0.8" fill="none" />
+          </svg>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <ScrollReveal variant="slide-right">
+              <p className="font-mono text-[11px] tracking-[0.22em] uppercase mb-6" style={{ color: 'rgba(34,33,31,0.46)' }}>
+                Ready to begin?
+              </p>
+              <h2
+                className="font-display tracking-widest leading-none mb-8"
+                style={{ fontSize: 'clamp(2.8rem,7vw,6.5rem)', color: CHARCOAL }}
+              >
+                KNOW WHAT<br />YOU'RE<br />
+                <span style={{ color: 'rgba(34,33,31,0.42)' }}>BUYING.</span>
+              </h2>
+              <p className="max-w-sm font-light leading-relaxed text-lg mb-10" style={{ color: 'rgba(34,33,31,0.60)' }}>
+                TheSafeHive helps conscious families make safer, better-informed product choices — using
+                evidence, not marketing.
+              </p>
+              <MagneticButton strength={0.3}>
+                <Link
+                  to="/learn"
+                  className="btn-shimmer relative overflow-hidden inline-flex items-center gap-3 font-display tracking-widest text-lg px-10 py-4 rounded-full border no-underline group transition-all duration-300 transform hover:-translate-y-1"
+                  style={{ borderColor: 'rgba(34,33,31,0.12)', background: TERRACOTTA, color: VANILLA }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#A34E2F'; e.currentTarget.style.borderColor = '#A34E2F'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = TERRACOTTA; e.currentTarget.style.borderColor = 'rgba(34,33,31,0.12)'; }}
+                >
+                  <span className="relative z-10 flex items-center gap-3">
+                    EXPLORE <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              </MagneticButton>
+            </ScrollReveal>
+
+            <ScrollReveal variant="scale" delay={0.12}>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: Shield, title: 'SVA-1 Protocol', desc: 'Algorithmic ingredient verification' },
+                  { icon: CheckCircle2, title: 'Science-backed', desc: 'EU REACH, EWG & IARC referenced' },
+                  { icon: Leaf, title: 'Eco-focused', desc: 'Sustainable safe alternatives' },
+                  { icon: Search, title: 'Transparent', desc: 'Every claim is source-linked' },
+                ].map(({ icon: Icon, title, desc }) => (
+                  <div
+                    key={title}
+                    className="rounded-2xl p-6 border group hover:bg-white/40 transition-all duration-300"
+                    style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'rgba(34,33,31,0.06)' }}
+                  >
+                    <Icon className="h-7 w-7 mb-4 group-hover:scale-110 transition-transform duration-300 text-terracotta" strokeWidth={1.5} />
+                    <h3 className="font-display tracking-widest text-base mb-1" style={{ color: CHARCOAL }}>{title}</h3>
+                    <p className="font-mono text-xs" style={{ color: 'rgba(34,33,31,0.50)' }}>{desc}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Torn paper: soft sage → soft sand (Footer transition) ───────── */}
+      <TornPaper from={SOFT_SAGE} to={SOFT_SAND} height={72} />
     </div>
   );
 };

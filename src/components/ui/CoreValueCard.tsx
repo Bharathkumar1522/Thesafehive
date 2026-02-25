@@ -5,7 +5,6 @@ interface CoreValueCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  color: 'green' | 'blue' | 'yellow' | 'purple' | 'pink';
   index?: number;
 }
 
@@ -13,31 +12,10 @@ export const CoreValueCard: React.FC<CoreValueCardProps> = ({
   icon: Icon,
   title,
   description,
-  color,
   index = 0,
 }) => {
-  const colorVariants = {
-    green: {
-      bg: 'bg-green-100',
-      text: 'text-green-600',
-    },
-    blue: {
-      bg: 'bg-blue-100',
-      text: 'text-blue-600',
-    },
-    yellow: {
-      bg: 'bg-yellow-100',
-      text: 'text-yellow-600',
-    },
-    purple: {
-      bg: 'bg-purple-100',
-      text: 'text-purple-600',
-    },
-    pink: {
-      bg: 'bg-pink-100',
-      text: 'text-pink-600',
-    },
-  };
+  const TERRACOTTA = '#B85C38';
+  const CHARCOAL = '#22211F';
 
   return (
     <motion.div
@@ -45,19 +23,26 @@ export const CoreValueCard: React.FC<CoreValueCardProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ y: -5, scale: 1.02 }}
-      className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 h-full flex items-center space-x-4"
+      whileHover={{ y: -6, scale: 1.02 }}
+      className="bg-white p-7 rounded-2xl border transition-all duration-400 h-full flex items-center space-x-5 group hover-card"
+      style={{
+        boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+        borderColor: 'rgba(34,33,31,0.06)'
+      }}
     >
-      <motion.div
-        whileHover={{ rotate: 360 }}
-        transition={{ duration: 0.5 }}
-        className={`${colorVariants[color].bg} flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center`}
+      <div
+        className="flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center transition-colors duration-400 group-hover:bg-[#B85C38]"
+        style={{ background: 'rgba(184,92,56,0.12)' }}
       >
-        <Icon className={`h-7 w-7 ${colorVariants[color].text}`} />
-      </motion.div>
+        <Icon
+          className="h-6 w-6 transition-colors duration-400 group-hover:text-white"
+          style={{ color: TERRACOTTA }}
+          strokeWidth={1.5}
+        />
+      </div>
       <div className="flex-1">
-        <h3 className="text-lg md:text-xl font-heading font-bold text-gray-900 mb-2">{title}</h3>
-        <p className="text-gray-700 text-sm md:text-base">{description}</p>
+        <h3 className="text-xl font-heading mb-1.5" style={{ color: CHARCOAL }}>{title}</h3>
+        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
       </div>
     </motion.div>
   );
@@ -68,7 +53,6 @@ interface CoreValuesGridProps {
     icon: LucideIcon;
     title: string;
     description: string;
-    color: 'green' | 'blue' | 'yellow' | 'purple' | 'pink';
   }>;
   className?: string;
 }

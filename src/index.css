@@ -1,9 +1,7 @@
 /* =========================
-   Import Google Fonts FIRST
+   1. Import Fonts
    ========================= */
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* Tailwind layers */
 @tailwind base;
@@ -11,90 +9,61 @@
 @tailwind utilities;
 
 /* =========================
-   Self-hosted variable font
-   (Put Inter-Var.woff2/.woff in /public/fonts)
-   ========================= */
-@font-face {
-  font-family: "InterVar";
-  src:
-    url("/fonts/Inter-Var.woff2") format("woff2-variations"),
-    url("/fonts/Inter-Var.woff2") format("woff2"),
-    url("/fonts/Inter-Var.woff") format("woff");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-  /* avoids FOIT */
-}
-
-/* System fallbacks via CSS var so Tailwind can reference it */
-:root {
-  --font-sans: "InterVar", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji";
-
-  /* Campaign 2026 Variables */
-  --color-primary: 89 167 92;
-  /* #59a75c */
-  --color-secondary: 12 64 35;
-  /* #0C4023 */
-  --color-accent: 212 165 66;
-  /* #d4a542 */
-  --color-dark: 12 12 14;
-  /* #0C0C0E */
-}
-
-/* Rendering polish */
-html {
-  font-family: var(--font-sans);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-synthesis-weight: none;
-  /* crisper bolds for variable fonts */
-  overflow-x: hidden;
-}
-
-/* =========================
-   Base element resets/tweaks
+   2. Base
    ========================= */
 @layer base {
-  body {
-    /* Body/UI text uses InterVar */
-    @apply font-body text-gray-900 bg-white selection:bg-green-200 selection:text-gray-900;
+  html {
+    font-family: var(--font-sans, 'DM Sans', system-ui, sans-serif);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis-weight: none;
+    overflow-x: hidden;
+    scroll-behavior: auto;
+    /* Lenis takes over smooth scrolling */
+    background-color: #0D0F0A;
+    /* carbon — prevents flash */
   }
 
-  /* Headings: Nunito (set in tailwind.config as font-heading) */
+  body {
+    @apply font-body text-oat bg-forest leading-relaxed;
+    @apply selection:bg-mint selection:text-carbon;
+  }
+
+  /* Headings: editorial serif by default */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-heading text-gray-900 tracking-tight;
+    @apply font-heading text-oat tracking-tight font-medium;
   }
 
   h1 {
-    @apply font-extrabold;
+    @apply text-5xl md:text-7xl lg:text-8xl leading-none;
+    letter-spacing: -0.03em;
   }
 
-  h2,
+  h2 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+    letter-spacing: -0.02em;
+  }
+
   h3 {
-    @apply font-bold;
+    @apply text-2xl md:text-3xl lg:text-4xl;
   }
 
-  /* Links: clear hover + focus styles */
+  /* Links */
   a {
-    @apply text-green-600 underline-offset-2;
-  }
-
-  a:hover {
-    @apply text-green-700;
+    @apply text-oat underline underline-offset-[5px] decoration-oat/20 hover:decoration-mint hover:text-mint transition-colors duration-300;
   }
 
   a:focus-visible {
-    @apply outline-none ring-2 ring-green-500 ring-offset-2 ring-offset-white;
+    @apply outline-none ring-1 ring-mint ring-offset-4 ring-offset-carbon;
   }
 
-  /* Media defaults prevent CLS for images you size via attrs */
+  /* Media */
   img,
   svg,
   video,
@@ -106,35 +75,53 @@ html {
     @apply block max-w-full h-auto;
   }
 
-  /* Forms & buttons – consistent focus ring */
+  /* Inputs, buttons */
   button,
   [role="button"],
   input,
   select,
   textarea {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
-  }
-
-  /* Dark mode basics (Tailwind darkMode: "class") */
-  .dark body {
-    @apply bg-gray-900 text-gray-100;
-  }
-
-  .dark a {
-    @apply text-green-400;
-  }
-
-  .dark a:hover {
-    @apply text-green-300;
-  }
-
-  .dark a:focus-visible {
-    @apply ring-green-400 ring-offset-gray-900;
+    @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-mint focus-visible:ring-offset-2 focus-visible:ring-offset-carbon transition-all duration-300;
   }
 }
 
 /* =========================
-   Accessibility & motion
+   3. Global Noise Overlay
+   Very subtle — sits above everything, below modals
+   ========================= */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* =========================
+   4. Lenis Smooth Scroll
+   ========================= */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* =========================
+   5. Accessibility
    ========================= */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -146,10 +133,10 @@ html {
 }
 
 /* =========================
-   Prose (if using @tailwindcss/typography)
+   6. Prose overrides (blog content)
    ========================= */
 .prose {
-  @apply text-gray-700;
+  @apply text-charcoal/80;
 }
 
 .prose h1,
@@ -158,23 +145,322 @@ html {
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply font-heading text-gray-900;
+  @apply font-heading text-charcoal;
 }
 
 .prose a {
-  @apply text-green-600 no-underline;
+  @apply text-umber no-underline decoration-taupe/30;
 }
 
 .prose a:hover {
-  @apply underline text-green-700;
+  @apply underline text-forest;
 }
 
+/* Dark prose (for blog posts on dark backgrounds) */
+.prose-dark {
+  @apply text-oat/80;
+}
+
+.prose-dark h1,
+.prose-dark h2,
+.prose-dark h3,
+.prose-dark h4,
+.prose-dark h5,
+.prose-dark h6 {
+  @apply text-oat;
+}
+
+.prose-dark a {
+  @apply text-mint;
+}
+
+/* =========================
+   7. Utility Classes
+   ========================= */
 @layer utilities {
-  .text-stroke {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+
+  /* Mint glow blur blob */
+  .mint-glow {
+    background: radial-gradient(ellipse at 50% 50%, rgba(71, 255, 171, 0.12) 0%, transparent 70%);
   }
 
-  .text-stroke-sm {
-    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.1);
+  /* Text stroke for display headings */
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(71, 255, 171, 0.4);
+    color: transparent;
   }
+
+  .text-stroke-oat {
+    -webkit-text-stroke: 1px rgba(240, 237, 234, 0.3);
+    color: transparent;
+  }
+
+  /* Clip-path reveal */
+  .clip-reveal {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .clip-revealed {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /* Magnetic button cursor area */
+  .magnetic-zone {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Grid overlay */
+  .grid-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2347FFAB' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Scanline data effect */
+  .scanline {
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        rgba(71, 255, 171, 0.015) 2px,
+        rgba(71, 255, 171, 0.015) 4px);
+  }
+
+  /* Glass morphism panel */
+  .glass-dark {
+    background: rgba(15, 36, 25, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(71, 255, 171, 0.08);
+  }
+
+  .glass-carbon {
+    background: rgba(13, 15, 10, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(71, 255, 171, 0.06);
+  }
+
+  /* Warm forest glass — for Navbar / overlays on forest bg */
+  .glass-forest {
+    background: rgba(10, 28, 16, 0.72);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(71, 255, 171, 0.08);
+  }
+}
+
+/* =========================
+   8. Visual Enrichment Utilities
+   ========================= */
+
+/* ── Hover card lift with terracotta glow ── */
+.hover-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(184, 92, 56, 0.13), 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-color: rgba(184, 92, 56, 0.22) !important;
+}
+
+/* ── Hover: icon scale & color shift ── */
+.hover-icon {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+}
+
+.hover-card:hover .hover-icon,
+.group:hover .hover-icon {
+  transform: scale(1.18) rotate(-5deg);
+  color: #B85C38;
+}
+
+/* ── Float bob animation (for decorative SVGs) ── */
+@keyframes float-bob {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  33% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+
+  66% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+}
+
+@keyframes float-bob-reverse {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  33% {
+    transform: translateY(-8px) rotate(-3deg);
+  }
+
+  66% {
+    transform: translateY(-14px) rotate(2deg);
+  }
+}
+
+@keyframes drift-slow {
+
+  0%,
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  50% {
+    transform: translateX(10px) translateY(-8px);
+  }
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-scale {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+.float-bob {
+  animation: float-bob 7s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.float-bob-reverse {
+  animation: float-bob-reverse 9s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.drift-slow {
+  animation: drift-slow 11s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.spin-slow {
+  animation: spin-slow 20s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.pulse-scale {
+  animation: pulse-scale 3.5s ease-in-out infinite;
+}
+
+/* ── Dot-grid pattern for VANILLA sections ── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(34, 33, 31, 0.065) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ── Honeycomb pattern for SAGE sections ── */
+.honeycomb-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V18L28 2l28 16v32L28 66zM28 18L0 2v32l28 16 28-16V2L28 18z' fill='none' stroke='rgba(34,33,31,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/* ── CTA button shimmer on hover ── */
+@keyframes shimmer {
+  0% {
+    background-position: -300px 0;
+  }
+
+  100% {
+    background-position: 300px 0;
+  }
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg,
+      transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+  background-size: 300px 100%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-shimmer:hover::after {
+  opacity: 1;
+  animation: shimmer 0.7s ease forwards;
+}
+
+/* ── Font-on-SAGE: ensure dark charcoal for max readability ── */
+.on-sage body,
+.text-on-sage {
+  color: rgba(34, 33, 31, 0.80);
+}
+
+/* ── Font-on-TERRACOTTA: always vanilla ── */
+.text-on-terra {
+  color: rgba(250, 245, 228, 0.92);
+}
+
+.text-on-terra-muted {
+  color: rgba(250, 245, 228, 0.55);
+}
+
+/* ── Hover underline slide (for nav links / text links) ── */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #B85C38;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Image reveal hover ── */
+.img-hover {
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.img-hover img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-hover:hover img {
+  transform: scale(1.04);
 }

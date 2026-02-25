@@ -1,528 +1,585 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { coreValues } from "../data/values";
+/**
+ * About.tsx — Redesigned to match Home styling.
+ *
+ * Palette: VANILLA (#FAF5E4) content bg, TERRACOTTA (#B85C38) accents + CTA
+ * Type: font-display tracking-widest (H1/H2), font-mono (labels), font-heading (cards), font-light (body)
+ * Rhythm: thin hr + mono label between sections (same as Home)
+ * Transitions: TornPaper vanilla → terracotta before CTA
+ * Animations: ScrollReveal + StaggerContainer (no manual IntersectionObserver)
+ */
+import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { coreValues } from '../data/values';
 import {
   Leaf,
   Building,
-  Search,
-  Shield,
-  AlertTriangle,
-  Award,
-  MessageSquare,
-  Eye,
   Microscope,
   TrendingUp,
   Target,
   ShieldCheck,
   ShoppingBag,
   GraduationCap,
-  ScanText,
-  FileSearch,
-  Activity,
-  Scale,
-  ShieldAlert,
-  Fingerprint,
   CheckCircle2,
   Users,
   HeartHandshake,
   ClipboardCheck,
   BadgeCheck,
-} from "lucide-react";
-import { CoreValuesGrid } from "../components/ui/CoreValueCard";
+  ArrowRight,
+} from 'lucide-react';
+import { CoreValuesGrid } from '../components/ui/CoreValueCard';
+import { ScrollReveal, StaggerContainer, StaggerItem } from '../components/animations/ScrollReveal';
+import { Parallax } from '../components/animations/Parallax';
+import { TornPaper } from '../components/ui/OrganicSectionDividers';
+import type { LucideIcon } from 'lucide-react';
 
-/** Cloudinary helper: build responsive URLs with f_auto,q_auto and width */
-const cld = (publicUrl: string, w: number) =>
-  publicUrl.replace("/upload/", `/upload/f_auto,q_auto,w_${w}/`);
+// ─── Palette ──────────────────────────────────────────────────────────────────
+const VANILLA = '#FAF5E4';
+const SOFT_SAGE = '#C7EABB';
+const SOFT_SAND = '#F0E7DB';
+const TERRACOTTA = '#B85C38';
 
-type LucideIcon = React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
 
-const SectionHeader = ({
-  title,
-  highlight,
-  subtitle,
-}: {
-  title: string;
-  highlight?: string;
-  subtitle?: string;
-}) => (
-  <div className="text-center mb-12 md:mb-16">
-    <h2 className="text-3xl md:text-4xl font-heading font-bold text-gray-900">
-      {title} {highlight ? <span className="text-green-600">{highlight}</span> : null}
-    </h2>
-    {subtitle ? (
-      <p className="mt-4 text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">{subtitle}</p>
-    ) : null}
+// ─── Paper texture (replaced with index.css pattern) ────────
+const paperStyle: React.CSSProperties = {};
+
+// ─── Section rule helper ──────────────────────────────────────────────────────
+const SectionRule = ({ label, accent = false }: { label: string; accent?: boolean }) => (
+  <div className="flex items-center gap-6 mb-16">
+    <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+    <span
+      className="font-mono text-[10px] tracking-[0.24em] uppercase"
+      style={{ color: accent ? 'rgba(184,92,56,0.5)' : 'rgba(34,33,31,0.22)' }}
+    >{label}</span>
+    <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
   </div>
 );
 
-/** ---- Mission/Vision (inlined) ---- */
-const Mission = () => {
-  const missionPoints: Array<{ icon: LucideIcon; title: string; description: string }> = [
+// ─── Cloudinary helper ────────────────────────────────────────────────────────
+const cld = (url: string, w: number) =>
+  url.replace('/upload/', `/upload/f_auto,q_auto,w_${w}/`);
+
+const HERO_IMG =
+  'https://res.cloudinary.com/dwmaznf4n/image/upload/v1752349834/20250712_2047_Harmonious_Nature_Bliss_simple_compose_01k002qpqyf9j8ypjrg10eabrk_tauyp9.png';
+
+// ═════════════════════════════════════════════════════════════════════════════
+const About = () => {
+  const missionPoints: Array<{ icon: LucideIcon; title: string; description: string }> = useMemo(() => [
     {
       icon: Target,
-      title: "Clear Safety Decisions",
-      description:
-        "TheSafeHive translates complex chemical and ingredient data into clear, structured signals that help people make safer everyday choices with confidence.",
+      title: 'Clear Safety Decisions',
+      description: `TheSafeHive translates complex chemical and ingredient data into clear, structured signals that help people make safer everyday choices with confidence.`,
     },
     {
       icon: ShieldCheck,
-      title: "Evidence-Led Verification",
-      description:
-        "TheSafeHive assesses ingredients using publicly available scientific and regulatory sources, prioritising evidence over marketing claims.",
+      title: 'Evidence-Led Verification',
+      description: `TheSafeHive assesses ingredients using publicly available scientific and regulatory sources, prioritising evidence over marketing claims.`,
     },
     {
       icon: ShoppingBag,
-      title: "Practical Application",
-      description:
-        "TheSafeHive demonstrates how safety intelligence can be applied in real purchasing decisions, reducing confusion and decision fatigue.",
+      title: 'Practical Application',
+      description: `TheSafeHive demonstrates how safety intelligence can be applied in real purchasing decisions, reducing confusion and decision fatigue.`,
     },
     {
       icon: GraduationCap,
-      title: "Education and Transparency",
-      description:
-        "TheSafeHive helps people understand what’s inside products, why ingredients matter, and where scientific certainty or uncertainty exists.",
+      title: 'Education and Transparency',
+      description: `TheSafeHive helps people understand what's inside products, why ingredients matter, and where scientific certainty or uncertainty exists.`,
     },
-  ];
+  ], []);
+
+
+
+  const customerPromise = useMemo(() => [
+    {
+      icon: CheckCircle2,
+      title: 'The End of Decision Fatigue',
+      description: `You shouldn't need a PhD in Toxicology to buy shampoo. TheSafeHive's SVA-1 protocol cross-references ingredient data against publicly available scientific and regulatory sources so you get clear, structured safety signals — without the jargon.`,
+    },
+    {
+      icon: ClipboardCheck,
+      title: 'Physical Integrity Audit',
+      description: `An algorithm can detect toxins, but it cannot verify product quality. That is why every product that passes TheSafeHive digital screening undergoes a physical Golden Sample check — reducing formulation mismatch risk.`,
+    },
+    {
+      icon: BadgeCheck,
+      title: 'No Fear Mongering, Just Facts',
+      description: `TheSafeHive does not use scary marketing. TheSafeHive uses data — telling you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.`,
+    },
+    {
+      icon: Users,
+      title: 'Community-Led Validation',
+      description: `TheSafeHive listens to feedback from families, parents, and eco-conscious shoppers to continuously refine what "lower-risk" means in the real world.`,
+    },
+  ], []);
+
+  const futurePlans = useMemo(() => [
+    {
+      icon: Building,
+      title: 'Brand-Level Collaboration',
+      description:
+        'TheSafeHive works with transparent brands to improve ingredient disclosure and formulation accountability.',
+    },
+    {
+      icon: Microscope,
+      title: 'Selective Lab Validation',
+      description:
+        'TheSafeHive introduces targeted third-party testing to calibrate and strengthen verification logic.',
+    },
+    {
+      icon: TrendingUp,
+      title: 'Compliance Infrastructure',
+      description:
+        'TheSafeHive supports safety and regulatory workflows in a tightening chemical compliance environment.',
+    },
+  ], []);
 
   return (
-    <section className="py-16 md:py-24 bg-white" aria-labelledby="mission-heading">
-      <div className="container mx-auto px-4">
+    <div className="pt-16" style={{ backgroundColor: VANILLA }}>
+      <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+
+      {/* ════════════════════════════════════════════════════════════════
+          HERO
+         ════════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative min-h-[80vh] flex flex-col justify-center overflow-hidden pt-12 pb-0"
+        style={{ backgroundColor: VANILLA }}
+        aria-labelledby="about-hero-heading"
+      >
+        <div className="absolute inset-0 pointer-events-none dot-grid" style={{ opacity: 0.55 }} />
+
+        {/* Floating leaf — top-right */}
+        <Parallax offset={45} className="absolute top-24 right-8 md:right-32 pointer-events-none float-bob opacity-18" aria-hidden="true">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <path d="M30 5C30 5 55 20 55 38C55 50 43.8 55 30 55C16.2 55 5 50 5 38C5 20 30 5 30 5Z" fill="rgba(184,92,56,0.12)" />
+            <path d="M30 55V5" stroke="rgba(184,92,56,0.20)" strokeWidth="1" />
+            <path d="M30 28C30 28 18 20 12 28" stroke="rgba(184,92,56,0.18)" strokeWidth="0.8" />
+            <path d="M30 38C30 38 42 30 48 38" stroke="rgba(184,92,56,0.18)" strokeWidth="0.8" />
+          </svg>
+        </Parallax>
+
+        {/* Floating small honeycomb — mid-left */}
+        <Parallax offset={80} className="hidden lg:block absolute left-[8%] top-[50%] pointer-events-none drift-slow opacity-12" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <path d="M22 2L40 12V32L22 42L4 32V12L22 2Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="none" />
+          </svg>
+        </Parallax>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Text */}
+            <div>
+              <motion.p
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="font-mono text-[10px] tracking-[0.28em] uppercase mb-6"
+                style={{ color: 'rgba(184,92,56,0.5)' }}
+              >
+                About TheSafeHive
+              </motion.p>
+
+              <div className="overflow-hidden mb-3">
+                <motion.h1
+                  id="about-hero-heading"
+                  initial={{ y: '105%' }} animate={{ y: '0%' }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                  className="font-display leading-none tracking-widest text-charcoal"
+                  style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
+                >
+                  ABOUT
+                </motion.h1>
+              </div>
+              <div className="overflow-hidden mb-10">
+                <motion.h1
+                  initial={{ y: '105%' }} animate={{ y: '0%' }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.32 }}
+                  className="font-display leading-none tracking-widest text-terracotta"
+                  style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
+                >
+                  THESAFEHIVE
+                </motion.h1>
+              </div>
+
+              <motion.p
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.55 }}
+                className="text-lg md:text-xl font-light leading-relaxed max-w-lg mb-10"
+                style={{ color: 'rgba(34,33,31,0.68)' }}
+              >
+                TheSafeHive is a compliance-first technology platform building the digital
+                infrastructure for evidence-based product safety. We bridge the gap between
+                complex chemical data and everyday consumer decisions.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.72 }}
+              >
+                <Link
+                  to="/contact"
+                  className="btn-shimmer relative overflow-hidden inline-flex items-center gap-3 font-display tracking-widest text-base px-8 py-4 rounded-full no-underline group transition-all duration-300"
+                  style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(184,92,56,0.22)' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = '#A34E2F')}
+                  onMouseLeave={e => (e.currentTarget.style.background = TERRACOTTA)}
+                >
+                  <span className="relative z-10 flex items-center gap-3">
+                    GET IN TOUCH <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Hero image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+              className="relative"
+            >
+              <div
+                className="img-hover rounded-[3rem] overflow-hidden shadow-2xl"
+                style={{ border: '1px solid rgba(34,33,31,0.06)' }}
+              >
+                <picture>
+                  <source type="image/avif"
+                    srcSet={`${cld(HERO_IMG, 640)} 640w, ${cld(HERO_IMG, 960)} 960w, ${cld(HERO_IMG, 1280)} 1280w`} />
+                  <source type="image/webp"
+                    srcSet={`${cld(HERO_IMG, 640)} 640w, ${cld(HERO_IMG, 960)} 960w, ${cld(HERO_IMG, 1280)} 1280w`} />
+                  <img
+                    src={cld(HERO_IMG, 960)}
+                    alt="Natural organic materials conveying chemical safety"
+                    className="w-full h-[28rem] lg:h-[36rem] object-cover"
+                    loading="eager"
+                    width={960} height={720}
+                  />
+                </picture>
+              </div>
+              {/* Accent blob */}
+              <div
+                className="absolute -bottom-12 -right-12 w-64 h-64 rounded-full blur-[80px] pointer-events-none -z-10"
+                style={{ background: 'rgba(184,92,56,0.08)' }}
+              />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Scroll cue */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px 0px" }}
-          transition={{ duration: 0.55 }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
+          className="flex justify-center pb-10 mt-16"
         >
-          <SectionHeader
-            title="Discover Our"
-            highlight="Vision"
-            subtitle="TheSafeHive exists to bridge the gap between complex chemical safety data and everyday consumer decisions."
+          <motion.div
+            animate={{ y: [0, 7, 0] }} transition={{ duration: 1.6, repeat: Infinity }}
+            className="w-px h-10 will-change-transform"
+            style={{ background: 'linear-gradient(to bottom, rgba(184,92,56,0.28), transparent)' }}
           />
         </motion.div>
+      </section>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-          {missionPoints.map((point, index) => (
-            <motion.article
-              key={point.title}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px 0px" }}
-              transition={{ duration: 0.45, delay: index * 0.08 }}
-              className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-6 md:p-8 border border-green-100 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 md:w-14 md:h-14 bg-green-600 rounded-xl flex items-center justify-center shrink-0">
-                  <point.icon className="w-6 h-6 md:w-7 md:h-7 text-white" aria-hidden="true" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{point.title}</h3>
-                  <p className="text-gray-700 leading-relaxed">{point.description}</p>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-/** ---- End Mission/Vision ---- */
+      {/* ── TornPaper: VANILLA → SOFT_SAND (human story zone) ────────── */}
+      <TornPaper from={VANILLA} to={SOFT_SAND} height={72} />
 
-const About = () => {
-  const HERO_BASE =
-    "https://res.cloudinary.com/dwmaznf4n/image/upload/v1752349834/20250712_2047_Harmonious_Nature_Bliss_simple_compose_01k002qpqyf9j8ypjrg10eabrk_tauyp9.png";
+      {/* ════════ VISION / MISSION ════════ */}
+      <section
+        className="relative py-28"
+        style={{ backgroundColor: SOFT_SAND }}
+        aria-labelledby="vision-heading"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+        <div className="absolute inset-0 pointer-events-none honeycomb-pattern" style={{ opacity: 0.65 }} />
 
-  const svaRef = useRef<HTMLElement>(null);
-  const customerRef = useRef<HTMLElement>(null);
-  const futureRef = useRef<HTMLElement>(null);
+        {/* Floating decorative hexagon — top-right */}
+        <Parallax offset={60} className="absolute top-12 right-6 lg:right-16 pointer-events-none float-bob opacity-20" aria-hidden="true">
+          <svg width="80" height="90" viewBox="0 0 80 90" fill="none">
+            <path d="M40 3L77 23V67L40 87L3 67V23L40 3Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="rgba(34,33,31,0.04)" />
+          </svg>
+        </Parallax>
 
-  const [svaVisible, setSvaVisible] = useState(false);
-  const [customerVisible, setCustomerVisible] = useState(false);
-  const [futureVisible, setFutureVisible] = useState(false);
+        <div className="container mx-auto px-6 relative z-10">
+          <SectionRule label="Our Vision" />
 
-  useEffect(() => {
-    const makeObserver = (setter: (v: boolean) => void) =>
-      new IntersectionObserver(
-        ([entry]) => entry.isIntersecting && setter(true),
-        { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
-      );
-
-    const sObs = makeObserver(setSvaVisible);
-    const cObs = makeObserver(setCustomerVisible);
-    const fObs = makeObserver(setFutureVisible);
-
-    if (svaRef.current) sObs.observe(svaRef.current);
-    if (customerRef.current) cObs.observe(customerRef.current);
-    if (futureRef.current) fObs.observe(futureRef.current);
-
-    return () => {
-      sObs.disconnect();
-      cObs.disconnect();
-      fObs.disconnect();
-    };
-  }, []);
-
-  const futurePlans = useMemo(
-    () => [
-      {
-        icon: Building,
-        title: "Brand-Level Collaboration",
-        description:
-          "TheSafeHive works with transparent brands to improve ingredient disclosure and formulation accountability.",
-      },
-      {
-        icon: Microscope,
-        title: "Selective Lab Validation",
-        description:
-          "TheSafeHive introduces targeted third-party testing to calibrate and strengthen verification logic.",
-      },
-      {
-        icon: TrendingUp,
-        title: "Compliance Infrastructure",
-        description:
-          "TheSafeHive supports safety and regulatory workflows in a tightening chemical compliance environment.",
-      },
-    ],
-    []
-  );
-
-  const svaArchitecture = useMemo(
-    () => [
-      {
-        step: "1",
-        icon: ScanText,
-        title: "Ingredient Intelligence",
-        description:
-          "Product labels and supplier information are complex and inconsistent. TheSafeHive transforms raw ingredient data into a clean, standardised format so every product is evaluated on the same basis, without relying on marketing claims.",
-      },
-      {
-        step: "2",
-        icon: FileSearch,
-        title: "Evidence-Backed Safety Signals",
-        description:
-          "Safety claims should be backed by science. TheSafeHive references authoritative regulatory and scientific sources to identify known safety concerns, emerging risks, and areas where evidence is limited. Every insight is grounded in traceable public data, not opinions.",
-      },
-      {
-        step: "3",
-        icon: Scale,
-        title: "Safety Scoring You Can Rely On",
-        description:
-          "Using TheSafeHive’s proprietary evaluation framework, each product is assessed for potential concern levels based on current scientific and regulatory understanding. Where data is incomplete, uncertainty is clearly highlighted rather than hidden.",
-      },
-      {
-        step: "4",
-        icon: Activity,
-        title: "Always Up to Date",
-        description:
-          "Safety information changes over time. When new research or regulatory updates emerge, relevant products are automatically reviewed so assessments stay current.",
-      },
-      {
-        step: "5",
-        icon: Fingerprint,
-        title: "Personalised, Informational Clarity",
-        description:
-          "Everyone’s needs are different. TheSafeHive allows you to view safety information through your own preferences, such as avoiding specific ingredient groups - while remaining strictly informational and non-medical.",
-      },
-    ],
-    []
-  );
-
-  const customerPromise = useMemo(
-    () => [
-      {
-        icon: CheckCircle2,
-        title: "The End of Decision Fatigue",
-        description:
-          "You shouldn't need a PhD in Toxicology to buy shampoo. TheSafeHive SVA-1 algorithm does the heavy lifting by scanning thousands of ingredients against 50+ databases, so you get a simple Yes or No.",
-      },
-      {
-        icon: ClipboardCheck,
-        title: "Physical Integrity Audit",
-        description:
-          "An algorithm can detect toxins, but it cannot verify product quality. That is why every product that passes TheSafeHive digital screening undergoes a physical Golden Sample check. TheSafeHive verifies the product in the box matches the safety data on the screen, reducing formulation mismatch risk.",
-      },
-      {
-        icon: BadgeCheck,
-        title: "No Fear Mongering, Just Facts",
-        description:
-          "TheSafeHive does not use scary marketing like Chemical-Free (which is impossible). TheSafeHive uses data. TheSafeHive tells you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.",
-      },
-      {
-        icon: Users,
-        title: "Community-Led Validation",
-        description:
-          "TheSafeHive Verified Marketplace is not just an algorithm output. It is a community choice. TheSafeHive listens to feedback from families, parents, and eco-conscious shoppers to continuously refine what Safe means in the real world.",
-      },
-    ],
-    []
-  );
-
-  return (
-    <div className="pt-16">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-green-50 to-white overflow-hidden" aria-labelledby="hero-heading">
-        <div className="relative">
-          <picture>
-            <source
-              type="image/avif"
-              srcSet={`${cld(HERO_BASE, 640)} 640w, ${cld(HERO_BASE, 960)} 960w, ${cld(
-                HERO_BASE,
-                1280
-              )} 1280w, ${cld(HERO_BASE, 1600)} 1600w, ${cld(HERO_BASE, 1920)} 1920w`}
-            />
-            <source
-              type="image/webp"
-              srcSet={`${cld(HERO_BASE, 640)} 640w, ${cld(HERO_BASE, 960)} 960w, ${cld(
-                HERO_BASE,
-                1280
-              )} 1280w, ${cld(HERO_BASE, 1600)} 1600w, ${cld(HERO_BASE, 1920)} 1920w`}
-            />
-            <img
-              src={cld(HERO_BASE, 1280)}
-              srcSet={`${cld(HERO_BASE, 640)} 640w, ${cld(HERO_BASE, 960)} 960w, ${cld(
-                HERO_BASE,
-                1280
-              )} 1280w, ${cld(HERO_BASE, 1600)} 1600w, ${cld(HERO_BASE, 1920)} 1920w`}
-              sizes="100vw"
-              alt="Nature inspired calm background"
-              className="w-full h-80 sm:h-[32rem] md:h-[40rem] object-cover brightness-95"
-              width={1920}
-              height={1080}
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-
-          <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
-
-          <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6">
-            <motion.blockquote
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2 }}
-              className="max-w-3xl text-center text-white"
-            >
-              <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-relaxed font-medium">
-                “We didn’t just want to sell products - we wanted to make chemical safety understandable, usable, and trustworthy.”
+          <ScrollReveal variant="fade">
+            <div className="text-center mb-16">
+              <h2
+                id="vision-heading"
+                className="font-display text-charcoal tracking-widest leading-none mb-6"
+                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
+              >
+                DISCOVER OUR<br /><span className="text-terracotta">VISION</span>
+              </h2>
+              <p className="max-w-2xl mx-auto text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.70)' }}>
+                TheSafeHive exists to bridge the gap between complex chemical safety data
+                and everyday consumer decisions.
               </p>
-              <footer className="mt-6 text-base sm:text-lg">- TheSafeHive team</footer>
-            </motion.blockquote>
-          </div>
-        </div>
-
-        {/* Intro */}
-        <div className="container mx-auto px-4 py-12 md:py-16 text-center">
-          <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-gray-900">
-            About <span className="text-green-600">TheSafeHive</span>
-          </h1>
-          <p className="mt-5 max-w-3xl mx-auto text-base sm:text-lg text-gray-700">
-            TheSafeHive is a compliance-first technology platform building the digital infrastructure for the post-PFAS era.
-          </p>
-          <p className="mt-3 max-w-3xl mx-auto text-sm text-gray-600">
-            Note: TheSafeHive content and assessments are educational and not medical advice.
-          </p>
-
-          <div className="mt-10 flex justify-center">
-            <div className="flex items-center gap-4 text-gray-400">
-              <div className="w-12 h-px bg-gradient-to-r from-transparent to-gray-300" />
-              <Leaf className="w-6 h-6 text-green-600" aria-hidden="true" />
-              <div className="w-12 h-px bg-gradient-to-l from-transparent to-gray-300" />
             </div>
-          </div>
+          </ScrollReveal>
+
+          <StaggerContainer staggerDelay={0.1}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {missionPoints.map(({ icon: Icon, title, description }) => (
+                <StaggerItem key={title} variant="slide-up">
+                  <div
+                    className="hover-card bg-white rounded-2xl p-8 border h-full group"
+                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.07)' }}
+                  >
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+                      style={{ background: 'rgba(184,92,56,0.10)' }}
+                    >
+                      <Icon className="h-6 w-6 hover-icon" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
+                    </div>
+                    <h3 className="font-heading text-charcoal text-xl mb-3">{title}</h3>
+                    <p className="font-light leading-relaxed" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerContainer>
         </div>
       </section>
 
-      {/* Mission/Vision */}
-      <Mission />
+      {/* ── TornPaper: SOFT_SAND → SOFT_SAGE ────────── */}
+      <TornPaper from={SOFT_SAND} to={SOFT_SAGE} height={72} />
 
-      {/* Values */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
-          <SectionHeader
-            title="Our"
-            highlight="Values"
-            subtitle="Principles that guide TheSafeHive verification-first approach."
-          />
+      {/* ════════ CORE VALUES (SOFT_SAGE zone) ════════ */}
+      <section
+        className="relative py-24"
+        style={{ backgroundColor: SOFT_SAGE }}
+        aria-label="Our Values"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+        <div className="absolute inset-0 pointer-events-none honeycomb-pattern" style={{ opacity: 0.65 }} />
+
+        {/* Floating leaf — bottom-left */}
+        <div className="absolute bottom-8 left-6 lg:left-20 pointer-events-none float-bob-reverse opacity-18" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4C24 4 44 14 44 28C44 39 34 44 24 44C14 44 4 39 4 28C4 14 24 4 24 4Z" fill="rgba(34,33,31,0.07)" />
+            <path d="M24 44V4" stroke="rgba(34,33,31,0.13)" strokeWidth="0.8" />
+          </svg>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <SectionRule label="Our Values" />
+          <ScrollReveal variant="fade">
+            <div className="text-center mb-16">
+              <h2
+                className="font-display text-charcoal tracking-widest leading-none"
+                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
+              >
+                OUR <span className="text-terracotta">VALUES</span>
+              </h2>
+              <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(34,33,31,0.46)' }}>
+                Principles that guide TheSafeHive verification-first approach.
+              </p>
+            </div>
+          </ScrollReveal>
           <CoreValuesGrid values={coreValues} />
         </div>
       </section>
 
-      {/* How We Compute Safety: The SVA-1 Architecture */}
-      <section ref={svaRef} className="py-16 md:py-24 px-4 bg-white" aria-labelledby="sva-heading">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={svaVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionHeader
-              title="How We Compute Safety"
-              highlight="The SVA-1 Architecture"
-              subtitle="TheSafeHive runs an automated, auditable compliance pipeline. SVA-1 combines AI-assisted processing with defined evaluation rules to assess product safety consistently."
-            />
-          </motion.div>
 
-          <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {svaArchitecture.map((item, i) => (
-              <motion.article
-                key={item.title}
-                initial={{ opacity: 0, y: 14 }}
-                animate={svaVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.45, delay: 0.12 + i * 0.08 }}
-                className="bg-gray-50 p-6 md:p-7 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 bg-green-600 rounded-2xl flex items-center justify-center">
-                    <item.icon className="w-6 h-6 text-white" aria-hidden="true" />
-                  </div>
-                  <span className="text-xs font-semibold text-gray-600 bg-white border border-gray-200 rounded-full px-3 py-1">
-                    Stage {item.step}
-                  </span>
-                </div>
 
-                <h3 className="mt-5 text-lg font-semibold text-gray-900">{item.title}</h3>
-                <p className="mt-2 text-gray-700 leading-relaxed">{item.description}</p>
-              </motion.article>
-            ))}
-          </div>
-
-          <div className="max-w-4xl mx-auto mt-10 bg-green-50 border border-green-100 rounded-2xl p-6">
-            <div className="flex items-start gap-3">
-              <ShieldAlert className="w-6 h-6 text-green-600 mt-0.5" aria-hidden="true" />
-              <div className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                <p className="font-semibold text-gray-900">Non-medical boundary</p>
-                <p className="mt-1">
-                  TheSafeHive scoring and personalisation are strictly informational. TheSafeHive does not provide medical advice, diagnosis, or treatment.
-                  Where evidence is incomplete, TheSafeHive highlights uncertainty and applies precautionary logic.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What This Means For You */}
+      {/* ════════ CUSTOMER PROMISE (SOFT_SAND zone) ════════ */}
       <section
-        ref={customerRef}
-        className="py-16 md:py-24 px-4 bg-gradient-to-br from-gray-50 to-white"
+        className="relative py-28"
+        style={{ backgroundColor: SOFT_SAND }}
         aria-labelledby="customer-heading"
       >
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={customerVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionHeader
-              title="What This Means For You"
-              highlight="The Customer View"
-              subtitle="Technology is our engine, but safety is our destination. We built TheSafeHive because we were tired of being confused in the supermarket aisle."
-            />
-          </motion.div>
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+        <div className="absolute inset-0 pointer-events-none dot-grid" style={{ opacity: 0.55 }} />
+        <div className="container mx-auto px-6 relative z-10">
+          <SectionRule label="The Customer View" />
 
-          <div className="max-w-6xl mx-auto grid sm:grid-cols-2 gap-6 md:gap-8">
-            {customerPromise.map((item, i) => (
-              <motion.article
-                key={item.title}
-                initial={{ opacity: 0, y: 14 }}
-                animate={customerVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.45, delay: 0.12 + i * 0.08 }}
-                className="bg-white p-6 md:p-7 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+          <ScrollReveal variant="fade">
+            <div className="text-center mb-16">
+              <h2
+                id="customer-heading"
+                className="font-display text-charcoal tracking-widest leading-none mb-6"
+                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
               >
-                <div className="w-12 h-12 bg-green-600 rounded-2xl flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-white" aria-hidden="true" />
-                </div>
+                WHAT THIS MEANS<br /><span className="text-terracotta">FOR YOU</span>
+              </h2>
+              <p className="max-w-xl mx-auto font-light text-lg" style={{ color: 'rgba(34,33,31,0.50)' }}>
+                Technology is our engine, but safety is our destination.
+              </p>
+            </div>
+          </ScrollReveal>
 
-                <h3 className="mt-5 text-lg font-semibold text-gray-900">{item.title}</h3>
-                <p className="mt-2 text-gray-700 leading-relaxed">{item.description}</p>
-              </motion.article>
-            ))}
-          </div>
+          <StaggerContainer staggerDelay={0.1}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {customerPromise.map(({ icon: Icon, title, description }) => (
+                <StaggerItem key={title} variant="slide-up">
+                  <motion.div
+                    whileHover="hover"
+                    initial="initial"
+                    className="hover-card bg-white rounded-2xl p-8 border flex gap-6 h-full cursor-default"
+                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.07)' }}
+                  >
+                    <motion.div
+                      variants={{
+                        initial: { scale: 1, rotate: 0, backgroundColor: '#22211F' },
+                        hover: { scale: 1.1, rotate: 4, backgroundColor: TERRACOTTA }
+                      }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    >
+                      <Icon className="h-6 w-6 flex-shrink-0" style={{ color: VANILLA }} strokeWidth={1.5} />
+                    </motion.div>
+                    <div>
+                      <h3 className="font-heading text-charcoal text-xl mb-3">{title}</h3>
+                      <p className="font-light leading-relaxed text-sm" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
+                    </div>
+                  </motion.div>
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerContainer>
 
-          <div className="max-w-4xl mx-auto mt-10 bg-green-50 border border-green-100 rounded-2xl p-6">
-            <div className="flex items-start gap-3">
-              <HeartHandshake className="w-6 h-6 text-green-600 mt-0.5" aria-hidden="true" />
-              <div className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                <p className="font-semibold text-gray-900">TheSafeHive promise</p>
-                <p className="mt-1">
-                  TheSafeHive is building a verified marketplace grounded in evidence, transparency, and community feedback. TheSafeHive is not here to scare you.
-                  TheSafeHive is here to give you clarity you can trust.
+          {/* Promise callout */}
+          <ScrollReveal variant="scale" delay={0.1}>
+            <div
+              className="max-w-4xl mx-auto mt-14 bg-white rounded-2xl p-10 border text-center"
+              style={{ boxShadow: '0 4px 22px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.05)' }}
+            >
+              <HeartHandshake
+                className="h-10 w-10 mx-auto mb-6 text-terracotta"
+                strokeWidth={1.5}
+              />
+              <p className="font-mono text-xs tracking-widest uppercase mb-4" style={{ color: 'rgba(184,92,56,0.5)' }}>
+                TheSafeHive Promise
+              </p>
+              <p className="font-light text-lg leading-relaxed" style={{ color: 'rgba(34,33,31,0.58)' }}>
+                TheSafeHive is building a verified marketplace grounded in evidence, transparency,
+                and community feedback. TheSafeHive is not here to scare you. TheSafeHive is here
+                to give you clarity you can trust.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── TornPaper: SOFT_SAND → VANILLA ────────── */}
+      <TornPaper from={SOFT_SAND} to={VANILLA} height={72} />
+
+      {/* ════════ LOOKING AHEAD (VANILLA zone) ════════ */}
+      <section
+        className="relative py-24"
+        style={{ backgroundColor: VANILLA }}
+        aria-labelledby="future-heading"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+        <div className="absolute inset-0 pointer-events-none dot-grid" style={{ opacity: 0.55 }} />
+
+        {/* Floating small honeycomb */}
+        <Parallax offset={50} className="hidden lg:block absolute right-[8%] top-[25%] pointer-events-none drift-slow opacity-12" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <path d="M22 2L40 12V32L22 42L4 32V12L22 2Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="none" />
+          </svg>
+        </Parallax>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <SectionRule label="Looking Ahead" />
+
+          <ScrollReveal variant="fade">
+            <div className="text-center mb-16">
+              <h2
+                id="future-heading"
+                className="font-display text-charcoal tracking-widest leading-none"
+                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
+              >
+                LOOKING <span className="text-terracotta">AHEAD</span>
+              </h2>
+              <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(34,33,31,0.46)' }}>
+                As TheSafeHive evolves, we aim to expand safety intelligence capabilities through:
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <StaggerContainer staggerDelay={0.12}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {futurePlans.map(({ icon: Icon, title, description }) => (
+                <StaggerItem key={title} variant="scale">
+                  <div
+                    className="hover-card bg-white rounded-2xl p-10 border text-center h-full group"
+                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.07)' }}
+                  >
+                    <div
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                      style={{ background: 'rgba(184,92,56,0.08)' }}
+                    >
+                      <Icon className="h-8 w-8 hover-icon" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
+                    </div>
+                    <h3 className="font-heading text-charcoal text-xl mb-4">{title}</h3>
+                    <p className="font-light leading-relaxed text-sm" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* ── TornPaper: VANILLA → SOFT_SAND ────────── */}
+      <TornPaper from={VANILLA} to={SOFT_SAND} height={72} />
+
+      {/* ════════════════════════════════════════════════════════════════
+          STORY
+         ════════════════════════════════════════════════════════════════ */}
+      <section
+        className="relative py-24"
+        style={{ backgroundColor: SOFT_SAND }}
+        aria-label="TheSafeHive Story"
+      >
+        <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
+        <div className="absolute inset-0 pointer-events-none dot-grid" style={{ opacity: 0.55 }} />
+        <div className="container mx-auto px-6 relative z-10">
+          <SectionRule label="The Story" />
+
+          <div className="max-w-3xl mx-auto">
+            <ScrollReveal variant="slide-up">
+              <h2
+                className="font-display text-charcoal tracking-widest leading-none mb-12"
+                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
+              >
+                THESAFEHIVE <span className="text-terracotta">STORY</span>
+              </h2>
+            </ScrollReveal>
+
+            <div className="space-y-7">
+              {[
+                'The SafeHive was born to solve a data problem. The £14B personal care market lacks a unified safety standard. We built the SafeHive Protocol to bridge the gap between complex chemical data and consumer buying decisions.',
+                'When I first arrived in the UK, I was struck by the sheer number of products claiming to be "eco", "green", or "safe". But the more I looked, the more overwhelming it became. Labels were confusing, ingredient lists were full of jargon, and marketing was often designed to reassure without evidence.',
+                `I realised I wasn't alone. Many people want to make healthier choices, but they get stuck in a maze of vague claims, inconsistent ingredient disclosures, and decision fatigue. TheSafeHive exists to cut through the noise and make chemical safety easier to understand, easier to compare, and easier to act on.`,
+              ].map((para, i) => (
+                <ScrollReveal key={i} variant="fade" delay={i * 0.1}>
+                  <p className="text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.58)' }}>{para}</p>
+                </ScrollReveal>
+              ))}
+            </div>
+
+            <ScrollReveal variant="scale" delay={0.2}>
+              <div
+                className="mt-14 rounded-2xl p-10 border"
+                style={{
+                  background: 'rgba(184,92,56,0.05)',
+                  borderColor: 'rgba(184,92,56,0.14)',
+                }}
+              >
+                <Leaf className="h-8 w-8 text-terracotta mb-6" strokeWidth={1.5} />
+                <blockquote
+                  className="font-heading italic text-charcoal leading-relaxed mb-5"
+                  style={{ fontSize: 'clamp(1.2rem,2vw,1.6rem)' }}
+                >
+                  "TheSafeHive turns chemical safety into clear, usable decisions."
+                </blockquote>
+                <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(34,33,31,0.28)' }}>
+                  — TheSafeHive Team
                 </p>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Future Plans */}
-      <section ref={futureRef} className="py-16 md:py-24 px-4 bg-white" aria-labelledby="future-heading">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={futureVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <SectionHeader
-              title="Looking"
-              highlight="Ahead"
-              subtitle="As TheSafeHive evolves, TheSafeHive aims to expand safety intelligence capabilities through:"
-            />
-          </motion.div>
 
-          <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 md:gap-8">
-            {futurePlans.map((plan, i) => (
-              <motion.article
-                key={plan.title}
-                initial={{ opacity: 0, y: 16 }}
-                animate={futureVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.15 + i * 0.12 }}
-                className="bg-gray-50 p-7 md:p-8 rounded-3xl text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="w-16 h-16 mx-auto mb-6 bg-green-600 rounded-2xl flex items-center justify-center">
-                  <plan.icon className="w-8 h-8 text-white" aria-hidden="true" />
-                </div>
-                <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-3">{plan.title}</h3>
-                <p className="text-gray-700 leading-relaxed">{plan.description}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TheSafeHive story (below Looking Ahead) */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <SectionHeader title="TheSafeHive" highlight="story" />
-
-            <div className="prose prose-lg max-w-none text-gray-700">
-              <p className="text-justify">
-                The SafeHive was born to solve a data problem. The £14B personal care market lacks a unified safety standard.
-                We built the SafeHive Protocol to bridge the gap between complex chemical data and consumer buying decisions.
-              </p>
-
-              <p className="text-justify">
-                When I first arrived in the UK, I was struck by the sheer number of products claiming to be “eco”, “green”,
-                or “safe”. But the more I looked, the more overwhelming it became. Labels were confusing, ingredient lists
-                were full of jargon, and marketing was often designed to reassure without evidence.
-              </p>
-
-              <p className="text-justify">
-                I realised I wasn’t alone. Many people want to make healthier choices, but they get stuck in a maze of
-                vague claims, inconsistent ingredient disclosures, and decision fatigue. TheSafeHive exists to cut through the noise
-                and make chemical safety easier to understand, easier to compare, and easier to act on.
-              </p>
-            </div>
-
-            <div className="mt-10 p-6 bg-white border-l-4 border-green-600 rounded-xl shadow-sm">
-              <blockquote className="italic text-gray-900 text-base sm:text-lg">
-                "TheSafeHive turns chemical safety into clear, usable decisions."
-              </blockquote>
-              <p className="mt-2 text-sm text-gray-600 text-right">- TheSafeHive team</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

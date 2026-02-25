@@ -1,6 +1,14 @@
-import React, { useState } from "react";
-import { CheckCircle2, XCircle } from "lucide-react";
+// quizgame.tsx — Chemical Quiz, brand-aligned design
+import { useState } from "react";
+import { CheckCircle2, XCircle, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { categoryConfig, quizData } from "./data";
+
+// ── Brand palette ─────────────────────────────────────────────────────────────
+const VANILLA = "#FAF5E4";
+const SAGE = "#A2CB8B";
+const TERRACOTTA = "#B85C38";
+const CHARCOAL = "#22211F";
 
 export default function QuizGame() {
   const [activeCategory, setActiveCategory] = useState<keyof typeof quizData>("Cleaning Products");
@@ -11,16 +19,19 @@ export default function QuizGame() {
   const [categoryScores, setCategoryScores] = useState<Record<string, { correct: number; total: number }>>({});
 
   const currentQuizData = quizData[activeCategory];
-  const currentConfig = categoryConfig[activeCategory];
+  const totalQ = currentQuizData.length;
+  const progress = ((currentQuestion + (showResult ? 1 : 0)) / totalQ) * 100;
+  const isCorrect = selectedAnswer !== null && selectedAnswer === currentQuizData[currentQuestion].safe;
 
   const handleQuizAnswer = (answer: boolean) => {
+    if (showResult) return; // debounce
     setSelectedAnswer(answer);
     const correct = answer === currentQuizData[currentQuestion].safe;
     if (correct) setScore((s) => s + 1);
     setShowResult(true);
 
     setTimeout(() => {
-      if (currentQuestion < currentQuizData.length - 1) {
+      if (currentQuestion < totalQ - 1) {
         setCurrentQuestion((q) => q + 1);
         setSelectedAnswer(null);
         setShowResult(false);
@@ -28,20 +39,24 @@ export default function QuizGame() {
         const prev = categoryScores[activeCategory] || { correct: 0, total: 0 };
         setCategoryScores({
           ...categoryScores,
-          [activeCategory]: { correct: prev.correct + (selectedAnswer === currentQuizData[currentQuestion].safe ? 1 : 0), total: currentQuizData.length },
+          [activeCategory]: {
+            correct: prev.correct + (answer === currentQuizData[currentQuestion].safe ? 1 : 0),
+            total: totalQ,
+          },
         });
         setCurrentQuestion(0);
         setSelectedAnswer(null);
         setShowResult(false);
         setScore(0);
       }
-    }, 1500);
+    }, 2000);
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Category Selection */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-8">
+    <div className="max-w-3xl mx-auto space-y-6">
+
+      {/* ── Category pills ──────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
         {Object.entries(categoryConfig).map(([category, cfg]) => {
           const Icon = cfg.icon;
           const active = activeCategory === category;
@@ -55,83 +70,154 @@ export default function QuizGame() {
                 setShowResult(false);
                 setSelectedAnswer(null);
               }}
-              className={`p-3 md:p-4 rounded-xl text-center transition-all duration-300 ${
-                active ? `${cfg.buttonActiveColor} text-white shadow-lg transform scale-105` : `bg-gradient-to-br ${cfg.bgGradient} ${cfg.textColor} hover:shadow-md border-2 ${cfg.borderColor}`
-              }`}
+              className="group flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2"
+              style={
+                active
+                  ? { background: CHARCOAL, color: VANILLA, boxShadow: "0 4px 16px rgba(34,33,31,0.20)" }
+                  : { background: "rgba(255,255,255,0.6)", color: "rgba(34,33,31,0.54)", border: "1px solid rgba(34,33,31,0.09)" }
+              }
             >
-              <Icon className={`h-6 w-6 mx-auto mb-2 ${active ? "text-white" : cfg.textColor}`} />
-              <div className="text-xs md:text-sm font-medium">{category}</div>
+              <Icon
+                className="h-5 w-5 transition-transform duration-300 group-hover:scale-110"
+                style={{ color: active ? TERRACOTTA : "rgba(34,33,31,0.40)" }}
+              />
+              <span className="font-mono text-[10px] tracking-wide text-center leading-tight">{category}</span>
               {categoryScores[category] && (
-                <div className="text-xs mt-1 opacity-75">
+                <span
+                  className="font-mono text-[9px] px-1.5 py-0.5 rounded-full"
+                  style={{ background: active ? "rgba(250,245,228,0.15)" : SAGE + "33", color: active ? VANILLA : "#3A6B2A" }}
+                >
                   {categoryScores[category].correct}/{categoryScores[category].total}
-                </div>
+                </span>
               )}
             </button>
           );
         })}
       </div>
 
-      {/* Progress */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-3">
-          <span className={`text-sm font-medium ${currentConfig.textColor}`}>Progress</span>
-          <span className="text-sm font-medium text-gray-600">
-            {currentQuestion + 1}/{currentQuizData.length}
+      {/* ── Progress bar ────────────────────────────────────────────── */}
+      <div className="space-y-2">
+        <div className="flex justify-between items-center">
+          <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.36)" }}>
+            Progress
           </span>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[10px] tracking-widest" style={{ color: "rgba(184,92,56,0.6)" }}>
+              Score: {score}/{currentQuestion + (showResult ? 1 : 0)}
+            </span>
+            <span className="font-display text-base tracking-widest" style={{ color: CHARCOAL }}>
+              {currentQuestion + (showResult ? 1 : 0)}<span style={{ color: "rgba(34,33,31,0.24)" }}>/{totalQ}</span>
+            </span>
+          </div>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
-          <div
-            className={`h-full ${currentConfig.progressColor} transition-all duration-500 ease-out rounded-full shadow-sm`}
-            style={{ width: `${((currentQuestion + (showResult ? 1 : 0)) / currentQuizData.length) * 100}%` }}
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(34,33,31,0.08)" }}>
+          <motion.div
+            className="h-full rounded-full"
+            style={{ background: TERRACOTTA }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           />
         </div>
-        <div className="mt-2 text-center">
-          <span className="text-sm text-gray-600">
-            Category Score: {score}/{currentQuestion + (showResult ? 1 : 0)}
-          </span>
-        </div>
       </div>
 
-      {/* Question */}
-      <div className={`bg-gradient-to-br ${currentConfig.bgGradient} p-6 md:p-8 rounded-2xl shadow-lg mb-8 border-2 ${currentConfig.borderColor}`}>
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center">
-          Is "<span className={currentConfig.textColor}>{currentQuizData[currentQuestion].chemical}</span>" safe to use?
-        </h3>
+      {/* ── Question card ───────────────────────────────────────────── */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${activeCategory}-${currentQuestion}`}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="rounded-2xl border overflow-hidden"
+          style={{ background: "rgba(255,255,255,0.80)", borderColor: "rgba(34,33,31,0.08)", boxShadow: "0 4px 28px rgba(0,0,0,0.06)" }}
+        >
+          {/* Question */}
+          <div className="px-6 py-8 text-center border-b" style={{ borderColor: "rgba(34,33,31,0.06)" }}>
+            <p className="font-mono text-[10px] tracking-[0.24em] uppercase mb-4" style={{ color: "rgba(184,92,56,0.50)" }}>
+              Is this ingredient safe?
+            </p>
+            <h3
+              className="font-heading leading-snug"
+              style={{ fontSize: "clamp(1.15rem,2.5vw,1.5rem)", color: CHARCOAL }}
+            >
+              "<span style={{ color: TERRACOTTA }}>{currentQuizData[currentQuestion].chemical}</span>"
+            </h3>
+          </div>
 
-        {!showResult ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button
-              onClick={() => handleQuizAnswer(true)}
-              className="group p-6 bg-green-100 hover:bg-green-200 text-green-800 rounded-xl transition-all duration-300 transform hover:scale-105 font-medium border-2 border-green-300 hover:border-green-400 hover:shadow-lg"
-            >
-              <CheckCircle2 className="h-6 w-6 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-              <div className="font-bold">Safe to Use</div>
-              <div className="text-sm mt-1 opacity-75">Non‑toxic and family‑friendly</div>
-            </button>
-            <button
-              onClick={() => handleQuizAnswer(false)}
-              className="group p-6 bg-red-100 hover:bg-red-200 text-red-800 rounded-xl transition-all duration-300 transform hover:scale-105 font-medium border-2 border-red-300 hover:border-red-400 hover:shadow-lg"
-            >
-              <XCircle className="h-6 w-6 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-              <div className="font-bold">Harmful/Avoid</div>
-              <div className="text-sm mt-1 opacity-75">Contains toxic chemicals</div>
-            </button>
+          {/* Answer choices or feedback */}
+          <div className="p-4 md:p-6">
+            <AnimatePresence mode="wait">
+              {!showResult ? (
+                <motion.div
+                  key="choices"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+                >
+                  <button
+                    onClick={() => handleQuizAnswer(true)}
+                    className="group flex flex-col items-center gap-2 py-6 px-4 rounded-xl border-2 transition-all duration-300 hover:-translate-y-0.5"
+                    style={{ background: "rgba(162,203,139,0.10)", borderColor: "rgba(162,203,139,0.35)", color: "#2F6A20" }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(162,203,139,0.22)"; e.currentTarget.style.borderColor = SAGE; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(162,203,139,0.10)"; e.currentTarget.style.borderColor = "rgba(162,203,139,0.35)"; }}
+                  >
+                    <CheckCircle2 className="h-7 w-7 group-hover:scale-110 transition-transform" style={{ color: "#5A8A3C" }} strokeWidth={1.5} />
+                    <span className="font-display tracking-widest text-base" style={{ color: "#2F6A20" }}>SAFE TO USE</span>
+                    <span className="font-light text-xs" style={{ color: "rgba(47,106,32,0.60)" }}>Non-toxic and family-friendly</span>
+                  </button>
+                  <button
+                    onClick={() => handleQuizAnswer(false)}
+                    className="group flex flex-col items-center gap-2 py-6 px-4 rounded-xl border-2 transition-all duration-300 hover:-translate-y-0.5"
+                    style={{ background: "rgba(184,92,56,0.07)", borderColor: "rgba(184,92,56,0.22)", color: TERRACOTTA }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(184,92,56,0.14)"; e.currentTarget.style.borderColor = TERRACOTTA; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(184,92,56,0.07)"; e.currentTarget.style.borderColor = "rgba(184,92,56,0.22)"; }}
+                  >
+                    <XCircle className="h-7 w-7 group-hover:scale-110 transition-transform" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
+                    <span className="font-display tracking-widest text-base" style={{ color: TERRACOTTA }}>HARMFUL / AVOID</span>
+                    <span className="font-light text-xs" style={{ color: "rgba(184,92,56,0.60)" }}>Contains toxic chemicals</span>
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="result"
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="rounded-xl p-5 md:p-6"
+                  style={{
+                    background: isCorrect ? "rgba(162,203,139,0.15)" : "rgba(184,92,56,0.08)",
+                    border: `1px solid ${isCorrect ? "rgba(162,203,139,0.45)" : "rgba(184,92,56,0.28)"}`,
+                  }}
+                >
+                  {/* Result header */}
+                  <div className="flex items-center gap-3 mb-4">
+                    {isCorrect
+                      ? <CheckCircle2 className="h-5 w-5 flex-shrink-0" style={{ color: "#5A8A3C" }} strokeWidth={1.5} />
+                      : <XCircle className="h-5 w-5 flex-shrink-0" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
+                    }
+                    <span className="font-mono text-xs tracking-widest uppercase" style={{ color: isCorrect ? "#5A8A3C" : TERRACOTTA }}>
+                      {isCorrect ? "Correct!" : "Not quite"}
+                    </span>
+                  </div>
+                  {/* Explanation */}
+                  <p className="font-light leading-relaxed text-sm mb-4" style={{ color: "rgba(34,33,31,0.70)" }}>
+                    {currentQuizData[currentQuestion].explanation}
+                  </p>
+                  {/* Alternative */}
+                  <div className="flex items-start gap-3 pt-3 border-t" style={{ borderColor: "rgba(34,33,31,0.08)" }}>
+                    <ChevronRight className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "rgba(184,92,56,0.50)" }} strokeWidth={1.5} />
+                    <p className="font-light italic text-sm" style={{ color: "rgba(34,33,31,0.52)" }}>
+                      {currentQuizData[currentQuestion].alternative}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        ) : (
-          <div
-            className={`p-6 rounded-xl transition-all duration-500 ${
-              selectedAnswer === currentQuizData[currentQuestion].safe
-                ? "bg-green-100 border-2 border-green-300 shadow-green-100"
-                : "bg-red-100 border-2 border-red-300 shadow-red-100"
-            } shadow-lg`}
-          >
-            <p className="text-gray-700 mb-3 font-medium">{currentQuizData[currentQuestion].explanation}</p>
-            <div className="border-l-4 border-green-500 pl-3">
-              <p className="text-sm text-gray-600 italic font-medium">💡 {currentQuizData[currentQuestion].alternative}</p>
-            </div>
-          </div>
-        )}
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }

@@ -14,10 +14,7 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
-  optimizeDeps: {
-    // Keep lucide-react out of pre-bundling to save some dev build time
-    exclude: ['lucide-react'],
-  },
+
   server: {
     proxy: {
       '/api': {
@@ -27,13 +24,17 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 800, // raise from default 500 KB to reduce noise
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
-        // Manual vendor chunk splitting for better caching
+        // Each stable library in its own chunk → long-term CDN/browser caching
         manualChunks: {
-          react: ['react', 'react-dom'],
-          vendor: ['lucide-react'],
+          'react-core': ['react', 'react-dom'],
+          'react-router': ['react-router-dom'],
+          'framer-motion': ['framer-motion'],
+          'lucide': ['lucide-react'],
+          'contentful': ['contentful'],
+          'keen-slider': ['keen-slider'],
         },
       },
     },

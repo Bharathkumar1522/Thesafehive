@@ -1,18 +1,20 @@
+// GameHub.tsx — branded tab shell for all three games
 import React, { Suspense, useMemo, useRef, useState } from "react";
 import { Brain, Gamepad2, Grid3X3 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Lazy-loaded game routes (code-splitting)
 const QuizGame = React.lazy(() => import("./quizgame"));
 const ProductSortingGame = React.lazy(() => import("./productsortinggame"));
 const MemoryMatch = React.lazy(() => import("./memorymatch"));
 
-type GameKey = "quiz" | "sorting" | "memory";
+// ── Brand palette ────────────────────────────────────────────────────────────
+const VANILLA = "#FAF5E4";
+const SAGE = "#A2CB8B";
+const TERRACOTTA = "#B85C38";
+const CHARCOAL = "#22211F";
 
-type TabDef = {
-  key: GameKey;
-  label: string;
-  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-};
+type GameKey = "quiz" | "sorting" | "memory";
+type TabDef = { key: GameKey; label: string; Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> };
 
 const TABS: TabDef[] = [
   { key: "quiz", label: "Chemical Quiz", Icon: Brain },
@@ -23,7 +25,6 @@ const TABS: TabDef[] = [
 export default function GameHub() {
   const [active, setActive] = useState<GameKey>("quiz");
 
-  // Stable ids for ARIA relationships
   const ids = useMemo(
     () =>
       TABS.reduce(
@@ -37,27 +38,16 @@ export default function GameHub() {
     []
   );
 
-  // Refs for keyboard focus management
-  const tabRefs = useRef<Record<GameKey, HTMLButtonElement | null>>({
-    quiz: null,
-    sorting: null,
-    memory: null,
-  });
-
-  const focusTab = (k: GameKey) => {
-    tabRefs.current[k]?.focus();
-  };
-
+  const tabRefs = useRef<Record<GameKey, HTMLButtonElement | null>>({ quiz: null, sorting: null, memory: null });
+  const focusTab = (k: GameKey) => tabRefs.current[k]?.focus();
   const moveFocus = (dir: "prev" | "next" | "home" | "end") => {
     const order: GameKey[] = TABS.map((t) => t.key);
     const idx = order.indexOf(active);
     let nextIdx = idx;
-
     if (dir === "prev") nextIdx = (idx - 1 + order.length) % order.length;
     if (dir === "next") nextIdx = (idx + 1) % order.length;
     if (dir === "home") nextIdx = 0;
     if (dir === "end") nextIdx = order.length - 1;
-
     const nextKey = order[nextIdx];
     setActive(nextKey);
     focusTab(nextKey);
@@ -65,80 +55,34 @@ export default function GameHub() {
 
   const onTabKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     switch (e.key) {
-      case "ArrowLeft":
-      case "Left":
-        e.preventDefault();
-        moveFocus("prev");
-        break;
-      case "ArrowRight":
-      case "Right":
-        e.preventDefault();
-        moveFocus("next");
-        break;
-      case "Home":
-        e.preventDefault();
-        moveFocus("home");
-        break;
-      case "End":
-        e.preventDefault();
-        moveFocus("end");
-        break;
-      case "Enter":
-      case " ":
-        // Space/Enter already selects since we set active on click.
-        // Prevent page scroll on Space.
-        e.preventDefault();
-        break;
+      case "ArrowLeft": case "Left": e.preventDefault(); moveFocus("prev"); break;
+      case "ArrowRight": case "Right": e.preventDefault(); moveFocus("next"); break;
+      case "Home": e.preventDefault(); moveFocus("home"); break;
+      case "End": e.preventDefault(); moveFocus("end"); break;
+      case "Enter": case " ": e.preventDefault(); break;
     }
   };
 
   const renderPanel = () => {
+    const panelProps = (key: GameKey) => ({
+      id: ids.panel[key], role: "tabpanel" as const,
+      "aria-labelledby": ids.tab[key], tabIndex: 0,
+    });
     switch (active) {
-      case "quiz":
-        return (
-          <div
-            id={ids.panel.quiz}
-            role="tabpanel"
-            aria-labelledby={ids.tab.quiz}
-            tabIndex={0}
-          >
-            <QuizGame />
-          </div>
-        );
-      case "sorting":
-        return (
-          <div
-            id={ids.panel.sorting}
-            role="tabpanel"
-            aria-labelledby={ids.tab.sorting}
-            tabIndex={0}
-          >
-            <ProductSortingGame />
-          </div>
-        );
-      case "memory":
-        return (
-          <div
-            id={ids.panel.memory}
-            role="tabpanel"
-            aria-labelledby={ids.tab.memory}
-            tabIndex={0}
-          >
-            <MemoryMatch />
-          </div>
-        );
-      default:
-        return null;
+      case "quiz": return <div {...panelProps("quiz")}><QuizGame /></div>;
+      case "sorting": return <div {...panelProps("sorting")}><ProductSortingGame /></div>;
+      case "memory": return <div {...panelProps("memory")}><MemoryMatch /></div>;
+      default: return null;
     }
   };
 
   return (
-    <>
-      {/* Accessible tablist with keyboard support */}
+    <div>
+      {/* ── Game selector tabs ──────────────────────────────────────── */}
       <div
         role="tablist"
         aria-label="Game selector"
-        className="flex flex-col sm:flex-row justify-center gap-4 mb-8"
+        className="flex flex-col sm:flex-row justify-center gap-3 mb-8"
       >
         {TABS.map(({ key, label, Icon }) => {
           const selected = active === key;
@@ -153,24 +97,62 @@ export default function GameHub() {
               tabIndex={selected ? 0 : -1}
               onKeyDown={onTabKeyDown}
               onClick={() => setActive(key)}
-              className={`px-6 py-3 rounded-xl font-medium transition-all flex items-center justify-center outline-none
-                ${
-                  selected
-                    ? "bg-green-600 text-white shadow-lg"
-                    : "bg-white text-green-600 border-2 border-green-600 hover:bg-green-50"
-                }`}
+              className="relative flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full font-mono text-sm tracking-widest uppercase transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              style={
+                selected
+                  ? {
+                    background: TERRACOTTA,
+                    color: VANILLA,
+                    boxShadow: "0 4px 20px rgba(184,92,56,0.28)",
+                    border: "2px solid transparent",
+                  }
+                  : {
+                    background: "rgba(255,255,255,0.7)",
+                    color: `rgba(${parseInt(CHARCOAL.slice(1, 3), 16)},${parseInt(CHARCOAL.slice(3, 5), 16)},${parseInt(CHARCOAL.slice(5, 7), 16)},0.58)`,
+                    border: `2px solid rgba(34,33,31,0.12)`,
+                  }
+              }
             >
-              <Icon className="h-5 w-5 mr-2" aria-hidden="true" />
-              {label}
+              {selected && (
+                <motion.div
+                  layoutId="game-tab-pill"
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: TERRACOTTA }}
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <Icon className="h-4 w-4 relative z-10" aria-hidden="true" />
+              <span className="relative z-10">{label}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Only mount the active panel -> lighter initial JS (lazy()) */}
-      <Suspense fallback={<div className="p-8 text-center">Loading game…</div>}>
-        {renderPanel()}
+      {/* ── Game panel ──────────────────────────────────────────────── */}
+      <Suspense
+        fallback={
+          <div className="h-48 flex items-center justify-center">
+            <span
+              className="font-mono text-sm tracking-widest"
+              style={{ color: "rgba(34,33,31,0.26)" }}
+            >
+              Loading game…
+            </span>
+          </div>
+        }
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            {renderPanel()}
+          </motion.div>
+        </AnimatePresence>
       </Suspense>
-    </>
+    </div>
   );
 }
