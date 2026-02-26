@@ -102,7 +102,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
           >
             <Leaf
               className="h-6 w-6 group-hover:rotate-12 transition-transform duration-500"
-              style={{ color: '#47FFAB' }}
+              style={{ color: '#B85C38' }}
               aria-hidden="true"
               strokeWidth={1.5}
             />
@@ -192,7 +192,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
               {/* Drawer header */}
               <div className="flex justify-between items-center mb-14">
                 <Link to="/" className="flex items-center gap-2.5 no-underline" onClick={closeMenu}>
-                  <Leaf className="h-6 w-6" style={{ color: '#47FFAB' }} strokeWidth={1.5} />
+                  <Leaf className="h-6 w-6" style={{ color: '#B85C38' }} strokeWidth={1.5} />
                   <span className="font-display text-3xl tracking-[0.2em]" style={{ color: '#FAF5E4' }}>SAFEHIVE</span>
                 </Link>
                 <button

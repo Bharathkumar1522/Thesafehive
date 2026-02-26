@@ -144,7 +144,7 @@ const Footer = () => {
             <div className="col-span-1 md:col-span-2">
               <Link to="/" className="flex items-center gap-2.5 mb-6 no-underline group">
                 <Leaf className="h-5 w-5 group-hover:rotate-12 transition-transform duration-500"
-                  style={{ color: '#47FFAB' }} strokeWidth={1.5} />
+                  style={{ color: TERRACOTTA }} strokeWidth={1.5} />
                 <span className="font-display text-2xl tracking-widest" style={{ color: CHARCOAL }}>SAFEHIVE</span>
               </Link>
               <p className="text-sm leading-relaxed max-w-xs font-light" style={{ color: 'rgba(34,33,31,0.60)' }}>
