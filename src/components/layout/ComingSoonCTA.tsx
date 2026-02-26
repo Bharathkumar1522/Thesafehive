@@ -106,7 +106,7 @@ export function ComingSoonCTA() {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          We are actively developing TheSafeHive Safety Graph to bring you the safest choices. We are working to identify the top 1% of products that pass our strict 'SVA-1 Protocol' for our marketplace.
+          We are actively developing THESAFEHIVE Safety Graph to bring you the safest choices. We are working to identify the top 1% of products that pass our strict 'SVA-1 Protocol' for our marketplace.
         </motion.p>
 
         <motion.div

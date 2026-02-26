@@ -18,7 +18,7 @@ export function useLenis() {
         const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
         if (isTouchDevice) {
-            console.log('[SafeHive] Touch device detected. Bypassing Lenis for native 60fps scrolling.');
+            console.log('[THESAFEHIVE] Touch device detected. Bypassing Lenis for native 60fps scrolling.');
             return;
         }
 

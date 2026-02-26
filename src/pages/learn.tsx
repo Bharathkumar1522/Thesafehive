@@ -1,5 +1,5 @@
 /**
- * learn.tsx — SafeHive Hub / Learn page
+ * learn.tsx — THESAFEHIVE Hub / Learn page
  * Full redesign: 3-color architecture (VANILLA / SAGE / TERRACOTTA)
  * with TornPaper organic dividers, font-display headlines,
  * ScrollReveal animations, and the GameHub component.
@@ -46,17 +46,17 @@ const svaArchitecture = [
   {
     step: '1', icon: ScanText,
     title: 'Ingredient Intelligence',
-    description: `Product labels and supplier information are complex and inconsistent. TheSafeHive transforms raw ingredient data into a clean, standardised format so every product is evaluated on the same basis, without relying on marketing claims.`,
+    description: `Product labels and supplier information are complex and inconsistent. THESAFEHIVE transforms raw ingredient data into a clean, standardised format so every product is evaluated on the same basis, without relying on marketing claims.`,
   },
   {
     step: '2', icon: FileSearch,
     title: 'Evidence-Backed Safety Signals',
-    description: `Safety claims should be backed by science. TheSafeHive references authoritative regulatory and scientific sources to identify known safety concerns, emerging risks, and areas where evidence is limited.`,
+    description: `Safety claims should be backed by science. THESAFEHIVE references authoritative regulatory and scientific sources to identify known safety concerns, emerging risks, and areas where evidence is limited.`,
   },
   {
     step: '3', icon: Scale,
     title: "Safety Scoring You Can Rely On",
-    description: `Using TheSafeHive's proprietary evaluation framework, each product is assessed for potential concern levels based on current scientific and regulatory understanding. Where data is incomplete, uncertainty is highlighted.`,
+    description: `Using THESAFEHIVE's proprietary evaluation framework, each product is assessed for potential concern levels based on current scientific and regulatory understanding. Where data is incomplete, uncertainty is highlighted.`,
   },
   {
     step: '4', icon: Activity,
@@ -66,7 +66,7 @@ const svaArchitecture = [
   {
     step: '5', icon: Sliders,
     title: 'Personalised, Informational Clarity',
-    description: `Everyone's needs are different. TheSafeHive allows you to view safety information through your own preferences — while remaining strictly informational and non-medical.`,
+    description: `Everyone's needs are different. THESAFEHIVE allows you to view safety information through your own preferences — while remaining strictly informational and non-medical.`,
   },
 ];
 
@@ -272,9 +272,9 @@ export default function Learn() {
                     Non-medical boundary
                   </p>
                   <p className="font-light leading-relaxed" style={{ color: 'rgba(34,33,31,0.58)' }}>
-                    TheSafeHive scoring and personalisation are strictly informational. TheSafeHive does
+                    THESAFEHIVE scoring and personalisation are strictly informational. THESAFEHIVE does
                     not provide medical advice, diagnosis, or treatment. Where evidence is incomplete,
-                    TheSafeHive highlights uncertainty and applies precautionary logic.
+                    THESAFEHIVE highlights uncertainty and applies precautionary logic.
                   </p>
                 </div>
               </div>

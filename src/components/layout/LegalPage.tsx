@@ -14,11 +14,11 @@ interface LegalPageProps {
 }
 
 function HighlightBrand({ text }: { text: string }) {
-  const parts = text.split(/(The\s?SafeHive)/g);
+  const parts = text.split(/(The\s?THESAFEHIVE)/g);
   return (
     <>
       {parts.map((part, i) =>
-        part.match(/^The\s?SafeHive$/) ? (
+        part.match(/^The\s?THESAFEHIVE$/) ? (
           <span key={i} className="text-umber">{part}</span>
         ) : (
           <React.Fragment key={i}>{part}</React.Fragment>

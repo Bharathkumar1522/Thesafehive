@@ -454,7 +454,7 @@ const Home = () => {
               </h2>
               <p className="max-w-2xl mx-auto text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.68)' }}>
                 "Natural." "Pure." "Clean." — these words have no legal definition. Brands use them freely.
-                TheSafeHive exists to bridge the gap between complex chemical safety data and everyday
+                THESAFEHIVE exists to bridge the gap between complex chemical safety data and everyday
                 consumer decisions — using only publicly available scientific and regulatory sources.
               </p>
             </div>
@@ -482,7 +482,7 @@ const Home = () => {
                 "Evidence-based safety, not marketing-based trust."
               </blockquote>
               <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(34,33,31,0.26)' }}>
-                — TheSafeHive Founding Principle
+                — THESAFEHIVE Founding Principle
               </p>
             </div>
           </ScrollReveal>
@@ -623,7 +623,7 @@ const Home = () => {
                 <span style={{ color: 'rgba(34,33,31,0.42)' }}>BUYING.</span>
               </h2>
               <p className="max-w-sm font-light leading-relaxed text-lg mb-10" style={{ color: 'rgba(34,33,31,0.60)' }}>
-                TheSafeHive helps conscious families make safer, better-informed product choices — using
+                THESAFEHIVE helps conscious families make safer, better-informed product choices — using
                 evidence, not marketing.
               </p>
               <MagneticButton strength={0.3}>

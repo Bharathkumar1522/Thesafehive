@@ -40,7 +40,7 @@ const LifestyleCarousel = () => {
       id: 5,
       url: 'https://res.cloudinary.com/dwmaznf4n/image/upload/v1759969700/20251009_0119_Barefoot_Bliss_simple_compose_01k735aafhfzza3jvsbcxjdyz8_l0plcy.webp',
       title: 'In Tune with Evidence, Not Marketing',
-      description: 'TheSafeHive cuts through label jargon so you can make clear, grounded decisions.',
+      description: 'THESAFEHIVE cuts through label jargon so you can make clear, grounded decisions.',
     },
     {
       id: 6,

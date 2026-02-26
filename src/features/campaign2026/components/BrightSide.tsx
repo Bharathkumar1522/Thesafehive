@@ -103,7 +103,7 @@ export default function BrightSide({ onBack }: BrightSideProps) {
         : blogPosts.filter(post => post.category === selectedCategory);
 
     const handleBlogClick = (slug: string) => {
-        // Redirect to TheSafeHive blog
+        // Redirect to THESAFEHIVE blog
         window.open(`https://www.thesafehive.com/blog/${slug}`, '_blank');
     };
 
@@ -232,7 +232,7 @@ export default function BrightSide({ onBack }: BrightSideProps) {
                                     Want More Toxin-Free Living Tips?
                                 </h3>
                                 <p className="text-[#0C4023]/80 leading-relaxed mb-6 max-w-2xl mx-auto">
-                                    Visit TheSafeHive.com for our complete library of articles, product reviews,
+                                    Visit THESAFEHIVE.com for our complete library of articles, product reviews,
                                     and expert guidance on living a healthier, toxin-free life all year round.
                                 </p>
                                 <a
@@ -242,7 +242,7 @@ export default function BrightSide({ onBack }: BrightSideProps) {
                                     className="inline-flex items-center gap-2 px-8 py-4 bg-[#59a75c] text-white font-semibold rounded-lg hover:bg-[#3d7a40] transition-all duration-300 shadow-lg hover:shadow-xl"
                                 >
                                     <BookOpen className="w-5 h-5" />
-                                    <span>Visit TheSafeHive Blog</span>
+                                    <span>Visit THESAFEHIVE Blog</span>
                                     <ExternalLink className="w-4 h-4" />
                                 </a>
                             </div>

@@ -4,7 +4,7 @@ import LegalPage from "../components/layout/LegalPage";
 export default function TermsOfService() {
   return (
     <LegalPage
-      title="Terms of Service – The SafeHive"
+      title="Terms of Service – THESAFEHIVE"
       toc={[
         { label: "1. Use of Website", href: "#use-of-website" },
         { label: "2. No Commercial Transactions", href: "#no-commercial-transactions" },
@@ -19,7 +19,7 @@ export default function TermsOfService() {
       <section className="mb-8">
         <h2 id="use-of-website" className="scroll-mt-24 text-xl font-semibold text-gray-900 mb-2">1. Use of Website</h2>
         <p>
-          The SafeHive provides a platform for sharing content related to healthy, natural, and harm-free living.
+          THESAFEHIVE provides a platform for sharing content related to healthy, natural, and harm-free living.
           You agree to use the site for personal, lawful, and non-commercial purposes. You must not misuse,
           disrupt, or attempt to interfere with the functionality or security of the site. Use of this website must
           comply with all applicable laws and these Terms.
@@ -29,7 +29,7 @@ export default function TermsOfService() {
       <section className="mb-8">
         <h2 id="no-commercial-transactions" className="scroll-mt-24 text-xl font-semibold text-gray-900 mb-2">2. No Commercial Transactions</h2>
         <p>
-          The SafeHive does not sell or promote any products or services. This website is purely informational and
+          THESAFEHIVE does not sell or promote any products or services. This website is purely informational and
           offers general awareness content with a contact form for inquiries. No financial transactions or commercial
           activities take place through this site.
         </p>
@@ -48,9 +48,9 @@ export default function TermsOfService() {
         <h2 id="intellectual-property" className="scroll-mt-24 text-xl font-semibold text-gray-900 mb-2">4. Intellectual Property</h2>
         <p>
           All original content on this site—including text, branding, blog posts, and certain AI-generated visuals—is
-          the property of The SafeHive or used under proper license. You may share content for personal or educational
+          the property of THESAFEHIVE or used under proper license. You may share content for personal or educational
           purposes with credit, but you may not reuse it commercially, misrepresent it, or modify it without permission.
-          The SafeHive is not responsible for how its content is used or misused outside of this website.
+          THESAFEHIVE is not responsible for how its content is used or misused outside of this website.
         </p>
       </section>
 

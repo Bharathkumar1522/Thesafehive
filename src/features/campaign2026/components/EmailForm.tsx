@@ -96,7 +96,7 @@ export default function EmailForm({ onClose }: EmailFormProps) {
                             <CheckCircle className="w-10 h-10 text-[#59a75c]" />
                         </div>
                         <h3 className="text-xl font-bold text-[#0C4023] mb-2">
-                            Welcome to TheSafeHive!
+                            Welcome to THESAFEHIVE!
                         </h3>
                         <p className="text-[#0C4023]/70">
                             Check your email for a special welcome gift 🎁

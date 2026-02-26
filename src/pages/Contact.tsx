@@ -28,15 +28,15 @@ const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const FAQS = [
   {
     question: `When will the SVA-1 verification tool be available?`,
-    answer: `TheSafeHive's SVA-1 product verifier is currently in development. You can join the waitlist via this contact form and we will notify you when early access opens.`,
+    answer: `THESAFEHIVE's SVA-1 product verifier is currently in development. You can join the waitlist via this contact form and we will notify you when early access opens.`,
   },
   {
-    question: `What does TheSafeHive mean by "lower-risk" products?`,
-    answer: `No product is truly "chemical-free" — everything is made of chemicals. TheSafeHive identifies products whose ingredients are not flagged as substances of concern under EU REACH, EWG Skin Deep, or IARC classifications. We say lower-risk, not risk-free.`,
+    question: `What does THESAFEHIVE mean by "lower-risk" products?`,
+    answer: `No product is truly "chemical-free" — everything is made of chemicals. THESAFEHIVE identifies products whose ingredients are not flagged as substances of concern under EU REACH, EWG Skin Deep, or IARC classifications. We say lower-risk, not risk-free.`,
   },
   {
-    question: `Is TheSafeHive medical advice?`,
-    answer: `No. TheSafeHive is strictly informational. Our assessments are based on publicly available scientific and regulatory sources and are not medical advice, diagnosis, or treatment recommendations. Always consult a qualified health professional.`,
+    question: `Is THESAFEHIVE medical advice?`,
+    answer: `No. THESAFEHIVE is strictly informational. Our assessments are based on publicly available scientific and regulatory sources and are not medical advice, diagnosis, or treatment recommendations. Always consult a qualified health professional.`,
   },
   {
     question: `Can I contribute to your blog?`,
@@ -136,7 +136,7 @@ const Contact = () => {
             style={{ color: 'rgba(34,33,31,0.46)' }}
           >
             Have a question about our methodology, a collaboration idea, or simply want to
-            learn more about TheSafeHive? We'd love to hear from you.
+            learn more about THESAFEHIVE? We'd love to hear from you.
           </motion.p>
         </div>
       </section>
@@ -233,7 +233,7 @@ const Contact = () => {
                         onMouseEnter={e => (e.currentTarget.style.color = '#A34E2F')}
                         onMouseLeave={e => (e.currentTarget.style.color = TERRACOTTA)}
                       >
-                        TheSafeHive ↗
+                        THESAFEHIVE ↗
                       </a>
                     </div>
                   </div>

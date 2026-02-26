@@ -223,7 +223,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t"
             style={{ borderColor: 'rgba(34,33,31,0.08)' }}>
             <p className="font-mono text-xs" style={{ color: 'rgba(34,33,31,0.40)' }}>
-              © {currentYear} TheSafeHive · SVA-1 Protocol
+              © {currentYear} THESAFEHIVE · SVA-1 Protocol
             </p>
             <p className="font-mono text-xs tracking-wider" style={{ color: 'rgba(34,33,31,0.40)' }}>
               SANCTUARY, NOT SPECULATION

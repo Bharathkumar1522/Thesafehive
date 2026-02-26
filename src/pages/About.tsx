@@ -68,22 +68,22 @@ const About = () => {
     {
       icon: Target,
       title: 'Clear Safety Decisions',
-      description: `TheSafeHive translates complex chemical and ingredient data into clear, structured signals that help people make safer everyday choices with confidence.`,
+      description: `THESAFEHIVE translates complex chemical and ingredient data into clear, structured signals that help people make safer everyday choices with confidence.`,
     },
     {
       icon: ShieldCheck,
       title: 'Evidence-Led Verification',
-      description: `TheSafeHive assesses ingredients using publicly available scientific and regulatory sources, prioritising evidence over marketing claims.`,
+      description: `THESAFEHIVE assesses ingredients using publicly available scientific and regulatory sources, prioritising evidence over marketing claims.`,
     },
     {
       icon: ShoppingBag,
       title: 'Practical Application',
-      description: `TheSafeHive demonstrates how safety intelligence can be applied in real purchasing decisions, reducing confusion and decision fatigue.`,
+      description: `THESAFEHIVE demonstrates how safety intelligence can be applied in real purchasing decisions, reducing confusion and decision fatigue.`,
     },
     {
       icon: GraduationCap,
       title: 'Education and Transparency',
-      description: `TheSafeHive helps people understand what's inside products, why ingredients matter, and where scientific certainty or uncertainty exists.`,
+      description: `THESAFEHIVE helps people understand what's inside products, why ingredients matter, and where scientific certainty or uncertainty exists.`,
     },
   ], []);
 
@@ -93,22 +93,22 @@ const About = () => {
     {
       icon: CheckCircle2,
       title: 'The End of Decision Fatigue',
-      description: `You shouldn't need a PhD in Toxicology to buy shampoo. TheSafeHive's SVA-1 protocol cross-references ingredient data against publicly available scientific and regulatory sources so you get clear, structured safety signals — without the jargon.`,
+      description: `You shouldn't need a PhD in Toxicology to buy shampoo. THESAFEHIVE's SVA-1 protocol cross-references ingredient data against publicly available scientific and regulatory sources so you get clear, structured safety signals — without the jargon.`,
     },
     {
       icon: ClipboardCheck,
       title: 'Physical Integrity Audit',
-      description: `An algorithm can detect toxins, but it cannot verify product quality. That is why every product that passes TheSafeHive digital screening undergoes a physical Golden Sample check — reducing formulation mismatch risk.`,
+      description: `An algorithm can detect toxins, but it cannot verify product quality. That is why every product that passes THESAFEHIVE digital screening undergoes a physical Golden Sample check — reducing formulation mismatch risk.`,
     },
     {
       icon: BadgeCheck,
       title: 'No Fear Mongering, Just Facts',
-      description: `TheSafeHive does not use scary marketing. TheSafeHive uses data — telling you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.`,
+      description: `THESAFEHIVE does not use scary marketing. THESAFEHIVE uses data — telling you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.`,
     },
     {
       icon: Users,
       title: 'Community-Led Validation',
-      description: `TheSafeHive listens to feedback from families, parents, and eco-conscious shoppers to continuously refine what "lower-risk" means in the real world.`,
+      description: `THESAFEHIVE listens to feedback from families, parents, and eco-conscious shoppers to continuously refine what "lower-risk" means in the real world.`,
     },
   ], []);
 
@@ -117,19 +117,19 @@ const About = () => {
       icon: Building,
       title: 'Brand-Level Collaboration',
       description:
-        'TheSafeHive works with transparent brands to improve ingredient disclosure and formulation accountability.',
+        'THESAFEHIVE works with transparent brands to improve ingredient disclosure and formulation accountability.',
     },
     {
       icon: Microscope,
       title: 'Selective Lab Validation',
       description:
-        'TheSafeHive introduces targeted third-party testing to calibrate and strengthen verification logic.',
+        'THESAFEHIVE introduces targeted third-party testing to calibrate and strengthen verification logic.',
     },
     {
       icon: TrendingUp,
       title: 'Compliance Infrastructure',
       description:
-        'TheSafeHive supports safety and regulatory workflows in a tightening chemical compliance environment.',
+        'THESAFEHIVE supports safety and regulatory workflows in a tightening chemical compliance environment.',
     },
   ], []);
 
@@ -174,7 +174,7 @@ const About = () => {
                 className="font-mono text-[10px] tracking-[0.28em] uppercase mb-6"
                 style={{ color: 'rgba(184,92,56,0.5)' }}
               >
-                About TheSafeHive
+                About THESAFEHIVE
               </motion.p>
 
               <div className="overflow-hidden mb-3">
@@ -205,7 +205,7 @@ const About = () => {
                 className="text-lg md:text-xl font-light leading-relaxed max-w-lg mb-10"
                 style={{ color: 'rgba(34,33,31,0.68)' }}
               >
-                TheSafeHive is a compliance-first technology platform building the digital
+                THESAFEHIVE is a compliance-first technology platform building the digital
                 infrastructure for evidence-based product safety. We bridge the gap between
                 complex chemical data and everyday consumer decisions.
               </motion.p>
@@ -306,7 +306,7 @@ const About = () => {
                 DISCOVER OUR<br /><span className="text-terracotta">VISION</span>
               </h2>
               <p className="max-w-2xl mx-auto text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.70)' }}>
-                TheSafeHive exists to bridge the gap between complex chemical safety data
+                THESAFEHIVE exists to bridge the gap between complex chemical safety data
                 and everyday consumer decisions.
               </p>
             </div>
@@ -367,7 +367,7 @@ const About = () => {
                 OUR <span className="text-terracotta">VALUES</span>
               </h2>
               <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(34,33,31,0.46)' }}>
-                Principles that guide TheSafeHive verification-first approach.
+                Principles that guide THESAFEHIVE verification-first approach.
               </p>
             </div>
           </ScrollReveal>
@@ -444,11 +444,11 @@ const About = () => {
                 strokeWidth={1.5}
               />
               <p className="font-mono text-xs tracking-widest uppercase mb-4" style={{ color: 'rgba(184,92,56,0.5)' }}>
-                TheSafeHive Promise
+                THESAFEHIVE Promise
               </p>
               <p className="font-light text-lg leading-relaxed" style={{ color: 'rgba(34,33,31,0.58)' }}>
-                TheSafeHive is building a verified marketplace grounded in evidence, transparency,
-                and community feedback. TheSafeHive is not here to scare you. TheSafeHive is here
+                THESAFEHIVE is building a verified marketplace grounded in evidence, transparency,
+                and community feedback. THESAFEHIVE is not here to scare you. THESAFEHIVE is here
                 to give you clarity you can trust.
               </p>
             </div>
@@ -488,7 +488,7 @@ const About = () => {
                 LOOKING <span className="text-terracotta">AHEAD</span>
               </h2>
               <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(34,33,31,0.46)' }}>
-                As TheSafeHive evolves, we aim to expand safety intelligence capabilities through:
+                As THESAFEHIVE evolves, we aim to expand safety intelligence capabilities through:
               </p>
             </div>
           </ScrollReveal>
@@ -526,7 +526,7 @@ const About = () => {
       <section
         className="relative py-24"
         style={{ backgroundColor: SOFT_SAND }}
-        aria-label="TheSafeHive Story"
+        aria-label="THESAFEHIVE Story"
       >
         <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
         <div className="absolute inset-0 pointer-events-none dot-grid" style={{ opacity: 0.55 }} />
@@ -545,9 +545,9 @@ const About = () => {
 
             <div className="space-y-7">
               {[
-                'The SafeHive was born to solve a data problem. The £14B personal care market lacks a unified safety standard. We built the SafeHive Protocol to bridge the gap between complex chemical data and consumer buying decisions.',
+                'THESAFEHIVE was born to solve a data problem. The £14B personal care market lacks a unified safety standard. We built the THESAFEHIVE Protocol to bridge the gap between complex chemical data and consumer buying decisions.',
                 'When I first arrived in the UK, I was struck by the sheer number of products claiming to be "eco", "green", or "safe". But the more I looked, the more overwhelming it became. Labels were confusing, ingredient lists were full of jargon, and marketing was often designed to reassure without evidence.',
-                `I realised I wasn't alone. Many people want to make healthier choices, but they get stuck in a maze of vague claims, inconsistent ingredient disclosures, and decision fatigue. TheSafeHive exists to cut through the noise and make chemical safety easier to understand, easier to compare, and easier to act on.`,
+                `I realised I wasn't alone. Many people want to make healthier choices, but they get stuck in a maze of vague claims, inconsistent ingredient disclosures, and decision fatigue. THESAFEHIVE exists to cut through the noise and make chemical safety easier to understand, easier to compare, and easier to act on.`,
               ].map((para, i) => (
                 <ScrollReveal key={i} variant="fade" delay={i * 0.1}>
                   <p className="text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.58)' }}>{para}</p>
@@ -568,10 +568,10 @@ const About = () => {
                   className="font-heading italic text-charcoal leading-relaxed mb-5"
                   style={{ fontSize: 'clamp(1.2rem,2vw,1.6rem)' }}
                 >
-                  "TheSafeHive turns chemical safety into clear, usable decisions."
+                  "THESAFEHIVE turns chemical safety into clear, usable decisions."
                 </blockquote>
                 <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(34,33,31,0.28)' }}>
-                  — TheSafeHive Team
+                  — THESAFEHIVE Team
                 </p>
               </div>
             </ScrollReveal>
