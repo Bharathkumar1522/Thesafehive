@@ -241,7 +241,7 @@ const Home = () => {
 
               <motion.p
                 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.7 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
                 className="max-w-lg mx-auto lg:mx-0 text-lg md:text-xl leading-relaxed font-light mb-12"
                 style={{ color: 'rgba(15, 23, 42,0.58)' }}
               >
@@ -251,7 +251,7 @@ const Home = () => {
 
               <motion.div
                 initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.88 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center"
               >
                 <MagneticButton strength={0.3}>
@@ -280,7 +280,7 @@ const Home = () => {
             {/* Right Column: Image Collage */}
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.9 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               className="mt-14 lg:mt-0 relative flex justify-center lg:justify-end"
             >
               <div className="relative w-full max-w-lg h-[400px] sm:h-[500px] lg:h-[600px] flex items-center justify-center">
