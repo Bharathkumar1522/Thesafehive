@@ -47,7 +47,7 @@ export default function SVAPassport() {
                                 </div>
                             </div>
                             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-sage/30 bg-sage/10 text-sage font-mono text-xs tracking-widest uppercase">
-                                <CheckCircle2 className="w-3.5 h-3.5" /> VERIFIED SAFE
+                                <CheckCircle2 className="w-3.5 h-3.5" /> ANALYSED
                             </div>
                         </div>
 
@@ -81,11 +81,16 @@ export default function SVAPassport() {
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-terracotta blur-[80px] opacity-[0.08]" />
                                 <div className="flex items-center gap-2 mb-6 relative z-10">
                                     <ShieldCheck className="w-4 h-4 text-terracotta" />
-                                    <span className="font-mono text-[10px] tracking-[0.2em] text-charcoal/40 uppercase">Hazard-Weighted Score</span>
+                                    <span className="font-mono text-[10px] tracking-[0.2em] text-charcoal/40 uppercase">Safety Rating</span>
                                 </div>
-                                <div className="mt-auto relative z-10 flex items-end gap-2">
-                                    <span className="font-display text-7xl text-charcoal leading-none">A+</span>
-                                    <span className="font-mono text-xs text-charcoal/40 mb-2 tracking-widest">/ SEVERITY 0</span>
+                                <div className="mt-auto relative z-10 flex flex-col items-start gap-1">
+                                    <div className="flex items-end gap-2">
+                                        <span className="font-display text-7xl text-charcoal leading-none">A+</span>
+                                        <span className="font-mono text-xs text-charcoal/40 mb-2 tracking-widest">/ SEVERITY 0</span>
+                                    </div>
+                                    <p className="font-light text-[10px] leading-snug text-charcoal/50 mt-1 max-w-[90%]">
+                                        Based on current ingredient data and applicable regulatory standards.
+                                    </p>
                                 </div>
                             </div>
 
