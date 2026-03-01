@@ -286,7 +286,7 @@ export default function DetectiveGame({ case: caseData, onBack }: DetectiveGameP
                                             rel="noopener noreferrer"
                                             className="px-8 py-3 bg-transparent border-2 border-[#59a75c] text-[#59a75c] font-semibold rounded-lg hover:bg-[#59a75c] hover:text-white transition-all duration-300"
                                         >
-                                            Learn More at THESAFEHIVE
+                                            Learn More at TheSafeHive
                                         </a>
                                     </div>
                                 </div>

@@ -3,7 +3,7 @@ import LegalPage from "../components/layout/LegalPage";
 export default function CookiePolicy() {
   return (
     <LegalPage
-      title="Cookie Policy – THESAFEHIVE"
+      title="Cookie Policy – TheSafeHive"
       toc={[
         { label: "1. Purpose and Scope", href: "#purpose-and-scope" },
         { label: "2. Consent Requirements", href: "#consent-requirements" },
@@ -17,7 +17,7 @@ export default function CookiePolicy() {
       <section className="mb-8">
         <h2 id="purpose-and-scope" className="scroll-mt-24 text-xl font-semibold text-gray-900 mb-2">1. Purpose and Scope</h2>
         <p>
-          THESAFEHIVE uses cookies and similar technologies to ensure a smooth and secure browsing experience,
+          TheSafeHive uses cookies and similar technologies to ensure a smooth and secure browsing experience,
           understand how visitors interact with our content, and make ongoing improvements to our website. Cookies are
           small files stored on your device that may be essential to site operation or optional depending on their use.
         </p>

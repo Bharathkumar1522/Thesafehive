@@ -24,8 +24,8 @@ export function Mission() {
   }, []);
 
   return (
-    <section 
-      id="mission" 
+    <section
+      id="mission"
       ref={ref}
       className="py-24 px-6 bg-gradient-to-br from-[#f8fffe] to-white relative overflow-hidden"
     >
@@ -72,7 +72,7 @@ export function Mission() {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-heading mb-8 text-gray-900 leading-tight">
                 Discover Our{' '}
                 <span className="text-[#4CAF50] relative">
                   Mission
@@ -92,7 +92,7 @@ export function Mission() {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Helping individuals and families choose safe, non-toxic alternatives for everyday life. 
+              Helping individuals and families choose safe, non-toxic alternatives for everyday life.
               Learn how we're building a safer, chemical-free world for you and your family.
             </motion.p>
 
@@ -134,7 +134,7 @@ export function Mission() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="mb-2 text-gray-900 font-semibold text-base">
+                    <h4 className="mb-2 text-gray-900 font-heading text-base">
                       {point.title}
                     </h4>
                     <p className="text-gray-600 text-base">
@@ -191,7 +191,7 @@ export function Mission() {
                   >
                     <Target className="w-8 h-8 text-white" />
                   </motion.div>
-                  <h3 className="mb-2 text-gray-900 font-sans font-semibold text-lg">
+                  <h3 className="mb-2 text-gray-900 font-sans font-medium text-lg">
                     Our Goal
                   </h3>
                   <p className="text-gray-600 font-sans text-sm">

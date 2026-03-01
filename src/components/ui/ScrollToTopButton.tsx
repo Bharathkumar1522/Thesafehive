@@ -38,7 +38,7 @@ export function ScrollToTopButton() {
                     transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                     onClick={scrollToTop}
                     className="fixed bottom-8 right-8 z-[100] p-3 rounded-full shadow-2xl transition-all duration-300 group focus:outline-none"
-                    style={{ background: '#FAF5E4', border: '1px solid rgba(34,33,31,0.1)' }}
+                    style={{ background: '#FAF5E4', border: '1px solid rgba(15, 23, 42,0.1)' }}
                     aria-label="Scroll to top"
                 >
                     <div className="absolute inset-0 rounded-full transition-opacity duration-300 opacity-0 group-hover:opacity-100" style={{ background: '#B85C38' }} />

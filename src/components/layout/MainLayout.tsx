@@ -16,9 +16,9 @@ export default function MainLayout({ isLoggedIn, onLogout }: MainLayoutProps) {
     const outlet = useOutlet();
 
     return (
-        <div className="flex flex-col min-h-screen overflow-x-hidden max-w-[100vw] w-full relative" style={{ backgroundColor: '#FAF5E4' }}>
+        <div className="flex flex-col min-h-screen overflow-x-hidden max-w-[100vw] w-full relative" style={{ backgroundColor: '#F8FAFC' }}>
             <Navbar isLoggedIn={isLoggedIn} onLogout={onLogout} />
-            <main className="flex-grow w-full max-w-[100vw]">
+            <main className="flex-grow w-full max-w-[100vw] relative z-10">
                 <AnimatePresence
                     mode="wait"
                     onExitComplete={() => {

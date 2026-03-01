@@ -21,13 +21,12 @@
     overflow-x: hidden;
     scroll-behavior: auto;
     /* Lenis takes over smooth scrolling */
-    background-color: #0D0F0A;
-    /* carbon — prevents flash */
+    /* Lenis takes over smooth scrolling */
   }
 
   body {
-    @apply font-body text-oat bg-forest leading-relaxed;
-    @apply selection:bg-mint selection:text-carbon;
+    @apply font-body text-charcoal/80 bg-offWhite leading-relaxed;
+    @apply selection:bg-mint selection:text-charcoal;
   }
 
   /* Headings: editorial serif by default */

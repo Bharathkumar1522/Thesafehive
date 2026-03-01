@@ -29,7 +29,7 @@ export default function Logo({ className = '', variant = 'light' }: LogoProps) {
                 />
             </g>
 
-            {/* THESAFEHIVE Text */}
+            {/* TheSafeHive Text */}
             <text
                 x="45"
                 y="32"
@@ -39,7 +39,7 @@ export default function Logo({ className = '', variant = 'light' }: LogoProps) {
                 fill={textColor}
                 letterSpacing="0.5"
             >
-                THESAFEHIVE
+                TheSafeHive
             </text>
         </svg>
     );

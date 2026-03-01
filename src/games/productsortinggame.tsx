@@ -4,10 +4,9 @@ import { RotateCcw, Leaf, AlertTriangle, CheckCircle2, XCircle } from "lucide-re
 import { motion, AnimatePresence } from "framer-motion";
 import { Product, sortingProducts } from "./data";
 
-const VANILLA = "#FAF5E4";
 const SAGE = "#A2CB8B";
-const TERRACOTTA = "#B85C38";
-const CHARCOAL = "#22211F";
+const TERRACOTTA = '#06B6D4';
+const CHARCOAL = '#0F172A';
 
 export default function ProductSortingGame() {
   const [products, setProducts] = useState<Product[]>(sortingProducts);
@@ -54,24 +53,24 @@ export default function ProductSortingGame() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2
-            className="font-display tracking-widest leading-none mb-1"
+            className="font-display leading-none mb-1"
             style={{ fontSize: "clamp(1.6rem,4vw,2.8rem)", color: CHARCOAL }}
           >
             SORTING <span style={{ color: TERRACOTTA }}>CHALLENGE</span>
           </h2>
-          <p className="font-light text-sm" style={{ color: "rgba(34,33,31,0.50)" }}>
+          <p className="font-light text-sm" style={{ color: "rgba(15, 23, 42,0.50)" }}>
             Drag products to the correct zone — or tap a card, then tap a zone on mobile.
           </p>
         </div>
         <div className="flex items-center gap-4 flex-shrink-0">
           <div className="text-center">
-            <div className="font-display text-2xl tracking-widest" style={{ color: TERRACOTTA }}>{sortingScore}</div>
-            <div className="font-mono text-[9px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.32)" }}>Score</div>
+            <div className="font-display text-2xl" style={{ color: TERRACOTTA }}>{sortingScore}</div>
+            <div className="font-mono text-[9px] tracking-widest uppercase" style={{ color: 'rgba(15, 23, 42,0.55)' }}>Score</div>
           </div>
           <button
             onClick={reset}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs tracking-widest uppercase transition-all duration-200 hover:opacity-80"
-            style={{ background: "rgba(34,33,31,0.07)", color: "rgba(34,33,31,0.54)", border: "1px solid rgba(34,33,31,0.10)" }}
+            style={{ background: "rgba(15, 23, 42,0.07)", color: "rgba(15, 23, 42,0.54)", border: "1px solid rgba(15, 23, 42,0.10)" }}
           >
             <RotateCcw className="h-3.5 w-3.5" /> Reset
           </button>
@@ -84,9 +83,9 @@ export default function ProductSortingGame() {
         {/* Products to sort */}
         <div
           className="rounded-2xl p-4 border"
-          style={{ background: "rgba(255,255,255,0.55)", borderColor: "rgba(34,33,31,0.08)" }}
+          style={{ background: "rgba(255,255,255,0.55)", borderColor: "rgba(15, 23, 42,0.08)" }}
         >
-          <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center gap-2" style={{ color: "rgba(34,33,31,0.36)" }}>
+          <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center gap-2" style={{ color: 'rgba(15, 23, 42,0.55)' }}>
             <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: TERRACOTTA }} />
             Products to Sort
           </h3>
@@ -104,20 +103,20 @@ export default function ProductSortingGame() {
                   onClick={() => handleTouchStart(p)}
                   className="group px-4 py-3 rounded-xl cursor-grab active:cursor-grabbing border-2 transition-all duration-200 hover:-translate-y-0.5"
                   style={{
-                    background: draggedItem?.name === p.name ? "rgba(184,92,56,0.10)" : "rgba(255,255,255,0.90)",
-                    borderColor: draggedItem?.name === p.name ? TERRACOTTA : "rgba(34,33,31,0.07)",
-                    boxShadow: draggedItem?.name === p.name ? `0 0 0 3px rgba(184,92,56,0.20)` : "0 2px 8px rgba(0,0,0,0.04)",
+                    background: draggedItem?.name === p.name ? "rgba(6, 182, 212,0.10)" : "rgba(255,255,255,0.90)",
+                    borderColor: draggedItem?.name === p.name ? TERRACOTTA : "rgba(15, 23, 42,0.07)",
+                    boxShadow: draggedItem?.name === p.name ? `0 0 0 3px rgba(6, 182, 212,0.20)` : "0 2px 8px rgba(0,0,0,0.04)",
                   }}
                 >
-                  <div className="font-mono text-[9px] tracking-widest uppercase mb-0.5" style={{ color: "rgba(34,33,31,0.34)" }}>{p.type}</div>
+                  <div className="font-mono text-[9px] tracking-widest uppercase mb-0.5" style={{ color: 'rgba(15, 23, 42,0.55)' }}>{p.type}</div>
                   <div className="font-light text-sm" style={{ color: CHARCOAL }}>{p.name}</div>
                 </motion.div>
               ))}
             </AnimatePresence>
             {allSorted && (
               <div className="py-8 text-center">
-                <p className="font-display text-xl tracking-widest" style={{ color: TERRACOTTA }}>ALL SORTED!</p>
-                <p className="font-light text-sm mt-1" style={{ color: "rgba(34,33,31,0.44)" }}>Final score: {sortingScore}</p>
+                <p className="font-display text-xl" style={{ color: TERRACOTTA }}>ALL SORTED!</p>
+                <p className="font-light text-sm mt-1" style={{ color: "rgba(15, 23, 42,0.44)" }}>Final score: {sortingScore}</p>
               </div>
             )}
           </div>
@@ -130,8 +129,8 @@ export default function ProductSortingGame() {
           onTouchEnd={() => handleZoneTouch("safe")}
           className="rounded-2xl p-4 border-2 border-dashed transition-all duration-300 min-h-[280px]"
           style={{
-            background: "rgba(162,203,139,0.08)",
-            borderColor: draggedItem ? SAGE : "rgba(162,203,139,0.38)",
+            background: "rgba(186, 230, 253,0.08)",
+            borderColor: draggedItem ? SAGE : "rgba(186, 230, 253,0.38)",
           }}
         >
           <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center justify-center gap-2" style={{ color: "#3A7A28" }}>
@@ -147,8 +146,8 @@ export default function ProductSortingGame() {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-xl border"
                   style={{
-                    background: p.correct ? "rgba(162,203,139,0.20)" : "rgba(184,92,56,0.10)",
-                    borderColor: p.correct ? "rgba(162,203,139,0.50)" : "rgba(184,92,56,0.30)",
+                    background: p.correct ? "rgba(186, 230, 253,0.20)" : "rgba(6, 182, 212,0.10)",
+                    borderColor: p.correct ? "rgba(186, 230, 253,0.50)" : "rgba(6, 182, 212,0.30)",
                   }}
                 >
                   {p.correct
@@ -156,7 +155,7 @@ export default function ProductSortingGame() {
                     : <XCircle className="h-3.5 w-3.5 flex-shrink-0" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
                   }
                   <div>
-                    <div className="font-mono text-[8px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.36)" }}>{p.type}</div>
+                    <div className="font-mono text-[8px] tracking-widest uppercase" style={{ color: 'rgba(15, 23, 42,0.55)' }}>{p.type}</div>
                     <div className="font-light text-xs" style={{ color: CHARCOAL }}>{p.name}</div>
                   </div>
                 </motion.div>
@@ -164,7 +163,7 @@ export default function ProductSortingGame() {
             </AnimatePresence>
             {safeZone.length === 0 && (
               <div className="py-8 text-center">
-                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: "rgba(162,203,139,0.55)" }}>Drop safe items here</p>
+                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: "rgba(186, 230, 253,0.55)" }}>Drop safe items here</p>
               </div>
             )}
           </div>
@@ -177,8 +176,8 @@ export default function ProductSortingGame() {
           onTouchEnd={() => handleZoneTouch("harmful")}
           className="rounded-2xl p-4 border-2 border-dashed transition-all duration-300 min-h-[280px]"
           style={{
-            background: "rgba(184,92,56,0.05)",
-            borderColor: draggedItem ? TERRACOTTA : "rgba(184,92,56,0.28)",
+            background: "rgba(6, 182, 212,0.05)",
+            borderColor: draggedItem ? TERRACOTTA : "rgba(6, 182, 212,0.28)",
           }}
         >
           <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center justify-center gap-2" style={{ color: TERRACOTTA }}>
@@ -194,8 +193,8 @@ export default function ProductSortingGame() {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-xl border"
                   style={{
-                    background: p.correct ? "rgba(184,92,56,0.10)" : "rgba(162,203,139,0.15)",
-                    borderColor: p.correct ? "rgba(184,92,56,0.30)" : "rgba(162,203,139,0.45)",
+                    background: p.correct ? "rgba(6, 182, 212,0.10)" : "rgba(186, 230, 253,0.15)",
+                    borderColor: p.correct ? "rgba(6, 182, 212,0.30)" : "rgba(186, 230, 253,0.45)",
                   }}
                 >
                   {p.correct
@@ -203,7 +202,7 @@ export default function ProductSortingGame() {
                     : <XCircle className="h-3.5 w-3.5 flex-shrink-0" style={{ color: "#5A8A3C" }} strokeWidth={1.5} />
                   }
                   <div>
-                    <div className="font-mono text-[8px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.36)" }}>{p.type}</div>
+                    <div className="font-mono text-[8px] tracking-widest uppercase" style={{ color: 'rgba(15, 23, 42,0.55)' }}>{p.type}</div>
                     <div className="font-light text-xs" style={{ color: CHARCOAL }}>{p.name}</div>
                   </div>
                 </motion.div>
@@ -211,7 +210,7 @@ export default function ProductSortingGame() {
             </AnimatePresence>
             {harmfulZone.length === 0 && (
               <div className="py-8 text-center">
-                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: "rgba(184,92,56,0.40)" }}>Drop harmful items here</p>
+                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: '#0891B2' }}>Drop harmful items here</p>
               </div>
             )}
           </div>

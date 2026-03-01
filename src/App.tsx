@@ -9,22 +9,23 @@ import { Analytics } from '@vercel/analytics/react';
 
 // ─── Lazy Loaded Routes (Code Splitting) ─────────────────────────
 const About = lazy(() => import('./pages/About'));
-const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Login = lazy(() => import('./pages/Login'));
 const Learn = lazy(() => import('./pages/learn'));
+const SVA = lazy(() => import('./pages/SVA'));
 
 // Lazy-loaded policy/legal pages
 const CookiePolicy = lazy(() => import('./pages/cookie-policy'));
 const PrivacyPolicy = lazy(() => import('./pages/privacy-policy'));
 const TermsOfService = lazy(() => import('./pages/terms-of-service'));
+
 const Campaign2026 = lazy(() => import('./features/campaign2026/Campaign2026Container'));
 
-// Global fallback loader for lazy routes
+// Global fallback loader for lazy routes that also prevents footer flicker
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FAF5E4' }}>
-    <div className="font-mono text-sm tracking-widest uppercase animate-pulse" style={{ color: 'rgba(34,33,31,0.4)' }}>
+  <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F8FAFC' }}>
+    <div className="font-mono text-sm tracking-widest uppercase animate-pulse" style={{ color: 'rgba(15, 23, 42,0.4)' }}>
       Loading...
     </div>
   </div>
@@ -49,7 +50,7 @@ function App() {
       <Routes>
         {/* Campaign Route (No Navbar/Footer) */}
         <Route path="/campaign-2026" element={
-          <Suspense fallback={<div className="bg-carbon min-h-screen text-oat flex items-center justify-center font-mono text-sm">Loading...</div>}>
+          <Suspense fallback={<PageLoader />}>
             <Campaign2026 />
           </Suspense>
         } />
@@ -57,8 +58,8 @@ function App() {
         {/* Main Site Routes (With Navbar/Footer) */}
         <Route element={<MainLayout isLoggedIn={isLoggedIn} onLogout={handleLogout} />}>
           <Route path="/" element={<Home />} />
+          <Route path="/sva" element={<Suspense fallback={<PageLoader />}><SVA /></Suspense>} />
           <Route path="/about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
-          <Route path="/blog" element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />
           <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
           <Route path="/learn" element={<Suspense fallback={<PageLoader />}><Learn /></Suspense>} />
           <Route path="/contact" element={<Suspense fallback={<PageLoader />}><Contact /></Suspense>} />

@@ -80,7 +80,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                         {stages[stage].text}
                     </h2>
                     <div className="text-[#59a75c]/60 text-xs font-medium tracking-widest">
-                        TOXIN DETECTIVE • THESAFEHIVE
+                        TOXIN DETECTIVE • TheSafeHive
                     </div>
                 </div>
 

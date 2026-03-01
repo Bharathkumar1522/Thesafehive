@@ -1,5 +1,5 @@
 import { Share2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { BlogPost, SimpleBlogPost } from '../../types/blog';
 import ShareModal from '../ui/modals/ShareModal';
@@ -56,7 +56,7 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH, priority = false }: B
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
-          <span className="absolute top-4 left-4 bg-cream/90 backdrop-blur-sm text-sm px-4 py-1.5 rounded-full text-umber font-medium shadow-sm border border-taupe/10">
+          <span className="absolute top-4 left-4 bg-white/95 backdrop-blur-md text-sm px-4 py-1.5 rounded-full text-umber font-medium shadow-md border border-taupe/10">
             {category}
           </span>
 
@@ -80,7 +80,7 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH, priority = false }: B
           </div>
         </Link>
       ) : (
-        <div className="group block bg-cream rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-all duration-500 border border-taupe/10 hover:-translate-y-1">
+        <div className="group block bg-white rounded-[2rem] overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-taupe/10 hover:-translate-y-1">
           <div className="relative">
             <Img
               src={imageSrc}
@@ -89,7 +89,7 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH, priority = false }: B
               h={cardH}
               className="w-full h-56 object-cover"
             />
-            <span className="absolute top-3 left-3 bg-cream/90 backdrop-blur-sm text-sm px-4 py-1.5 rounded-full text-umber font-medium shadow-sm border border-taupe/10">
+            <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-md text-sm px-4 py-1.5 rounded-full text-umber font-medium shadow-md border border-taupe/10">
               {category}
             </span>
           </div>
@@ -130,4 +130,4 @@ const BlogCard = ({ post, variant = 'default', imgW, imgH, priority = false }: B
   );
 };
 
-export default BlogCard;
+export default memo(BlogCard);

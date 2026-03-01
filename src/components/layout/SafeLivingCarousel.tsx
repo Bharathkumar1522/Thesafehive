@@ -40,7 +40,7 @@ const LifestyleCarousel = () => {
       id: 5,
       url: 'https://res.cloudinary.com/dwmaznf4n/image/upload/v1759969700/20251009_0119_Barefoot_Bliss_simple_compose_01k735aafhfzza3jvsbcxjdyz8_l0plcy.webp',
       title: 'In Tune with Evidence, Not Marketing',
-      description: 'THESAFEHIVE cuts through label jargon so you can make clear, grounded decisions.',
+      description: 'TheSafeHive cuts through label jargon so you can make clear, grounded decisions.',
     },
     {
       id: 6,
@@ -115,7 +115,7 @@ const LifestyleCarousel = () => {
               <div className="relative z-10 h-full flex items-end">
                 <div className="w-full p-6 md:p-8">
                   <div className="max-w-2xl">
-                    <h3 className="text-2xl md:text-4xl font-heading font-bold text-white mb-3 drop-shadow-md">
+                    <h3 className="text-2xl md:text-4xl font-heading text-white mb-3 drop-shadow-md">
                       {image.title}
                     </h3>
                     <p className="text-lg md:text-xl text-cream/90 drop-shadow-md">{image.description}</p>

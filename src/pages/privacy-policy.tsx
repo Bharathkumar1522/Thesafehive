@@ -3,7 +3,7 @@ import LegalPage from "../components/layout/LegalPage";
 export default function PrivacyPolicy() {
   return (
     <LegalPage
-      title="Privacy Policy – THESAFEHIVE"
+      title="Privacy Policy – TheSafeHive"
       toc={[
         { label: "1. Introduction", href: "#introduction" },
         { label: "2. Data We Collect", href: "#data-we-collect" },
@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
       <section className="mb-8">
         <h2 id="introduction" className="scroll-mt-24 text-xl font-semibold text-gray-900 mb-2">1. Introduction</h2>
         <p>
-          At THESAFEHIVE, we take your privacy seriously. This Privacy Policy outlines how we collect, use, store, and protect your personal data when you use our website. We operate in compliance with the UK General Data Protection Regulation (UK GDPR), the EU General Data Protection Regulation (EU GDPR), and the Indian Digital Personal Data Protection Act (DPDPA) 2023.
+          At TheSafeHive, we take your privacy seriously. This Privacy Policy outlines how we collect, use, store, and protect your personal data when you use our website. We operate in compliance with the UK General Data Protection Regulation (UK GDPR), the EU General Data Protection Regulation (EU GDPR), and the Indian Digital Personal Data Protection Act (DPDPA) 2023.
         </p>
       </section>
 
@@ -103,7 +103,7 @@ export default function PrivacyPolicy() {
       <section className="mb-8">
         <h2 id="blog-and-health-disclaimer" className="scroll-mt-24 text-xl font-semibold text-gray-900 mb-2">12. Blog and Health Disclaimer</h2>
         <p>
-          All content on THESAFEHIVE blog is for informational purposes only. It is not a substitute for professional medical advice. Please consult a licensed healthcare provider before making health-related decisions.
+          All content on TheSafeHive blog is for informational purposes only. It is not a substitute for professional medical advice. Please consult a licensed healthcare provider before making health-related decisions.
         </p>
       </section>
 

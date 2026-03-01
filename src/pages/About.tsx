@@ -34,9 +34,9 @@ import { TornPaper } from '../components/ui/OrganicSectionDividers';
 import type { LucideIcon } from 'lucide-react';
 
 // ─── Palette ──────────────────────────────────────────────────────────────────
-const VANILLA = '#FAF5E4';
-const SOFT_SAGE = '#C7EABB';
-const SOFT_SAND = '#F0E7DB';
+const VANILLA = '#F8FAFC';
+const SOFT_SAGE = '#E0E7FF';
+const SOFT_SAND = '#F1F5F9';
 const TERRACOTTA = '#B85C38';
 
 
@@ -46,21 +46,19 @@ const paperStyle: React.CSSProperties = {};
 // ─── Section rule helper ──────────────────────────────────────────────────────
 const SectionRule = ({ label, accent = false }: { label: string; accent?: boolean }) => (
   <div className="flex items-center gap-6 mb-16">
-    <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+    <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42,0.07)' }} />
     <span
       className="font-mono text-[10px] tracking-[0.24em] uppercase"
-      style={{ color: accent ? 'rgba(184,92,56,0.5)' : 'rgba(34,33,31,0.22)' }}
+      style={{ color: accent ? 'rgba(6, 182, 212,0.5)' : 'rgba(15, 23, 42,0.22)' }}
     >{label}</span>
-    <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+    <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42,0.07)' }} />
   </div>
 );
 
-// ─── Cloudinary helper ────────────────────────────────────────────────────────
-const cld = (url: string, w: number) =>
-  url.replace('/upload/', `/upload/f_auto,q_auto,w_${w}/`);
+
 
 const HERO_IMG =
-  'https://res.cloudinary.com/dwmaznf4n/image/upload/v1752349834/20250712_2047_Harmonious_Nature_Bliss_simple_compose_01k002qpqyf9j8ypjrg10eabrk_tauyp9.png';
+  '/images/about_hero_image_1772254361906.png';
 
 // ═════════════════════════════════════════════════════════════════════════════
 const About = () => {
@@ -68,22 +66,22 @@ const About = () => {
     {
       icon: Target,
       title: 'Clear Safety Decisions',
-      description: `THESAFEHIVE translates complex chemical and ingredient data into clear, structured signals that help people make safer everyday choices with confidence.`,
+      description: `TheSafeHive translates complex chemical and ingredient data into clear, structured signals that help people make safer everyday choices with confidence.`,
     },
     {
       icon: ShieldCheck,
       title: 'Evidence-Led Verification',
-      description: `THESAFEHIVE assesses ingredients using publicly available scientific and regulatory sources, prioritising evidence over marketing claims.`,
+      description: `TheSafeHive assesses ingredients using publicly available scientific and regulatory sources, prioritising evidence over marketing claims.`,
     },
     {
       icon: ShoppingBag,
       title: 'Practical Application',
-      description: `THESAFEHIVE demonstrates how safety intelligence can be applied in real purchasing decisions, reducing confusion and decision fatigue.`,
+      description: `TheSafeHive demonstrates how safety intelligence can be applied in real purchasing decisions, reducing confusion and decision fatigue.`,
     },
     {
       icon: GraduationCap,
       title: 'Education and Transparency',
-      description: `THESAFEHIVE helps people understand what's inside products, why ingredients matter, and where scientific certainty or uncertainty exists.`,
+      description: `TheSafeHive helps people understand what's inside products, why ingredients matter, and where scientific certainty or uncertainty exists.`,
     },
   ], []);
 
@@ -93,22 +91,22 @@ const About = () => {
     {
       icon: CheckCircle2,
       title: 'The End of Decision Fatigue',
-      description: `You shouldn't need a PhD in Toxicology to buy shampoo. THESAFEHIVE's SVA-1 protocol cross-references ingredient data against publicly available scientific and regulatory sources so you get clear, structured safety signals — without the jargon.`,
+      description: `You shouldn't need a PhD in Toxicology to buy shampoo. TheSafeHive's SVA-1 protocol cross-references ingredient data against publicly available scientific and regulatory sources so you get clear, structured safety signals — without the jargon.`,
     },
     {
       icon: ClipboardCheck,
       title: 'Physical Integrity Audit',
-      description: `An algorithm can detect toxins, but it cannot verify product quality. That is why every product that passes THESAFEHIVE digital screening undergoes a physical Golden Sample check — reducing formulation mismatch risk.`,
+      description: `An algorithm can detect toxins, but it cannot verify product quality. That is why every product that passes TheSafeHive digital screening undergoes a physical Golden Sample check — reducing formulation mismatch risk.`,
     },
     {
       icon: BadgeCheck,
       title: 'No Fear Mongering, Just Facts',
-      description: `THESAFEHIVE does not use scary marketing. THESAFEHIVE uses data — telling you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.`,
+      description: `TheSafeHive does not use scary marketing. TheSafeHive uses data — telling you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.`,
     },
     {
       icon: Users,
       title: 'Community-Led Validation',
-      description: `THESAFEHIVE listens to feedback from families, parents, and eco-conscious shoppers to continuously refine what "lower-risk" means in the real world.`,
+      description: `TheSafeHive listens to feedback from families, parents, and eco-conscious shoppers to continuously refine what "lower-risk" means in the real world.`,
     },
   ], []);
 
@@ -117,19 +115,19 @@ const About = () => {
       icon: Building,
       title: 'Brand-Level Collaboration',
       description:
-        'THESAFEHIVE works with transparent brands to improve ingredient disclosure and formulation accountability.',
+        'TheSafeHive works with transparent brands to improve ingredient disclosure and formulation accountability.',
     },
     {
       icon: Microscope,
       title: 'Selective Lab Validation',
       description:
-        'THESAFEHIVE introduces targeted third-party testing to calibrate and strengthen verification logic.',
+        'TheSafeHive introduces targeted third-party testing to calibrate and strengthen verification logic.',
     },
     {
       icon: TrendingUp,
       title: 'Compliance Infrastructure',
       description:
-        'THESAFEHIVE supports safety and regulatory workflows in a tightening chemical compliance environment.',
+        'TheSafeHive supports safety and regulatory workflows in a tightening chemical compliance environment.',
     },
   ], []);
 
@@ -150,17 +148,17 @@ const About = () => {
         {/* Floating leaf — top-right */}
         <Parallax offset={45} className="absolute top-24 right-8 md:right-32 pointer-events-none float-bob opacity-18" aria-hidden="true">
           <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-            <path d="M30 5C30 5 55 20 55 38C55 50 43.8 55 30 55C16.2 55 5 50 5 38C5 20 30 5 30 5Z" fill="rgba(184,92,56,0.12)" />
-            <path d="M30 55V5" stroke="rgba(184,92,56,0.20)" strokeWidth="1" />
-            <path d="M30 28C30 28 18 20 12 28" stroke="rgba(184,92,56,0.18)" strokeWidth="0.8" />
-            <path d="M30 38C30 38 42 30 48 38" stroke="rgba(184,92,56,0.18)" strokeWidth="0.8" />
+            <path d="M30 5C30 5 55 20 55 38C55 50 43.8 55 30 55C16.2 55 5 50 5 38C5 20 30 5 30 5Z" fill="rgba(184, 92, 56,0.12)" />
+            <path d="M30 55V5" stroke="rgba(184, 92, 56,0.20)" strokeWidth="1" />
+            <path d="M30 28C30 28 18 20 12 28" stroke="rgba(184, 92, 56,0.18)" strokeWidth="0.8" />
+            <path d="M30 38C30 38 42 30 48 38" stroke="rgba(184, 92, 56,0.18)" strokeWidth="0.8" />
           </svg>
         </Parallax>
 
         {/* Floating small honeycomb — mid-left */}
         <Parallax offset={80} className="hidden lg:block absolute left-[8%] top-[50%] pointer-events-none drift-slow opacity-12" aria-hidden="true">
           <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-            <path d="M22 2L40 12V32L22 42L4 32V12L22 2Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="none" />
+            <path d="M22 2L40 12V32L22 42L4 32V12L22 2Z" stroke="rgba(15, 23, 42,0.20)" strokeWidth="1" fill="none" />
           </svg>
         </Parallax>
 
@@ -172,9 +170,9 @@ const About = () => {
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
                 className="font-mono text-[10px] tracking-[0.28em] uppercase mb-6"
-                style={{ color: 'rgba(184,92,56,0.5)' }}
+                style={{ color: '#0891B2' }}
               >
-                About THESAFEHIVE
+                About TheSafeHive
               </motion.p>
 
               <div className="overflow-hidden mb-3">
@@ -182,7 +180,7 @@ const About = () => {
                   id="about-hero-heading"
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-                  className="font-display leading-none tracking-widest text-charcoal"
+                  className="font-display leading-none text-charcoal"
                   style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
                 >
                   ABOUT
@@ -192,10 +190,10 @@ const About = () => {
                 <motion.h1
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.32 }}
-                  className="font-display leading-none tracking-widest text-terracotta"
+                  className="font-display leading-none text-terracotta"
                   style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
                 >
-                  THESAFEHIVE
+                  TheSafeHive
                 </motion.h1>
               </div>
 
@@ -203,9 +201,9 @@ const About = () => {
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.55 }}
                 className="text-lg md:text-xl font-light leading-relaxed max-w-lg mb-10"
-                style={{ color: 'rgba(34,33,31,0.68)' }}
+                style={{ color: 'rgba(15, 23, 42,0.68)' }}
               >
-                THESAFEHIVE is a compliance-first technology platform building the digital
+                TheSafeHive is a compliance-first technology platform building the digital
                 infrastructure for evidence-based product safety. We bridge the gap between
                 complex chemical data and everyday consumer decisions.
               </motion.p>
@@ -216,9 +214,9 @@ const About = () => {
               >
                 <Link
                   to="/contact"
-                  className="btn-shimmer relative overflow-hidden inline-flex items-center gap-3 font-display tracking-widest text-base px-8 py-4 rounded-full no-underline group transition-all duration-300"
-                  style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(184,92,56,0.22)' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#A34E2F')}
+                  className="btn-shimmer relative overflow-hidden inline-flex items-center gap-3 font-display text-base px-8 py-4 rounded-full no-underline group transition-all duration-300"
+                  style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(6, 182, 212,0.22)' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = '#0891B2')}
                   onMouseLeave={e => (e.currentTarget.style.background = TERRACOTTA)}
                 >
                   <span className="relative z-10 flex items-center gap-3">
@@ -236,18 +234,15 @@ const About = () => {
             >
               <div
                 className="img-hover rounded-[3rem] overflow-hidden shadow-2xl"
-                style={{ border: '1px solid rgba(34,33,31,0.06)' }}
+                style={{ border: '1px solid rgba(15, 23, 42,0.06)' }}
               >
                 <picture>
-                  <source type="image/avif"
-                    srcSet={`${cld(HERO_IMG, 640)} 640w, ${cld(HERO_IMG, 960)} 960w, ${cld(HERO_IMG, 1280)} 1280w`} />
-                  <source type="image/webp"
-                    srcSet={`${cld(HERO_IMG, 640)} 640w, ${cld(HERO_IMG, 960)} 960w, ${cld(HERO_IMG, 1280)} 1280w`} />
                   <img
-                    src={cld(HERO_IMG, 960)}
+                    src={HERO_IMG}
                     alt="Natural organic materials conveying chemical safety"
                     className="w-full h-[28rem] lg:h-[36rem] object-cover"
                     loading="eager"
+                    fetchPriority="high"
                     width={960} height={720}
                   />
                 </picture>
@@ -255,7 +250,7 @@ const About = () => {
               {/* Accent blob */}
               <div
                 className="absolute -bottom-12 -right-12 w-64 h-64 rounded-full blur-[80px] pointer-events-none -z-10"
-                style={{ background: 'rgba(184,92,56,0.08)' }}
+                style={{ background: 'rgba(6, 182, 212,0.08)' }}
               />
             </motion.div>
           </div>
@@ -269,7 +264,7 @@ const About = () => {
           <motion.div
             animate={{ y: [0, 7, 0] }} transition={{ duration: 1.6, repeat: Infinity }}
             className="w-px h-10 will-change-transform"
-            style={{ background: 'linear-gradient(to bottom, rgba(184,92,56,0.28), transparent)' }}
+            style={{ background: 'linear-gradient(to bottom, rgba(184, 92, 56,0.28), transparent)' }}
           />
         </motion.div>
       </section>
@@ -289,7 +284,7 @@ const About = () => {
         {/* Floating decorative hexagon — top-right */}
         <Parallax offset={60} className="absolute top-12 right-6 lg:right-16 pointer-events-none float-bob opacity-20" aria-hidden="true">
           <svg width="80" height="90" viewBox="0 0 80 90" fill="none">
-            <path d="M40 3L77 23V67L40 87L3 67V23L40 3Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="rgba(34,33,31,0.04)" />
+            <path d="M40 3L77 23V67L40 87L3 67V23L40 3Z" stroke="rgba(15, 23, 42,0.20)" strokeWidth="1" fill="rgba(15, 23, 42,0.04)" />
           </svg>
         </Parallax>
 
@@ -300,13 +295,13 @@ const About = () => {
             <div className="text-center mb-16">
               <h2
                 id="vision-heading"
-                className="font-display text-charcoal tracking-widest leading-none mb-6"
+                className="font-display text-charcoal leading-none mb-6"
                 style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
               >
                 DISCOVER OUR<br /><span className="text-terracotta">VISION</span>
               </h2>
-              <p className="max-w-2xl mx-auto text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.70)' }}>
-                THESAFEHIVE exists to bridge the gap between complex chemical safety data
+              <p className="max-w-2xl mx-auto text-lg leading-relaxed font-light" style={{ color: 'rgba(15, 23, 42,0.70)' }}>
+                TheSafeHive exists to bridge the gap between complex chemical safety data
                 and everyday consumer decisions.
               </p>
             </div>
@@ -318,16 +313,16 @@ const About = () => {
                 <StaggerItem key={title} variant="slide-up">
                   <div
                     className="hover-card bg-white rounded-2xl p-8 border h-full group"
-                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.07)' }}
+                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(15, 23, 42,0.07)' }}
                   >
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                      style={{ background: 'rgba(184,92,56,0.10)' }}
+                      style={{ background: 'rgba(184, 92, 56,0.10)' }}
                     >
                       <Icon className="h-6 w-6 hover-icon" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
                     </div>
                     <h3 className="font-heading text-charcoal text-xl mb-3">{title}</h3>
-                    <p className="font-light leading-relaxed" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
+                    <p className="font-light leading-relaxed" style={{ color: 'rgba(15, 23, 42,0.68)' }}>{description}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -351,8 +346,8 @@ const About = () => {
         {/* Floating leaf — bottom-left */}
         <div className="absolute bottom-8 left-6 lg:left-20 pointer-events-none float-bob-reverse opacity-18" aria-hidden="true">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <path d="M24 4C24 4 44 14 44 28C44 39 34 44 24 44C14 44 4 39 4 28C4 14 24 4 24 4Z" fill="rgba(34,33,31,0.07)" />
-            <path d="M24 44V4" stroke="rgba(34,33,31,0.13)" strokeWidth="0.8" />
+            <path d="M24 4C24 4 44 14 44 28C44 39 34 44 24 44C14 44 4 39 4 28C4 14 24 4 24 4Z" fill="rgba(15, 23, 42,0.07)" />
+            <path d="M24 44V4" stroke="rgba(15, 23, 42,0.13)" strokeWidth="0.8" />
           </svg>
         </div>
 
@@ -361,13 +356,13 @@ const About = () => {
           <ScrollReveal variant="fade">
             <div className="text-center mb-16">
               <h2
-                className="font-display text-charcoal tracking-widest leading-none"
+                className="font-display text-charcoal leading-none"
                 style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
               >
                 OUR <span className="text-terracotta">VALUES</span>
               </h2>
-              <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(34,33,31,0.46)' }}>
-                Principles that guide THESAFEHIVE verification-first approach.
+              <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(15, 23, 42,0.46)' }}>
+                Principles that guide TheSafeHive verification-first approach.
               </p>
             </div>
           </ScrollReveal>
@@ -380,7 +375,7 @@ const About = () => {
       {/* ════════ CUSTOMER PROMISE (SOFT_SAND zone) ════════ */}
       <section
         className="relative py-28"
-        style={{ backgroundColor: SOFT_SAND }}
+        style={{ backgroundColor: SOFT_SAGE }}
         aria-labelledby="customer-heading"
       >
         <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
@@ -392,12 +387,12 @@ const About = () => {
             <div className="text-center mb-16">
               <h2
                 id="customer-heading"
-                className="font-display text-charcoal tracking-widest leading-none mb-6"
+                className="font-display text-charcoal leading-none mb-6"
                 style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
               >
-                WHAT THIS MEANS<br /><span className="text-terracotta">FOR YOU</span>
+                WHAT THIS MEANS<br /><span className="text-cyan-500">FOR YOU</span>
               </h2>
-              <p className="max-w-xl mx-auto font-light text-lg" style={{ color: 'rgba(34,33,31,0.50)' }}>
+              <p className="max-w-xl mx-auto font-light text-lg" style={{ color: 'rgba(15, 23, 42,0.50)' }}>
                 Technology is our engine, but safety is our destination.
               </p>
             </div>
@@ -411,12 +406,12 @@ const About = () => {
                     whileHover="hover"
                     initial="initial"
                     className="hover-card bg-white rounded-2xl p-8 border flex gap-6 h-full cursor-default"
-                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.07)' }}
+                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(15, 23, 42,0.07)' }}
                   >
                     <motion.div
                       variants={{
                         initial: { scale: 1, rotate: 0, backgroundColor: '#22211F' },
-                        hover: { scale: 1.1, rotate: 4, backgroundColor: TERRACOTTA }
+                        hover: { scale: 1.1, rotate: 4, backgroundColor: '#06B6D4' }
                       }}
                       transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                       className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -425,7 +420,7 @@ const About = () => {
                     </motion.div>
                     <div>
                       <h3 className="font-heading text-charcoal text-xl mb-3">{title}</h3>
-                      <p className="font-light leading-relaxed text-sm" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
+                      <p className="font-light leading-relaxed text-sm" style={{ color: 'rgba(15, 23, 42,0.68)' }}>{description}</p>
                     </div>
                   </motion.div>
                 </StaggerItem>
@@ -437,18 +432,18 @@ const About = () => {
           <ScrollReveal variant="scale" delay={0.1}>
             <div
               className="max-w-4xl mx-auto mt-14 bg-white rounded-2xl p-10 border text-center"
-              style={{ boxShadow: '0 4px 22px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.05)' }}
+              style={{ boxShadow: '0 4px 22px rgba(0,0,0,0.04)', borderColor: 'rgba(15, 23, 42,0.05)' }}
             >
               <HeartHandshake
-                className="h-10 w-10 mx-auto mb-6 text-terracotta"
+                className="h-10 w-10 mx-auto mb-6 text-cyan-500"
                 strokeWidth={1.5}
               />
-              <p className="font-mono text-xs tracking-widest uppercase mb-4" style={{ color: 'rgba(184,92,56,0.5)' }}>
-                THESAFEHIVE Promise
+              <p className="font-mono text-xs tracking-widest uppercase mb-4" style={{ color: '#0891B2' }}>
+                TheSafeHive Promise
               </p>
-              <p className="font-light text-lg leading-relaxed" style={{ color: 'rgba(34,33,31,0.58)' }}>
-                THESAFEHIVE is building a verified marketplace grounded in evidence, transparency,
-                and community feedback. THESAFEHIVE is not here to scare you. THESAFEHIVE is here
+              <p className="font-light text-lg leading-relaxed" style={{ color: 'rgba(15, 23, 42,0.58)' }}>
+                TheSafeHive is building a verified marketplace grounded in evidence, transparency,
+                and community feedback. TheSafeHive is not here to scare you. TheSafeHive is here
                 to give you clarity you can trust.
               </p>
             </div>
@@ -456,13 +451,13 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── TornPaper: SOFT_SAND → VANILLA ────────── */}
-      <TornPaper from={SOFT_SAND} to={VANILLA} height={72} />
+      {/* ── TornPaper: SOFT_SAGE → SOFT_SAND ────────── */}
+      <TornPaper from={SOFT_SAGE} to={SOFT_SAND} height={72} />
 
       {/* ════════ LOOKING AHEAD (VANILLA zone) ════════ */}
       <section
         className="relative py-24"
-        style={{ backgroundColor: VANILLA }}
+        style={{ backgroundColor: SOFT_SAND }}
         aria-labelledby="future-heading"
       >
         <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
@@ -471,7 +466,7 @@ const About = () => {
         {/* Floating small honeycomb */}
         <Parallax offset={50} className="hidden lg:block absolute right-[8%] top-[25%] pointer-events-none drift-slow opacity-12" aria-hidden="true">
           <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-            <path d="M22 2L40 12V32L22 42L4 32V12L22 2Z" stroke="rgba(34,33,31,0.20)" strokeWidth="1" fill="none" />
+            <path d="M22 2L40 12V32L22 42L4 32V12L22 2Z" stroke="rgba(15, 23, 42,0.20)" strokeWidth="1" fill="none" />
           </svg>
         </Parallax>
 
@@ -482,13 +477,13 @@ const About = () => {
             <div className="text-center mb-16">
               <h2
                 id="future-heading"
-                className="font-display text-charcoal tracking-widest leading-none"
+                className="font-display text-charcoal leading-none"
                 style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
               >
                 LOOKING <span className="text-terracotta">AHEAD</span>
               </h2>
-              <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(34,33,31,0.46)' }}>
-                As THESAFEHIVE evolves, we aim to expand safety intelligence capabilities through:
+              <p className="max-w-xl mx-auto mt-5 font-light text-lg" style={{ color: 'rgba(15, 23, 42,0.46)' }}>
+                As TheSafeHive evolves, we aim to expand safety intelligence capabilities through:
               </p>
             </div>
           </ScrollReveal>
@@ -499,16 +494,16 @@ const About = () => {
                 <StaggerItem key={title} variant="scale">
                   <div
                     className="hover-card bg-white rounded-2xl p-10 border text-center h-full group"
-                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(34,33,31,0.07)' }}
+                    style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.04)', borderColor: 'rgba(15, 23, 42,0.07)' }}
                   >
                     <div
                       className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
-                      style={{ background: 'rgba(184,92,56,0.08)' }}
+                      style={{ background: 'rgba(184, 92, 56,0.08)' }}
                     >
-                      <Icon className="h-8 w-8 hover-icon" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
+                      <Icon className="h-8 w-8 hover-icon" style={{ color: '#B85C38' }} strokeWidth={1.5} />
                     </div>
                     <h3 className="font-heading text-charcoal text-xl mb-4">{title}</h3>
-                    <p className="font-light leading-relaxed text-sm" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
+                    <p className="font-light leading-relaxed text-sm" style={{ color: 'rgba(15, 23, 42,0.68)' }}>{description}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -517,16 +512,16 @@ const About = () => {
         </div>
       </section>
 
-      {/* ── TornPaper: VANILLA → SOFT_SAND ────────── */}
-      <TornPaper from={VANILLA} to={SOFT_SAND} height={72} />
+      {/* ── TornPaper: SOFT_SAND → VANILLA ────────── */}
+      <TornPaper from={SOFT_SAND} to={VANILLA} height={72} />
 
       {/* ════════════════════════════════════════════════════════════════
           STORY
          ════════════════════════════════════════════════════════════════ */}
       <section
         className="relative py-24"
-        style={{ backgroundColor: SOFT_SAND }}
-        aria-label="THESAFEHIVE Story"
+        style={{ backgroundColor: VANILLA }}
+        aria-label="TheSafeHive Story"
       >
         <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
         <div className="absolute inset-0 pointer-events-none dot-grid" style={{ opacity: 0.55 }} />
@@ -536,21 +531,21 @@ const About = () => {
           <div className="max-w-3xl mx-auto">
             <ScrollReveal variant="slide-up">
               <h2
-                className="font-display text-charcoal tracking-widest leading-none mb-12"
+                className="font-display text-charcoal leading-none mb-12"
                 style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
               >
-                THESAFEHIVE <span className="text-terracotta">STORY</span>
+                TheSafeHive <span className="text-terracotta">STORY</span>
               </h2>
             </ScrollReveal>
 
             <div className="space-y-7">
               {[
-                'THESAFEHIVE was born to solve a data problem. The £14B personal care market lacks a unified safety standard. We built the THESAFEHIVE Protocol to bridge the gap between complex chemical data and consumer buying decisions.',
+                'TheSafeHive was born to solve a data problem. The £14B personal care market lacks a unified safety standard. We built the TheSafeHive Protocol to bridge the gap between complex chemical data and consumer buying decisions.',
                 'When I first arrived in the UK, I was struck by the sheer number of products claiming to be "eco", "green", or "safe". But the more I looked, the more overwhelming it became. Labels were confusing, ingredient lists were full of jargon, and marketing was often designed to reassure without evidence.',
-                `I realised I wasn't alone. Many people want to make healthier choices, but they get stuck in a maze of vague claims, inconsistent ingredient disclosures, and decision fatigue. THESAFEHIVE exists to cut through the noise and make chemical safety easier to understand, easier to compare, and easier to act on.`,
+                `I realised I wasn't alone. Many people want to make healthier choices, but they get stuck in a maze of vague claims, inconsistent ingredient disclosures, and decision fatigue. TheSafeHive exists to cut through the noise and make chemical safety easier to understand, easier to compare, and easier to act on.`,
               ].map((para, i) => (
                 <ScrollReveal key={i} variant="fade" delay={i * 0.1}>
-                  <p className="text-lg leading-relaxed font-light" style={{ color: 'rgba(34,33,31,0.58)' }}>{para}</p>
+                  <p className="text-lg leading-relaxed font-light" style={{ color: 'rgba(15, 23, 42,0.58)' }}>{para}</p>
                 </ScrollReveal>
               ))}
             </div>
@@ -559,8 +554,8 @@ const About = () => {
               <div
                 className="mt-14 rounded-2xl p-10 border"
                 style={{
-                  background: 'rgba(184,92,56,0.05)',
-                  borderColor: 'rgba(184,92,56,0.14)',
+                  background: 'rgba(184, 92, 56,0.05)',
+                  borderColor: 'rgba(184, 92, 56,0.14)',
                 }}
               >
                 <Leaf className="h-8 w-8 text-terracotta mb-6" strokeWidth={1.5} />
@@ -568,10 +563,10 @@ const About = () => {
                   className="font-heading italic text-charcoal leading-relaxed mb-5"
                   style={{ fontSize: 'clamp(1.2rem,2vw,1.6rem)' }}
                 >
-                  "THESAFEHIVE turns chemical safety into clear, usable decisions."
+                  "TheSafeHive turns chemical safety into clear, usable decisions."
                 </blockquote>
-                <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(34,33,31,0.28)' }}>
-                  — THESAFEHIVE Team
+                <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(15, 23, 42,0.45)' }}>
+                  — TheSafeHive Team
                 </p>
               </div>
             </ScrollReveal>

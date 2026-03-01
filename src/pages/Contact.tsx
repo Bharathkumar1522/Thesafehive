@@ -12,11 +12,11 @@ import { motion } from 'framer-motion';
 import { TornPaper } from '../components/ui/OrganicSectionDividers';
 
 // ─── Paper texture (replaced with index.css pattern) ────────
-const VANILLA = '#FAF5E4';
-const SOFT_SAGE = '#C7EABB';
-const SOFT_SAND = '#F0E7DB';
-const TERRACOTTA = '#B85C38';
-const CHARCOAL = '#22211F';
+const VANILLA = '#F8FAFC';
+const SOFT_SAGE = '#E0E7FF';
+const SOFT_SAND = '#F1F5F9';
+const TERRACOTTA = '#06B6D4';
+const CHARCOAL = '#0F172A';
 const paperStyle: React.CSSProperties = {};
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -28,15 +28,15 @@ const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const FAQS = [
   {
     question: `When will the SVA-1 verification tool be available?`,
-    answer: `THESAFEHIVE's SVA-1 product verifier is currently in development. You can join the waitlist via this contact form and we will notify you when early access opens.`,
+    answer: `TheSafeHive's SVA-1 product verifier is currently in development. You can join the waitlist via this contact form and we will notify you when early access opens.`,
   },
   {
-    question: `What does THESAFEHIVE mean by "lower-risk" products?`,
-    answer: `No product is truly "chemical-free" — everything is made of chemicals. THESAFEHIVE identifies products whose ingredients are not flagged as substances of concern under EU REACH, EWG Skin Deep, or IARC classifications. We say lower-risk, not risk-free.`,
+    question: `What does TheSafeHive mean by "lower-risk" products?`,
+    answer: `No product is truly "chemical-free" — everything is made of chemicals. TheSafeHive identifies products whose ingredients are not flagged as substances of concern under EU REACH, EWG Skin Deep, or IARC classifications. We say lower-risk, not risk-free.`,
   },
   {
-    question: `Is THESAFEHIVE medical advice?`,
-    answer: `No. THESAFEHIVE is strictly informational. Our assessments are based on publicly available scientific and regulatory sources and are not medical advice, diagnosis, or treatment recommendations. Always consult a qualified health professional.`,
+    question: `Is TheSafeHive medical advice?`,
+    answer: `No. TheSafeHive is strictly informational. Our assessments are based on publicly available scientific and regulatory sources and are not medical advice, diagnosis, or treatment recommendations. Always consult a qualified health professional.`,
   },
   {
     question: `Can I contribute to your blog?`,
@@ -47,7 +47,7 @@ const FAQS = [
 // ─── Field styles (shared) ────────────────────────────────────────────────────
 const fieldStyle: React.CSSProperties = {
   background: 'white',
-  border: '1px solid rgba(34,33,31,0.10)',
+  border: '1px solid rgba(15, 23, 42,0.10)',
   borderRadius: '0.75rem',
   padding: '0.875rem 1.25rem',
   color: '#22211F',
@@ -108,14 +108,14 @@ const Contact = () => {
         <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(184,92,56,0.05) 0%, transparent 60%)' }}
+          style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212,0.05) 0%, transparent 60%)' }}
         />
 
         <div className="container mx-auto px-6 pt-24 pb-16 relative z-10 text-center">
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 }}
             className="font-mono text-[10px] tracking-[0.28em] uppercase mb-6"
-            style={{ color: 'rgba(184,92,56,0.5)' }}
+            style={{ color: '#0891B2' }}
           >
             Reach Out
           </motion.p>
@@ -123,7 +123,7 @@ const Contact = () => {
             <motion.h1
               initial={{ y: '105%' }} animate={{ y: '0%' }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-              className="font-display leading-none tracking-widest text-charcoal"
+              className="font-display leading-none text-charcoal"
               style={{ fontSize: 'clamp(3.5rem,10vw,10rem)' }}
             >
               LET'S <span className="text-terracotta">CONNECT</span>
@@ -133,10 +133,10 @@ const Contact = () => {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6 }}
             className="max-w-lg mx-auto font-light leading-relaxed text-lg"
-            style={{ color: 'rgba(34,33,31,0.46)' }}
+            style={{ color: 'rgba(15, 23, 42,0.46)' }}
           >
             Have a question about our methodology, a collaboration idea, or simply want to
-            learn more about THESAFEHIVE? We'd love to hear from you.
+            learn more about TheSafeHive? We'd love to hear from you.
           </motion.p>
         </div>
       </section>
@@ -155,9 +155,9 @@ const Contact = () => {
 
         <div className="container mx-auto px-6 mb-16">
           <div className="flex items-center gap-6">
-            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
-            <span className="font-mono text-[10px] tracking-[0.24em] uppercase" style={{ color: 'rgba(184,92,56,0.5)' }}>Contact</span>
-            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+            <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42,0.07)' }} />
+            <span className="font-mono text-[10px] tracking-[0.24em] uppercase" style={{ color: '#0891B2' }}>Contact</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42,0.07)' }} />
           </div>
         </div>
 
@@ -168,12 +168,12 @@ const Contact = () => {
             <ScrollReveal variant="slide-right" className="lg:col-span-2">
               <div className="pt-4">
                 <h2
-                  className="font-display text-charcoal tracking-widest leading-none mb-6"
+                  className="font-display text-charcoal leading-none mb-6"
                   style={{ fontSize: 'clamp(2rem,4vw,3.5rem)' }}
                 >
                   DROP US<br />A LINE
                 </h2>
-                <p className="font-light leading-relaxed text-lg mb-12" style={{ color: 'rgba(34,33,31,0.50)' }}>
+                <p className="font-light leading-relaxed text-lg mb-12" style={{ color: 'rgba(15, 23, 42,0.50)' }}>
                   Whether you are seeking clarity on an ingredient, interested in database access,
                   or simply want to say hello — our team is ready to assist.
                 </p>
@@ -182,13 +182,13 @@ const Contact = () => {
                   <div className="flex items-start gap-5">
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(34,33,31,0.06)' }}
+                      style={{ background: 'rgba(15, 23, 42,0.06)' }}
                     >
                       <MessageSquare className="h-5 w-5 text-charcoal" strokeWidth={1.5} />
                     </div>
                     <div>
                       <h3 className="font-heading text-charcoal text-lg mb-1">Response Time</h3>
-                      <p className="font-light text-sm leading-relaxed" style={{ color: 'rgba(34,33,31,0.50)' }}>
+                      <p className="font-light text-sm leading-relaxed" style={{ color: 'rgba(15, 23, 42,0.50)' }}>
                         We aim to reply to all editorial and user inquiries within 24–48 hours on business days.
                       </p>
                     </div>
@@ -197,7 +197,7 @@ const Contact = () => {
                   <div className="flex items-start gap-5">
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(34,33,31,0.06)' }}
+                      style={{ background: 'rgba(15, 23, 42,0.06)' }}
                     >
                       <Instagram className="h-5 w-5 text-charcoal" strokeWidth={1.5} />
                     </div>
@@ -208,7 +208,7 @@ const Contact = () => {
                         target="_blank" rel="noopener noreferrer"
                         className="font-mono text-sm no-underline transition-colors duration-200"
                         style={{ color: TERRACOTTA }}
-                        onMouseEnter={e => (e.currentTarget.style.color = '#A34E2F')}
+                        onMouseEnter={e => (e.currentTarget.style.color = '#0891B2')}
                         onMouseLeave={e => (e.currentTarget.style.color = TERRACOTTA)}
                       >
                         @thesafehive ↗
@@ -219,7 +219,7 @@ const Contact = () => {
                   <div className="flex items-start gap-5">
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(34,33,31,0.06)' }}
+                      style={{ background: 'rgba(15, 23, 42,0.06)' }}
                     >
                       <Linkedin className="h-5 w-5 text-charcoal" strokeWidth={1.5} />
                     </div>
@@ -230,10 +230,10 @@ const Contact = () => {
                         target="_blank" rel="noopener noreferrer"
                         className="font-mono text-sm no-underline transition-colors duration-200"
                         style={{ color: TERRACOTTA }}
-                        onMouseEnter={e => (e.currentTarget.style.color = '#A34E2F')}
+                        onMouseEnter={e => (e.currentTarget.style.color = '#0891B2')}
                         onMouseLeave={e => (e.currentTarget.style.color = TERRACOTTA)}
                       >
-                        THESAFEHIVE ↗
+                        TheSafeHive ↗
                       </a>
                     </div>
                   </div>
@@ -245,10 +245,10 @@ const Contact = () => {
             <ScrollReveal variant="scale" delay={0.1} className="lg:col-span-3">
               <div
                 className="bg-white rounded-2xl p-8 md:p-12 border"
-                style={{ boxShadow: '0 6px 36px rgba(0,0,0,0.05)', borderColor: 'rgba(34,33,31,0.07)' }}
+                style={{ boxShadow: '0 6px 36px rgba(0,0,0,0.05)', borderColor: 'rgba(15, 23, 42,0.07)' }}
               >
                 <h2
-                  className="font-display tracking-widest text-charcoal mb-8"
+                  className="font-display text-charcoal mb-8"
                   style={{ fontSize: 'clamp(1.5rem,3vw,2.4rem)' }}
                 >
                   SEND A MESSAGE
@@ -257,7 +257,7 @@ const Contact = () => {
                 {submitted && (
                   <div
                     className="rounded-xl px-6 py-4 mb-8 border"
-                    style={{ background: 'rgba(184,92,56,0.06)', borderColor: 'rgba(184,92,56,0.18)' }}
+                    style={{ background: 'rgba(6, 182, 212,0.06)', borderColor: 'rgba(6, 182, 212,0.18)' }}
                   >
                     <p className="font-mono text-sm" style={{ color: TERRACOTTA }}>✓ Message received — we'll be in touch shortly.</p>
                   </div>
@@ -274,28 +274,28 @@ const Contact = () => {
                       <label
                         htmlFor="name"
                         className="block font-mono text-[10px] tracking-[0.2em] uppercase mb-2"
-                        style={{ color: 'rgba(34,33,31,0.40)' }}
+                        style={{ color: 'rgba(15, 23, 42,0.40)' }}
                       >Your Name</label>
                       <input
                         type="text" id="name" name="name"
                         value={formData.name} onChange={handleChange}
                         required style={fieldStyle}
                         onFocus={e => (e.target.style.borderColor = TERRACOTTA)}
-                        onBlur={e => (e.target.style.borderColor = 'rgba(34,33,31,0.10)')}
+                        onBlur={e => (e.target.style.borderColor = 'rgba(15, 23, 42,0.10)')}
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="email"
                         className="block font-mono text-[10px] tracking-[0.2em] uppercase mb-2"
-                        style={{ color: 'rgba(34,33,31,0.40)' }}
+                        style={{ color: 'rgba(15, 23, 42,0.40)' }}
                       >Your Email</label>
                       <input
                         type="email" id="email" name="email"
                         value={formData.email} onChange={handleChange}
                         required style={fieldStyle}
                         onFocus={e => (e.target.style.borderColor = TERRACOTTA)}
-                        onBlur={e => (e.target.style.borderColor = 'rgba(34,33,31,0.10)')}
+                        onBlur={e => (e.target.style.borderColor = 'rgba(15, 23, 42,0.10)')}
                       />
                     </div>
                   </div>
@@ -304,7 +304,7 @@ const Contact = () => {
                     <label
                       htmlFor="subject"
                       className="block font-mono text-[10px] tracking-[0.2em] uppercase mb-2"
-                      style={{ color: 'rgba(34,33,31,0.40)' }}
+                      style={{ color: 'rgba(15, 23, 42,0.40)' }}
                     >Subject</label>
                     <select
                       id="subject" name="subject"
@@ -312,7 +312,7 @@ const Contact = () => {
                       required
                       style={{ ...fieldStyle, appearance: 'none', cursor: 'pointer' }}
                       onFocus={e => (e.target.style.borderColor = TERRACOTTA)}
-                      onBlur={e => (e.target.style.borderColor = 'rgba(34,33,31,0.10)')}
+                      onBlur={e => (e.target.style.borderColor = 'rgba(15, 23, 42,0.10)')}
                     >
                       <option value="">Please select a topic</option>
                       <option value="Product Inquiry">Database Inclusion</option>
@@ -326,7 +326,7 @@ const Contact = () => {
                     <label
                       htmlFor="message"
                       className="block font-mono text-[10px] tracking-[0.2em] uppercase mb-2"
-                      style={{ color: 'rgba(34,33,31,0.40)' }}
+                      style={{ color: 'rgba(15, 23, 42,0.40)' }}
                     >Message</label>
                     <textarea
                       id="message" name="message"
@@ -334,15 +334,15 @@ const Contact = () => {
                       required rows={5}
                       style={{ ...fieldStyle, resize: 'none', lineHeight: '1.6' }}
                       onFocus={e => (e.target.style.borderColor = TERRACOTTA)}
-                      onBlur={e => (e.target.style.borderColor = 'rgba(34,33,31,0.10)')}
+                      onBlur={e => (e.target.style.borderColor = 'rgba(15, 23, 42,0.10)')}
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-3 font-display tracking-widest text-base px-8 py-4 rounded-full transition-all duration-300 group"
-                    style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(184,92,56,0.22)' }}
-                    onMouseEnter={e => (e.currentTarget.style.background = '#A34E2F')}
+                    className="inline-flex items-center gap-3 font-display text-base px-8 py-4 rounded-full transition-all duration-300 group"
+                    style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(6, 182, 212,0.22)' }}
+                    onMouseEnter={e => (e.currentTarget.style.background = '#0891B2')}
                     onMouseLeave={e => (e.currentTarget.style.background = TERRACOTTA)}
                   >
                     SEND MESSAGE
@@ -368,15 +368,15 @@ const Contact = () => {
         <div className="container mx-auto px-6 relative z-10">
 
           <div className="flex items-center gap-6 mb-16">
-            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
-            <span className="font-mono text-[10px] tracking-[0.24em] uppercase" style={{ color: 'rgba(34,33,31,0.22)' }}>FAQ</span>
-            <div className="flex-1 h-px" style={{ background: 'rgba(34,33,31,0.07)' }} />
+            <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42,0.07)' }} />
+            <span className="font-mono text-[10px] tracking-[0.24em] uppercase" style={{ color: 'rgba(15, 23, 42,0.45)' }}>FAQ</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42,0.07)' }} />
           </div>
 
           <ScrollReveal variant="slide-up">
             <div className="text-center mb-16">
               <h2
-                className="font-display text-charcoal tracking-widest leading-none"
+                className="font-display text-charcoal leading-none"
                 style={{ fontSize: 'clamp(2.4rem,6vw,5rem)' }}
               >
                 COMMON <span className="text-terracotta">QUESTIONS</span>
@@ -390,7 +390,7 @@ const Contact = () => {
                 <StaggerItem key={index} variant="slide-up">
                   <div
                     className="bg-white rounded-2xl border overflow-hidden"
-                    style={{ borderColor: 'rgba(34,33,31,0.07)', boxShadow: '0 2px 14px rgba(0,0,0,0.03)' }}
+                    style={{ borderColor: 'rgba(15, 23, 42,0.07)', boxShadow: '0 2px 14px rgba(0,0,0,0.03)' }}
                   >
                     <FAQItem
                       question={faq.question}
@@ -418,36 +418,36 @@ const Contact = () => {
         <div className="absolute inset-0 pointer-events-none" style={{ ...paperStyle, opacity: 0.5 }} />
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(34,33,31,0.04) 0%, transparent 60%)' }}
+          style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(15, 23, 42,0.04) 0%, transparent 60%)' }}
         />
 
         <div className="container mx-auto px-6 relative z-10 text-center">
           <ScrollReveal variant="fade">
             <p className="font-mono text-[11px] tracking-[0.22em] uppercase mb-6"
-              style={{ color: 'rgba(34,33,31,0.46)' }}>
+              style={{ color: 'rgba(15, 23, 42,0.46)' }}>
               Still have questions?
             </p>
             <h2
-              className="font-display tracking-widest leading-none mb-8"
+              className="font-display leading-none mb-8"
               style={{ fontSize: 'clamp(2.8rem,7vw,6.5rem)', color: CHARCOAL }}
             >
-              WE'RE<br /><span style={{ color: 'rgba(34,33,31,0.42)' }}>LISTENING.</span>
+              WE'RE<br /><span style={{ color: 'rgba(15, 23, 42,0.42)' }}>LISTENING.</span>
             </h2>
             <p className="max-w-md mx-auto font-light leading-relaxed text-lg mb-10"
-              style={{ color: 'rgba(34,33,31,0.60)' }}>
+              style={{ color: 'rgba(15, 23, 42,0.60)' }}>
               Reach out to us anytime — we're a real team that actually responds.
             </p>
             <a
               href="#contact-form"
-              className="inline-flex items-center gap-3 font-display tracking-widest text-lg px-10 py-4 rounded-full border no-underline group transition-all duration-300"
-              style={{ borderColor: 'rgba(34,33,31,0.12)', background: TERRACOTTA, color: VANILLA }}
+              className="inline-flex items-center gap-3 font-display text-lg px-10 py-4 rounded-full border no-underline group transition-all duration-300"
+              style={{ borderColor: 'rgba(15, 23, 42,0.12)', background: TERRACOTTA, color: VANILLA }}
               onMouseEnter={e => {
-                e.currentTarget.style.background = '#A34E2F';
-                e.currentTarget.style.borderColor = '#A34E2F';
+                e.currentTarget.style.background = '#0891B2';
+                e.currentTarget.style.borderColor = '#0891B2';
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.background = TERRACOTTA;
-                e.currentTarget.style.borderColor = 'rgba(34,33,31,0.12)';
+                e.currentTarget.style.borderColor = 'rgba(15, 23, 42,0.12)';
               }}
             >
               SEND A MESSAGE <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />

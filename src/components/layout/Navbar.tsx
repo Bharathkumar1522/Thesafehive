@@ -13,9 +13,9 @@ interface NavbarProps {
 // ─── Colour tokens (hero bg is warm cream so nav is always dark) ──────────────
 const C_BRAND = '#22211F';          // charcoal
 const C_ACTIVE = '#B85C38';          // terracotta
-const C_MUTED = 'rgba(34,33,31,0.42)';
-const C_HOVER = 'rgba(34,33,31,0.75)';
-const C_GLASS = 'rgba(250,245,228,0.86)'; // warm cream scroll glass
+const C_MUTED = 'rgba(15, 23, 42,0.42)';
+const C_HOVER = 'rgba(15, 23, 42,0.75)';
+const C_GLASS = 'rgba(248, 250, 252,0.86)'; // warm cream scroll glass
 
 const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +47,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
     const idle =
       (window as unknown as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback
       || ((cb: () => void) => setTimeout(cb, 400));
-    const handles = [idle(() => prefetch('/blog')), idle(() => prefetch('/learn'))];
+    const handles = [idle(() => prefetch('/learn'))];
     return () => {
       const cancel =
         (window as unknown as { cancelIdleCallback?: (h: number) => void }).cancelIdleCallback
@@ -61,8 +61,8 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
   const NAV_LINKS = [
     { to: '/', label: 'Home' },
     { to: '/about', label: 'About' },
-    { to: '/blog', label: 'Blog' },
     { to: '/learn', label: 'Hub' },
+    { to: '/sva', label: 'SVA-1' },
     { to: '/contact', label: 'Contact' },
   ];
 
@@ -78,8 +78,8 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
               background: C_GLASS,
               backdropFilter: 'blur(22px)',
               WebkitBackdropFilter: 'blur(22px)',
-              borderBottom: '1px solid rgba(34,33,31,0.07)',
-              boxShadow: '0 1px 20px rgba(34,33,31,0.05)',
+              borderBottom: '1px solid rgba(15, 23, 42,0.07)',
+              boxShadow: '0 1px 20px rgba(15, 23, 42,0.05)',
             }
             : {}
         }
@@ -110,7 +110,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
               className="font-display text-2xl md:text-[1.65rem] tracking-[0.2em] transition-opacity duration-300 group-hover:opacity-75"
               style={{ color: C_BRAND }}
             >
-              SAFEHIVE
+              THESAFEHIVE
             </span>
           </Link>
 
@@ -122,7 +122,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
                   to={to}
                   end={to === '/'}
                   onMouseEnter={() => prefetch(to)}
-                  className="no-underline"
+                  className="no-underline relative block"
                   style={({ isActive }) => ({
                     fontFamily: 'inherit',
                     fontSize: '0.78rem',
@@ -141,7 +141,19 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
                     if (el.style.color !== C_ACTIVE) el.style.color = C_MUTED;
                   }}
                 >
-                  {label}
+                  {({ isActive }) => (
+                    <>
+                      {label}
+                      {isActive && (
+                        <motion.div
+                          layoutId="nav-indicator-desktop"
+                          className="absolute left-0 right-0 -bottom-1.5 h-0.5 rounded-full"
+                          style={{ background: C_ACTIVE }}
+                          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                        />
+                      )}
+                    </>
+                  )}
                 </NavLink>
               </li>
             ))}
@@ -171,75 +183,89 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </nav>
-      </header>
+      </header >
 
       {/* ── Mobile drawer ────────────────────────────────────────────────────── */}
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ x: '100%' }}
-            animate={{ x: '0%' }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[60] flex flex-col"
-            style={{ background: '#2C1810' }}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation"
-          >
-            <div className="flex flex-col h-full px-8 py-6">
-              {/* Drawer header */}
-              <div className="flex justify-between items-center mb-14">
-                <Link to="/" className="flex items-center gap-2.5 no-underline" onClick={closeMenu}>
-                  <Leaf className="h-6 w-6" style={{ color: '#B85C38' }} strokeWidth={1.5} />
-                  <span className="font-display text-3xl tracking-[0.2em]" style={{ color: '#FAF5E4' }}>SAFEHIVE</span>
-                </Link>
-                <button
-                  onClick={toggleMenu}
-                  className="transition-opacity hover:opacity-60"
-                  style={{ color: '#FAF5E4', background: 'none', border: 'none', cursor: 'pointer' }}
-                  aria-label="Close menu"
-                >
-                  <X className="h-7 w-7" strokeWidth={1.5} />
-                </button>
-              </div>
-
-              {/* Links */}
-              <ul className="space-y-1 list-none m-0 p-0 flex-1">
-                {NAV_LINKS.map(({ to, label }, i) => (
-                  <motion.li
-                    key={to}
-                    initial={{ opacity: 0, x: 32 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.08 + i * 0.065, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        {
+          isOpen && (
+            <motion.div
+              id="mobile-menu"
+              initial={{ x: '100%' }}
+              animate={{ x: '0%' }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed inset-0 z-[60] flex flex-col"
+              style={{ background: '#2C1810' }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation"
+            >
+              <div className="flex flex-col h-full px-8 py-6">
+                {/* Drawer header */}
+                <div className="flex justify-between items-center mb-14">
+                  <Link to="/" className="flex items-center gap-2.5 no-underline" onClick={closeMenu}>
+                    <Leaf className="h-6 w-6" style={{ color: '#B85C38' }} strokeWidth={1.5} />
+                    <span className="font-display text-3xl tracking-[0.2em]" style={{ color: '#FAF5E4' }}>THESAFEHIVE</span>
+                  </Link>
+                  <button
+                    onClick={toggleMenu}
+                    className="transition-opacity hover:opacity-60"
+                    style={{ color: '#FAF5E4', background: 'none', border: 'none', cursor: 'pointer' }}
+                    aria-label="Close menu"
                   >
-                    <NavLink
-                      to={to}
-                      end={to === '/'}
-                      onClick={closeMenu}
-                      className="block no-underline py-3 font-display tracking-[0.15em] uppercase transition-colors duration-200"
-                      style={({ isActive }) => ({
-                        fontSize: 'clamp(2.5rem, 7vw, 3.5rem)',
-                        color: isActive ? '#B85C38' : 'rgba(250,245,228,0.72)',
-                      })}
-                    >
-                      {label}
-                    </NavLink>
-                  </motion.li>
-                ))}
-              </ul>
+                    <X className="h-7 w-7" strokeWidth={1.5} />
+                  </button>
+                </div>
 
-              {/* Footer note */}
-              <div className="pt-8 border-t" style={{ borderColor: 'rgba(250,245,228,0.08)' }}>
-                <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(250,245,228,0.22)' }}>
-                  SVA-1 · Chemical Safety Platform
-                </p>
+                {/* Links */}
+                <ul className="space-y-1 list-none m-0 p-0 flex-1">
+                  {NAV_LINKS.map(({ to, label }, i) => (
+                    <motion.li
+                      key={to}
+                      initial={{ opacity: 0, x: 32 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.08 + i * 0.065, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <NavLink
+                        to={to}
+                        end={to === '/'}
+                        onClick={closeMenu}
+                        className="relative inline-block no-underline py-3 font-display tracking-[0.15em] uppercase transition-colors duration-200"
+                        style={({ isActive }) => ({
+                          fontSize: 'clamp(2.5rem, 7vw, 3.5rem)',
+                          color: isActive ? '#B85C38' : 'rgba(248, 250, 252,0.72)',
+                        })}
+                      >
+                        {({ isActive }) => (
+                          <>
+                            {label}
+                            {isActive && (
+                              <motion.div
+                                layoutId="nav-indicator-mobile"
+                                className="absolute left-0 right-0 bottom-1 h-[3px] rounded-full"
+                                style={{ background: '#B85C38' }}
+                                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                              />
+                            )}
+                          </>
+                        )}
+                      </NavLink>
+                    </motion.li>
+                  ))}
+                </ul>
+
+                {/* Footer note */}
+                <div className="pt-8 border-t" style={{ borderColor: 'rgba(248, 250, 252,0.08)' }}>
+                  <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(248, 250, 252,0.22)' }}>
+                    SVA-1 · Chemical Safety Platform
+                  </p>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )
+        }
+      </AnimatePresence >
     </>
   );
 };

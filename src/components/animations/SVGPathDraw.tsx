@@ -89,7 +89,7 @@ export function ScrollProgressPath({
                 <path
                     d={`M${width / 2} 0 L${width / 2} ${height}`}
                     fill="none"
-                    stroke="rgba(71,255,171,0.12)"
+                    stroke="rgba(34, 211, 238,0.12)"
                     strokeWidth={strokeWidth}
                 />
                 {/* Animated fill */}

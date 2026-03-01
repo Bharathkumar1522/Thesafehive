@@ -39,8 +39,8 @@ export default {
       fontFamily: {
         // Display: cinematic compressed for massive headings
         display: ["'Bebas Neue'", "Impact", "sans-serif"],
-        // Heading: expressive editorial serif
-        heading: ["'Cormorant Garamond'", "'Playfair Display'", "serif"],
+        // Heading: now mapped to sans to enforce max 3 fonts constraint
+        heading: ["'DM Sans'", "Outfit", "system-ui", "sans-serif"],
         // Body: clean humanist geometric
         body: ["'DM Sans'", "Outfit", "system-ui", "sans-serif"],
         sans: ["'DM Sans'", "Outfit", "system-ui", "sans-serif"],

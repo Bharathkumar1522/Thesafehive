@@ -14,9 +14,9 @@ import { ScrollReveal } from '../components/animations/ScrollReveal';
 import { TornPaper } from '../components/ui/OrganicSectionDividers';
 
 // ─── Palette & texture ────────────────────────────────────────────────────────
-const VANILLA = '#FAF5E4';
-const SOFT_SAND = '#F0E7DB';
-const TERRACOTTA = '#B85C38';
+const VANILLA = '#F8FAFC';
+const SOFT_SAND = '#F1F5F9';
+const TERRACOTTA = '#06B6D4';
 // ─── Paper texture (replaced with index.css pattern) ────────
 const paperStyle: React.CSSProperties = {};
 
@@ -54,7 +54,7 @@ const BlogPost = () => {
             animate={{ opacity: [0.3, 1, 0.3] }}
             transition={{ duration: 1.4, repeat: Infinity }}
             className="font-mono text-sm tracking-widest uppercase"
-            style={{ color: 'rgba(34,33,31,0.30)' }}
+            style={{ color: 'rgba(15, 23, 42,0.55)' }}
           >
             Loading…
           </motion.div>
@@ -72,23 +72,23 @@ const BlogPost = () => {
       >
         <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
         <div className="text-center relative z-10">
-          <p className="font-mono text-[10px] tracking-[0.24em] uppercase mb-6" style={{ color: 'rgba(184,92,56,0.5)' }}>
+          <p className="font-mono text-[10px] tracking-[0.24em] uppercase mb-6" style={{ color: '#0891B2' }}>
             404 — Not Found
           </p>
           <h1
-            className="font-display tracking-widest text-charcoal leading-none mb-8"
+            className="font-display text-charcoal leading-none mb-8"
             style={{ fontSize: 'clamp(2.5rem,6vw,5rem)' }}
           >
             ARTICLE<br /><span className="text-terracotta">NOT FOUND</span>
           </h1>
-          <p className="font-light text-lg mb-10" style={{ color: 'rgba(34,33,31,0.50)' }}>
+          <p className="font-light text-lg mb-10" style={{ color: 'rgba(15, 23, 42,0.50)' }}>
             The article you're looking for doesn't exist or has been moved.
           </p>
           <Link
             to="/blog"
-            className="inline-flex items-center gap-3 font-display tracking-widest text-base px-8 py-4 rounded-full no-underline transition-all duration-300"
-            style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(184,92,56,0.22)' }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#A34E2F')}
+            className="inline-flex items-center gap-3 font-display text-base px-8 py-4 rounded-full no-underline transition-all duration-300"
+            style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 6px 28px rgba(6, 182, 212,0.22)' }}
+            onMouseEnter={e => (e.currentTarget.style.background = '#0891B2')}
             onMouseLeave={e => (e.currentTarget.style.background = TERRACOTTA)}
           >
             <ArrowLeft className="h-4 w-4" /> BACK TO BLOG
@@ -112,7 +112,7 @@ const BlogPost = () => {
           <div className="absolute inset-0 pointer-events-none" style={paperStyle} />
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(184,92,56,0.04) 0%, transparent 60%)' }}
+            style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(6, 182, 212,0.04) 0%, transparent 60%)' }}
           />
 
           <div className="container mx-auto px-6 relative z-10">
@@ -126,9 +126,9 @@ const BlogPost = () => {
                 <Link
                   to="/blog"
                   className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase no-underline transition-colors duration-200"
-                  style={{ color: 'rgba(34,33,31,0.38)' }}
+                  style={{ color: 'rgba(15, 23, 42,0.55)' }}
                   onMouseEnter={e => (e.currentTarget.style.color = TERRACOTTA)}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(34,33,31,0.38)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(15, 23, 42,0.38)')}
                 >
                   <ArrowLeft className="h-3.5 w-3.5" /> Back to Insights
                 </Link>
@@ -143,14 +143,14 @@ const BlogPost = () => {
                 {post.category && (
                   <span
                     className="font-mono text-[10px] tracking-[0.24em] uppercase px-3 py-1.5 rounded-full border"
-                    style={{ borderColor: 'rgba(184,92,56,0.26)', color: TERRACOTTA }}
+                    style={{ borderColor: 'rgba(6, 182, 212,0.26)', color: TERRACOTTA }}
                   >
                     {post.category}
                   </span>
                 )}
                 <span
                   className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.14em] uppercase"
-                  style={{ color: 'rgba(34,33,31,0.34)' }}
+                  style={{ color: 'rgba(15, 23, 42,0.55)' }}
                 >
                   <Calendar className="h-3 w-3" />
                   {new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -162,7 +162,7 @@ const BlogPost = () => {
                 <motion.h1
                   initial={{ y: '101%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
-                  className="font-display leading-[1.05] tracking-wide text-charcoal"
+                  className="font-display leading-[1.05] text-charcoal"
                   style={{ fontSize: 'clamp(2rem,5vw,4rem)' }}
                 >
                   {post.title}
@@ -175,7 +175,7 @@ const BlogPost = () => {
                   initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                   className="font-light text-lg leading-relaxed mb-10"
-                  style={{ color: 'rgba(34,33,31,0.52)' }}
+                  style={{ color: 'rgba(15, 23, 42,0.52)' }}
                 >
                   {post.excerpt}
                 </motion.p>
@@ -195,7 +195,7 @@ const BlogPost = () => {
                     <span
                       key={tag}
                       className="flex items-center gap-1 font-mono text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full border"
-                      style={{ borderColor: 'rgba(34,33,31,0.10)', color: 'rgba(34,33,31,0.40)' }}
+                      style={{ borderColor: 'rgba(15, 23, 42,0.10)', color: 'rgba(15, 23, 42,0.40)' }}
                     >
                       <Tag className="h-2.5 w-2.5" /> {tag.trim()}
                     </span>
@@ -213,7 +213,7 @@ const BlogPost = () => {
                     src={post.imageUrl}
                     alt={post.title}
                     className="w-full h-56 md:h-80 object-cover rounded-2xl"
-                    style={{ border: '1px solid rgba(34,33,31,0.06)', boxShadow: '0 8px 40px rgba(0,0,0,0.06)' }}
+                    style={{ border: '1px solid rgba(15, 23, 42,0.06)', boxShadow: '0 8px 40px rgba(0,0,0,0.06)' }}
                   />
                 </motion.div>
               )}
@@ -235,14 +235,14 @@ const BlogPost = () => {
                 className="prose prose-lg max-w-none"
                 style={{
                   // Tailwind prose override via CSS variables
-                  '--tw-prose-body': 'rgba(34,33,31,0.72)',
+                  '--tw-prose-body': 'rgba(15, 23, 42,0.72)',
                   '--tw-prose-headings': '#22211F',
                   '--tw-prose-links': TERRACOTTA,
                   '--tw-prose-bold': '#22211F',
-                  '--tw-prose-hr': 'rgba(34,33,31,0.10)',
+                  '--tw-prose-hr': 'rgba(15, 23, 42,0.10)',
                   '--tw-prose-quotes': '#22211F',
                   '--tw-prose-quote-borders': TERRACOTTA,
-                  '--tw-prose-captions': 'rgba(34,33,31,0.44)',
+                  '--tw-prose-captions': 'rgba(15, 23, 42,0.44)',
                   '--tw-prose-code': '#22211F',
                   '--tw-prose-bullets': TERRACOTTA,
                   '--tw-prose-counters': TERRACOTTA,
@@ -255,20 +255,20 @@ const BlogPost = () => {
               <ScrollReveal variant="fade" delay={0.1}>
                 <div
                   className="border-t mt-16 pt-10"
-                  style={{ borderColor: 'rgba(34,33,31,0.08)' }}
+                  style={{ borderColor: 'rgba(15, 23, 42,0.08)' }}
                 >
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                     <div>
                       <h3 className="font-heading text-charcoal text-xl mb-1">Found this helpful?</h3>
-                      <p className="font-light text-sm" style={{ color: 'rgba(34,33,31,0.50)' }}>
+                      <p className="font-light text-sm" style={{ color: 'rgba(15, 23, 42,0.50)' }}>
                         Share this article with others who might benefit
                       </p>
                     </div>
                     <button
                       onClick={() => setShowShareModal(true)}
-                      className="inline-flex items-center gap-3 font-display tracking-widest text-sm px-7 py-3.5 rounded-full transition-all duration-300 group flex-shrink-0"
-                      style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 4px 20px rgba(184,92,56,0.20)' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = '#A34E2F')}
+                      className="inline-flex items-center gap-3 font-display text-sm px-7 py-3.5 rounded-full transition-all duration-300 group flex-shrink-0"
+                      style={{ background: TERRACOTTA, color: VANILLA, boxShadow: '0 4px 20px rgba(6, 182, 212,0.20)' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = '#0891B2')}
                       onMouseLeave={e => (e.currentTarget.style.background = TERRACOTTA)}
                     >
                       <Share2 className="h-4 w-4" /> SHARE
@@ -281,10 +281,10 @@ const BlogPost = () => {
               <ScrollReveal variant="fade" delay={0.15}>
                 <div
                   className="mt-10 rounded-xl p-5 border"
-                  style={{ background: 'rgba(34,33,31,0.02)', borderColor: 'rgba(34,33,31,0.07)' }}
+                  style={{ background: 'rgba(15, 23, 42,0.02)', borderColor: 'rgba(15, 23, 42,0.07)' }}
                 >
-                  <p className="font-mono text-xs leading-relaxed" style={{ color: 'rgba(34,33,31,0.36)' }}>
-                    <strong style={{ color: 'rgba(34,33,31,0.50)', fontWeight: 600 }}>Disclaimer:</strong> This article is for
+                  <p className="font-mono text-xs leading-relaxed" style={{ color: 'rgba(15, 23, 42,0.55)' }}>
+                    <strong style={{ color: 'rgba(15, 23, 42,0.50)', fontWeight: 600 }}>Disclaimer:</strong> This article is for
                     informational purposes only. It does not constitute medical advice. Always consult a qualified professional.
                   </p>
                 </div>
@@ -296,9 +296,9 @@ const BlogPost = () => {
                   <Link
                     to="/blog"
                     className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase no-underline transition-colors duration-200"
-                    style={{ color: 'rgba(34,33,31,0.38)' }}
+                    style={{ color: 'rgba(15, 23, 42,0.55)' }}
                     onMouseEnter={e => (e.currentTarget.style.color = TERRACOTTA)}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(34,33,31,0.38)')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(15, 23, 42,0.38)')}
                   >
                     <ArrowLeft className="h-3.5 w-3.5" /> Back to all insights
                   </Link>

@@ -8,10 +8,9 @@ const ProductSortingGame = React.lazy(() => import("./productsortinggame"));
 const MemoryMatch = React.lazy(() => import("./memorymatch"));
 
 // ── Brand palette ────────────────────────────────────────────────────────────
-const VANILLA = "#FAF5E4";
-const SAGE = "#A2CB8B";
-const TERRACOTTA = "#B85C38";
-const CHARCOAL = "#22211F";
+const VANILLA = '#F8FAFC';
+const TERRACOTTA = '#06B6D4';
+const CHARCOAL = '#0F172A';
 
 type GameKey = "quiz" | "sorting" | "memory";
 type TabDef = { key: GameKey; label: string; Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> };
@@ -103,13 +102,13 @@ export default function GameHub() {
                   ? {
                     background: TERRACOTTA,
                     color: VANILLA,
-                    boxShadow: "0 4px 20px rgba(184,92,56,0.28)",
+                    boxShadow: "0 4px 20px rgba(6, 182, 212,0.28)",
                     border: "2px solid transparent",
                   }
                   : {
                     background: "rgba(255,255,255,0.7)",
                     color: `rgba(${parseInt(CHARCOAL.slice(1, 3), 16)},${parseInt(CHARCOAL.slice(3, 5), 16)},${parseInt(CHARCOAL.slice(5, 7), 16)},0.58)`,
-                    border: `2px solid rgba(34,33,31,0.12)`,
+                    border: `2px solid rgba(15, 23, 42,0.12)`,
                   }
               }
             >
@@ -134,7 +133,7 @@ export default function GameHub() {
           <div className="h-48 flex items-center justify-center">
             <span
               className="font-mono text-sm tracking-widest"
-              style={{ color: "rgba(34,33,31,0.26)" }}
+              style={{ color: 'rgba(15, 23, 42,0.45)' }}
             >
               Loading game…
             </span>

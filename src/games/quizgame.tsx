@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { categoryConfig, quizData } from "./data";
 
 // ── Brand palette ─────────────────────────────────────────────────────────────
-const VANILLA = "#FAF5E4";
+const VANILLA = '#F8FAFC';
 const SAGE = "#A2CB8B";
-const TERRACOTTA = "#B85C38";
-const CHARCOAL = "#22211F";
+const TERRACOTTA = '#06B6D4';
+const CHARCOAL = '#0F172A';
 
 export default function QuizGame() {
   const [activeCategory, setActiveCategory] = useState<keyof typeof quizData>("Cleaning Products");
@@ -73,19 +73,19 @@ export default function QuizGame() {
               className="group flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2"
               style={
                 active
-                  ? { background: CHARCOAL, color: VANILLA, boxShadow: "0 4px 16px rgba(34,33,31,0.20)" }
-                  : { background: "rgba(255,255,255,0.6)", color: "rgba(34,33,31,0.54)", border: "1px solid rgba(34,33,31,0.09)" }
+                  ? { background: CHARCOAL, color: VANILLA, boxShadow: "0 4px 16px rgba(15, 23, 42,0.20)" }
+                  : { background: "rgba(255,255,255,0.6)", color: "rgba(15, 23, 42,0.54)", border: "1px solid rgba(15, 23, 42,0.09)" }
               }
             >
               <Icon
                 className="h-5 w-5 transition-transform duration-300 group-hover:scale-110"
-                style={{ color: active ? TERRACOTTA : "rgba(34,33,31,0.40)" }}
+                style={{ color: active ? TERRACOTTA : "rgba(15, 23, 42,0.40)" }}
               />
               <span className="font-mono text-[10px] tracking-wide text-center leading-tight">{category}</span>
               {categoryScores[category] && (
                 <span
                   className="font-mono text-[9px] px-1.5 py-0.5 rounded-full"
-                  style={{ background: active ? "rgba(250,245,228,0.15)" : SAGE + "33", color: active ? VANILLA : "#3A6B2A" }}
+                  style={{ background: active ? "rgba(248, 250, 252,0.15)" : SAGE + "33", color: active ? VANILLA : "#3A6B2A" }}
                 >
                   {categoryScores[category].correct}/{categoryScores[category].total}
                 </span>
@@ -98,19 +98,19 @@ export default function QuizGame() {
       {/* ── Progress bar ────────────────────────────────────────────── */}
       <div className="space-y-2">
         <div className="flex justify-between items-center">
-          <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: "rgba(34,33,31,0.36)" }}>
+          <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: 'rgba(15, 23, 42,0.55)' }}>
             Progress
           </span>
           <div className="flex items-center gap-3">
-            <span className="font-mono text-[10px] tracking-widest" style={{ color: "rgba(184,92,56,0.6)" }}>
+            <span className="font-mono text-[10px] tracking-widest" style={{ color: '#0891B2' }}>
               Score: {score}/{currentQuestion + (showResult ? 1 : 0)}
             </span>
-            <span className="font-display text-base tracking-widest" style={{ color: CHARCOAL }}>
-              {currentQuestion + (showResult ? 1 : 0)}<span style={{ color: "rgba(34,33,31,0.24)" }}>/{totalQ}</span>
+            <span className="font-display text-base" style={{ color: CHARCOAL }}>
+              {currentQuestion + (showResult ? 1 : 0)}<span style={{ color: 'rgba(15, 23, 42,0.45)' }}>/{totalQ}</span>
             </span>
           </div>
         </div>
-        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(34,33,31,0.08)" }}>
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(15, 23, 42,0.08)" }}>
           <motion.div
             className="h-full rounded-full"
             style={{ background: TERRACOTTA }}
@@ -129,11 +129,11 @@ export default function QuizGame() {
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
           className="rounded-2xl border overflow-hidden"
-          style={{ background: "rgba(255,255,255,0.80)", borderColor: "rgba(34,33,31,0.08)", boxShadow: "0 4px 28px rgba(0,0,0,0.06)" }}
+          style={{ background: "rgba(255,255,255,0.80)", borderColor: "rgba(15, 23, 42,0.08)", boxShadow: "0 4px 28px rgba(0,0,0,0.06)" }}
         >
           {/* Question */}
-          <div className="px-6 py-8 text-center border-b" style={{ borderColor: "rgba(34,33,31,0.06)" }}>
-            <p className="font-mono text-[10px] tracking-[0.24em] uppercase mb-4" style={{ color: "rgba(184,92,56,0.50)" }}>
+          <div className="px-6 py-8 text-center border-b" style={{ borderColor: "rgba(15, 23, 42,0.06)" }}>
+            <p className="font-mono text-[10px] tracking-[0.24em] uppercase mb-4" style={{ color: '#0891B2' }}>
               Is this ingredient safe?
             </p>
             <h3
@@ -158,24 +158,24 @@ export default function QuizGame() {
                   <button
                     onClick={() => handleQuizAnswer(true)}
                     className="group flex flex-col items-center gap-2 py-6 px-4 rounded-xl border-2 transition-all duration-300 hover:-translate-y-0.5"
-                    style={{ background: "rgba(162,203,139,0.10)", borderColor: "rgba(162,203,139,0.35)", color: "#2F6A20" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(162,203,139,0.22)"; e.currentTarget.style.borderColor = SAGE; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(162,203,139,0.10)"; e.currentTarget.style.borderColor = "rgba(162,203,139,0.35)"; }}
+                    style={{ background: "rgba(186, 230, 253,0.10)", borderColor: "rgba(186, 230, 253,0.35)", color: "#2F6A20" }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(186, 230, 253,0.22)"; e.currentTarget.style.borderColor = SAGE; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(186, 230, 253,0.10)"; e.currentTarget.style.borderColor = "rgba(186, 230, 253,0.35)"; }}
                   >
                     <CheckCircle2 className="h-7 w-7 group-hover:scale-110 transition-transform" style={{ color: "#5A8A3C" }} strokeWidth={1.5} />
-                    <span className="font-display tracking-widest text-base" style={{ color: "#2F6A20" }}>SAFE TO USE</span>
+                    <span className="font-display text-base" style={{ color: "#2F6A20" }}>SAFE TO USE</span>
                     <span className="font-light text-xs" style={{ color: "rgba(47,106,32,0.60)" }}>Non-toxic and family-friendly</span>
                   </button>
                   <button
                     onClick={() => handleQuizAnswer(false)}
                     className="group flex flex-col items-center gap-2 py-6 px-4 rounded-xl border-2 transition-all duration-300 hover:-translate-y-0.5"
-                    style={{ background: "rgba(184,92,56,0.07)", borderColor: "rgba(184,92,56,0.22)", color: TERRACOTTA }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(184,92,56,0.14)"; e.currentTarget.style.borderColor = TERRACOTTA; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(184,92,56,0.07)"; e.currentTarget.style.borderColor = "rgba(184,92,56,0.22)"; }}
+                    style={{ background: "rgba(6, 182, 212,0.07)", borderColor: "rgba(6, 182, 212,0.22)", color: TERRACOTTA }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(6, 182, 212,0.14)"; e.currentTarget.style.borderColor = TERRACOTTA; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(6, 182, 212,0.07)"; e.currentTarget.style.borderColor = "rgba(6, 182, 212,0.22)"; }}
                   >
                     <XCircle className="h-7 w-7 group-hover:scale-110 transition-transform" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
-                    <span className="font-display tracking-widest text-base" style={{ color: TERRACOTTA }}>HARMFUL / AVOID</span>
-                    <span className="font-light text-xs" style={{ color: "rgba(184,92,56,0.60)" }}>Contains toxic chemicals</span>
+                    <span className="font-display text-base" style={{ color: TERRACOTTA }}>HARMFUL / AVOID</span>
+                    <span className="font-light text-xs" style={{ color: '#0891B2' }}>Contains toxic chemicals</span>
                   </button>
                 </motion.div>
               ) : (
@@ -187,8 +187,8 @@ export default function QuizGame() {
                   transition={{ duration: 0.3 }}
                   className="rounded-xl p-5 md:p-6"
                   style={{
-                    background: isCorrect ? "rgba(162,203,139,0.15)" : "rgba(184,92,56,0.08)",
-                    border: `1px solid ${isCorrect ? "rgba(162,203,139,0.45)" : "rgba(184,92,56,0.28)"}`,
+                    background: isCorrect ? "rgba(186, 230, 253,0.15)" : "rgba(6, 182, 212,0.08)",
+                    border: `1px solid ${isCorrect ? "rgba(186, 230, 253,0.45)" : "rgba(6, 182, 212,0.28)"}`,
                   }}
                 >
                   {/* Result header */}
@@ -202,13 +202,13 @@ export default function QuizGame() {
                     </span>
                   </div>
                   {/* Explanation */}
-                  <p className="font-light leading-relaxed text-sm mb-4" style={{ color: "rgba(34,33,31,0.70)" }}>
+                  <p className="font-light leading-relaxed text-sm mb-4" style={{ color: "rgba(15, 23, 42,0.70)" }}>
                     {currentQuizData[currentQuestion].explanation}
                   </p>
                   {/* Alternative */}
-                  <div className="flex items-start gap-3 pt-3 border-t" style={{ borderColor: "rgba(34,33,31,0.08)" }}>
-                    <ChevronRight className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "rgba(184,92,56,0.50)" }} strokeWidth={1.5} />
-                    <p className="font-light italic text-sm" style={{ color: "rgba(34,33,31,0.52)" }}>
+                  <div className="flex items-start gap-3 pt-3 border-t" style={{ borderColor: "rgba(15, 23, 42,0.08)" }}>
+                    <ChevronRight className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: '#0891B2' }} strokeWidth={1.5} />
+                    <p className="font-light italic text-sm" style={{ color: "rgba(15, 23, 42,0.52)" }}>
                       {currentQuizData[currentQuestion].alternative}
                     </p>
                   </div>

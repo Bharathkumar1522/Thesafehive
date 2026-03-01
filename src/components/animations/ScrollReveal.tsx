@@ -61,6 +61,7 @@ export function ScrollReveal({
                 mass: 1,
                 delay,
             }}
+            style={{ willChange: 'transform, opacity' }}
             className={className}
         >
             {children}
@@ -123,6 +124,7 @@ export function StaggerItem({
         <motion.div
             variants={variantMap[activeVariant]}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            style={{ willChange: 'transform, opacity' }}
             className={className}
         >
             {children}

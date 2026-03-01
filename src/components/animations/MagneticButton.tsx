@@ -1,5 +1,5 @@
 // src/components/animations/MagneticButton.tsx
-import { useRef, ReactNode } from 'react';
+import { useRef, ReactNode, memo } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 interface MagneticButtonProps {
@@ -10,7 +10,7 @@ interface MagneticButtonProps {
     onClick?: () => void;
 }
 
-export function MagneticButton({
+export const MagneticButton = memo(function MagneticButton({
     children,
     className = '',
     strength = 0.35,
@@ -51,4 +51,4 @@ export function MagneticButton({
             {children}
         </motion.div>
     );
-}
+});

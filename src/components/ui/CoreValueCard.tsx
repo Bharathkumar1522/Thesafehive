@@ -14,8 +14,8 @@ export const CoreValueCard: React.FC<CoreValueCardProps> = ({
   description,
   index = 0,
 }) => {
-  const TERRACOTTA = '#B85C38';
-  const CHARCOAL = '#22211F';
+  const TERRACOTTA = '#06B6D4';
+  const CHARCOAL = '#0F172A';
 
   return (
     <motion.div
@@ -27,12 +27,12 @@ export const CoreValueCard: React.FC<CoreValueCardProps> = ({
       className="bg-white p-7 rounded-2xl border transition-all duration-400 h-full flex items-center space-x-5 group hover-card"
       style={{
         boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-        borderColor: 'rgba(34,33,31,0.06)'
+        borderColor: 'rgba(15, 23, 42,0.06)'
       }}
     >
       <div
         className="flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center transition-colors duration-400 group-hover:bg-[#B85C38]"
-        style={{ background: 'rgba(184,92,56,0.12)' }}
+        style={{ background: 'rgba(6, 182, 212,0.12)' }}
       >
         <Icon
           className="h-6 w-6 transition-colors duration-400 group-hover:text-white"
@@ -42,7 +42,7 @@ export const CoreValueCard: React.FC<CoreValueCardProps> = ({
       </div>
       <div className="flex-1">
         <h3 className="text-xl font-heading mb-1.5" style={{ color: CHARCOAL }}>{title}</h3>
-        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'rgba(34,33,31,0.68)' }}>{description}</p>
+        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'rgba(15, 23, 42,0.68)' }}>{description}</p>
       </div>
     </motion.div>
   );
