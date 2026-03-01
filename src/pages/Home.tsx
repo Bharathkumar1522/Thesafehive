@@ -61,12 +61,21 @@ const PLACEHOLDERS = [
   'e.g. "Tide Laundry Pods"…',
   'e.g. "Neutrogena Sunscreen"…',
 ];
-function useTypewriter(strings: string[], speed = 65, pauseMs = 2000) {
+function useTypewriter(strings: string[], speed = 65, pauseMs = 2000, initialDelay = 2000) {
   const [text, setText] = useState('');
   const [idx, setIdx] = useState(0);
   const [ci, setCi] = useState(0);
   const [del, setDel] = useState(false);
+  const [started, setStarted] = useState(false);
+
+  // Delay the start of the typewriter to free up the main thread during initial load
   useEffect(() => {
+    const t = setTimeout(() => setStarted(true), initialDelay);
+    return () => clearTimeout(t);
+  }, [initialDelay]);
+
+  useEffect(() => {
+    if (!started) return;
     const cur = strings[idx];
     const t = setTimeout(() => {
       if (!del) {
@@ -80,7 +89,7 @@ function useTypewriter(strings: string[], speed = 65, pauseMs = 2000) {
       }
     }, del ? speed / 2 : speed);
     return () => clearTimeout(t);
-  }, [text, ci, del, idx, strings, speed, pauseMs]);
+  }, [text, ci, del, idx, strings, speed, pauseMs, started]);
   return text;
 }
 
@@ -118,30 +127,34 @@ const Home = () => {
   });
 
   useEffect(() => {
-    (async () => {
-      try {
-        const entries = await client.getEntries({
-          content_type: import.meta.env.VITE_CONTENT_TYPE,
-          order: ['-sys.createdAt'], limit: 8, include: 2,
-        });
-        const posts: SimpleBlogPost[] = entries.items.map((item: ContentfulEntry) => {
-          const f = item.fields || {};
-          const cover = f.coverImage as { fields?: { file?: { url?: string } } }[] | undefined;
-          const raw = cover?.[0]?.fields?.file?.url ?? '';
-          return {
-            id: item.sys.id,
-            title: (f.title as string) || 'Untitled',
-            slug: (f.slug as string) || '',
-            excerpt: (f.excerpt as string) || '',
-            imageUrl: raw ? cfUrl(`https:${raw}`, SLIDER_W, SLIDER_H) : '/fallback.webp',
-            date: (f.date as string) || item.sys.createdAt,
-            category: (f.category as string) || 'Wellness',
-          } as SimpleBlogPost;
-        });
-        setBlogPosts(posts);
-      } catch { setBlogPosts([]); }
-      finally { setLoading(false); }
-    })();
+    // Delay data fetching to allow initial animations and LCP to finish first
+    const timer = setTimeout(() => {
+      (async () => {
+        try {
+          const entries = await client.getEntries({
+            content_type: import.meta.env.VITE_CONTENT_TYPE,
+            order: ['-sys.createdAt'], limit: 8, include: 2,
+          });
+          const posts: SimpleBlogPost[] = entries.items.map((item: ContentfulEntry) => {
+            const f = item.fields || {};
+            const cover = f.coverImage as { fields?: { file?: { url?: string } } }[] | undefined;
+            const raw = cover?.[0]?.fields?.file?.url ?? '';
+            return {
+              id: item.sys.id,
+              title: (f.title as string) || 'Untitled',
+              slug: (f.slug as string) || '',
+              excerpt: (f.excerpt as string) || '',
+              imageUrl: raw ? cfUrl(`https:${raw}`, SLIDER_W, SLIDER_H) : '/fallback.webp',
+              date: (f.date as string) || item.sys.createdAt,
+              category: (f.category as string) || 'Wellness',
+            } as SimpleBlogPost;
+          });
+          setBlogPosts(posts);
+        } catch { setBlogPosts([]); }
+        finally { setLoading(false); }
+      })();
+    }, 1200);
+    return () => clearTimeout(timer);
   }, []);
 
   // Removed duplicated mission points. They live on About.tsx.
@@ -405,7 +418,7 @@ const Home = () => {
               {/* Regulatory basis */}
               <div className="text-center">
                 <p className="font-mono text-xs mb-3" style={{ color: 'rgba(15, 23, 42,0.55)' }}>
-                  Verified against
+                  Aligned with
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {references.map(({ label, href }) => (

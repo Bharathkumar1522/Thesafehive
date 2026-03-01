@@ -21,6 +21,7 @@ export default function MainLayout({ isLoggedIn, onLogout }: MainLayoutProps) {
             <main className="flex-grow w-full max-w-[100vw] relative z-10">
                 <AnimatePresence
                     mode="wait"
+                    initial={false}
                     onExitComplete={() => {
                         window.scrollTo(0, 0);
                         getLenis()?.scrollTo(0, { immediate: true });
