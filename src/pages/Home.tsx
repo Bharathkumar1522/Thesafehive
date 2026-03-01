@@ -18,10 +18,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import {
-  ArrowRight, Shield, Leaf, CheckCircle2,
-  ChevronLeft, ChevronRight, Search,
-} from 'lucide-react';
+import { Shield, Search, ArrowRight, ChevronLeft, ChevronRight, CheckCircle2, Leaf } from 'lucide-react';
 import { createClient } from 'contentful';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
@@ -424,6 +421,25 @@ const Home = () => {
                     </a>
                   ))}
                 </div>
+              </div>
+
+              {/* SVA-1 Protocol Link */}
+              <div className="mt-8 flex justify-center">
+                <Link
+                  to="/sva"
+                  className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase px-6 py-2.5 rounded-full border no-underline transition-all duration-300"
+                  style={{ borderColor: 'rgba(15, 23, 42,0.12)', color: 'rgba(15, 23, 42,0.68)' }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.color = '#B85C38';
+                    e.currentTarget.style.borderColor = '#B85C38';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.color = 'rgba(15, 23, 42,0.68)';
+                    e.currentTarget.style.borderColor = 'rgba(15, 23, 42,0.12)';
+                  }}
+                >
+                  Learn about SVA-1 Protocol <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </div>
           </ScrollReveal>

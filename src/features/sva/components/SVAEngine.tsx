@@ -82,10 +82,7 @@ export default function SVAEngine() {
                                     className="flex-1 flex flex-col items-center lg:items-start relative group"
                                 >
 
-                                    {/* Vertical Connector (Mobile) */}
-                                    {index !== ENGINE_STEPS.length - 1 && (
-                                        <div className="lg:hidden absolute top-16 bottom-[-24px] left-1/2 w-0.5 bg-terracotta/20 -translate-x-1/2 z-0" />
-                                    )}
+                                    {/* Vertical Connector (Mobile) - Removed as per feedback */}
 
                                     {/* Node Icon */}
                                     <div className="w-16 h-16 rounded-2xl bg-white border border-terracotta/30 flex items-center justify-center text-terracotta shadow-sm mb-6 z-10 group-hover:scale-110 group-hover:bg-terracotta group-hover:text-white transition-all duration-300">
