@@ -13,7 +13,7 @@ export default function Img({ w, h, eager, decoding = "async", loading, ...rest 
       height={h}
       decoding={decoding}
       loading={eager ? undefined : (loading ?? "lazy")}
-      fetchPriority={eager ? "high" : undefined}
+      fetchpriority={eager ? "high" : undefined}
       {...rest}
     />
   );

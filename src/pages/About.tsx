@@ -242,7 +242,7 @@ const About = () => {
                     alt="Natural organic materials conveying chemical safety"
                     className="w-full h-[28rem] lg:h-[36rem] object-cover"
                     loading="eager"
-                    fetchPriority="high"
+                    fetchpriority="high"
                     width={960} height={720}
                   />
                 </picture>

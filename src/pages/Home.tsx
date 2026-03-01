@@ -295,7 +295,7 @@ const Home = () => {
                     alt="Natural chemical-free skincare and wellness products"
                     className="w-full h-full object-cover"
                     loading="eager"
-                    fetchPriority="high"
+                    fetchpriority="high"
                   />
                 </div>
 
@@ -309,7 +309,7 @@ const Home = () => {
                     alt="Clean and natural home aesthetic"
                     className="w-full h-full object-cover"
                     loading="eager"
-                    fetchPriority="high"
+                    fetchpriority="high"
                   />
                 </div>
               </div>
