@@ -196,7 +196,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
               exit={{ x: '100%' }}
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="fixed inset-0 z-[60] flex flex-col"
-              style={{ background: '#2C1810' }}
+              style={{ background: C_BRAND }}
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation"
