@@ -159,6 +159,8 @@ export default function DetectiveGame({ case: caseData, onBack }: DetectiveGameP
                                     <form onSubmit={handleSubmit} className="space-y-4">
                                         <input
                                             type="text"
+                                            id="answer"
+                                            name="answer"
                                             value={answer}
                                             onChange={(e) => setAnswer(e.target.value)}
                                             placeholder="Enter your answer..."

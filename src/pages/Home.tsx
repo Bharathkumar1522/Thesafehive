@@ -381,6 +381,8 @@ const Home = () => {
                 <div className="flex flex-1 items-center bg-transparent">
                   <Search className="ml-1 h-5 w-5 flex-shrink-0" style={{ color: '#B85C38' }} strokeWidth={1.5} />
                   <input
+                    id="waitlist-product"
+                    name="product"
                     type="text"
                     value={query}
                     onChange={e => setQuery(e.target.value)}

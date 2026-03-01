@@ -667,6 +667,7 @@ export default function Learn() {
                 />
                 <input
                   id="blog-search"
+                  name="search"
                   type="text"
                   placeholder="Search articles…"
                   value={searchQuery}
