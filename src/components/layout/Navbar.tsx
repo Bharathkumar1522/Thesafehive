@@ -1,7 +1,7 @@
 // src/components/layout/Navbar.tsx
 import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Leaf, Menu, X } from 'lucide-react';
+import { Leaf, Menu, X, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { routePrefetchers } from '../../routes/prefetch';
 
@@ -20,6 +20,7 @@ const C_GLASS = 'rgba(248, 250, 252,0.86)'; // warm cream scroll glass
 const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [shopHovered, setShopHovered] = useState(false);
   const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const toggleMenu = () => setIsOpen(v => !v);
@@ -116,58 +117,97 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
 
           {/* Desktop links ──────────────────────────── */}
           <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0">
-            {NAV_LINKS.map(({ to, label }) => (
+            {/* Home link — always first */}
+            <li key="/">
+              <NavLink
+                to="/"
+                end
+                onMouseEnter={() => prefetch('/')}
+                className="no-underline relative block"
+                style={({ isActive }) => ({
+                  fontFamily: 'inherit',
+                  fontSize: '0.78rem',
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  fontWeight: 500,
+                  color: isActive ? C_ACTIVE : C_MUTED,
+                  transition: 'color 0.25s',
+                })}
+                onMouseOver={e => { const el = e.currentTarget as HTMLElement; if (el.style.color !== C_ACTIVE) el.style.color = C_HOVER; }}
+                onMouseOut={e => { const el = e.currentTarget as HTMLElement; if (el.style.color !== C_ACTIVE) el.style.color = C_MUTED; }}
+              >
+                {({ isActive }) => (
+                  <>
+                    Home
+                    {isActive && (
+                      <motion.div layoutId="nav-indicator-desktop" className="absolute left-0 right-0 -bottom-1.5 h-0.5 rounded-full" style={{ background: C_ACTIVE }} transition={{ type: 'spring', stiffness: 350, damping: 30 }} />
+                    )}
+                  </>
+                )}
+              </NavLink>
+            </li>
+
+            {/* Shop — Coming Soon (2nd position) */}
+            <li className="relative" onMouseEnter={() => setShopHovered(true)} onMouseLeave={() => setShopHovered(false)}>
+              <button
+                style={{ fontFamily: 'inherit', fontSize: '0.78rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500, color: shopHovered ? C_HOVER : C_MUTED, transition: 'color 0.25s', background: 'none', border: 'none', cursor: 'default', padding: 0 }}
+                aria-label="Shop — Coming Soon"
+                tabIndex={-1}
+              >
+                Shop
+              </button>
+              <AnimatePresence>
+                {shopHovered && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute top-full left-0 mt-4 w-64 rounded-2xl z-[80] pointer-events-none"
+                    style={{ background: '#ffffff', boxShadow: '0 12px 48px rgba(15,23,42,0.12), 0 2px 8px rgba(15,23,42,0.06)', border: '1px solid rgba(15,23,42,0.07)' }}
+                  >
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-3">
+                        <ShoppingBag className="h-4 w-4" style={{ color: C_ACTIVE }} strokeWidth={1.5} />
+                        <span className="font-mono text-[10px] tracking-[0.22em] uppercase" style={{ color: C_ACTIVE }}>Shop</span>
+                      </div>
+                      <p className="font-light text-sm leading-relaxed mb-4" style={{ color: 'rgba(15,23,42,0.65)' }}>
+                        We're curating the brands and products.
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full border" style={{ borderColor: C_ACTIVE, color: C_ACTIVE }}>Coming Soon</span>
+                        <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: 'rgba(15,23,42,0.38)' }}>Stay Tuned</span>
+                      </div>
+                    </div>
+                    {/* Arrow */}
+                    <div className="absolute -top-2 left-6 w-3.5 h-3.5 rotate-45" style={{ background: '#ffffff', border: '1px solid rgba(15,23,42,0.07)', borderBottom: 'none', borderRight: 'none' }} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </li>
+
+            {/* Remaining nav links */}
+            {NAV_LINKS.filter(l => l.to !== '/').map(({ to, label }) => (
               <li key={to}>
                 <NavLink
                   to={to}
-                  end={to === '/'}
                   onMouseEnter={() => prefetch(to)}
                   className="no-underline relative block"
-                  style={({ isActive }) => ({
-                    fontFamily: 'inherit',
-                    fontSize: '0.78rem',
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
-                    fontWeight: 500,
-                    color: isActive ? C_ACTIVE : C_MUTED,
-                    transition: 'color 0.25s',
-                  })}
-                  onMouseOver={e => {
-                    const el = e.currentTarget as HTMLElement;
-                    if (el.style.color !== C_ACTIVE) el.style.color = C_HOVER;
-                  }}
-                  onMouseOut={e => {
-                    const el = e.currentTarget as HTMLElement;
-                    if (el.style.color !== C_ACTIVE) el.style.color = C_MUTED;
-                  }}
+                  style={({ isActive }) => ({ fontFamily: 'inherit', fontSize: '0.78rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500, color: isActive ? C_ACTIVE : C_MUTED, transition: 'color 0.25s' })}
+                  onMouseOver={e => { const el = e.currentTarget as HTMLElement; if (el.style.color !== C_ACTIVE) el.style.color = C_HOVER; }}
+                  onMouseOut={e => { const el = e.currentTarget as HTMLElement; if (el.style.color !== C_ACTIVE) el.style.color = C_MUTED; }}
                 >
                   {({ isActive }) => (
                     <>
                       {label}
                       {isActive && (
-                        <motion.div
-                          layoutId="nav-indicator-desktop"
-                          className="absolute left-0 right-0 -bottom-1.5 h-0.5 rounded-full"
-                          style={{ background: C_ACTIVE }}
-                          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                        />
+                        <motion.div layoutId="nav-indicator-desktop" className="absolute left-0 right-0 -bottom-1.5 h-0.5 rounded-full" style={{ background: C_ACTIVE }} transition={{ type: 'spring', stiffness: 350, damping: 30 }} />
                       )}
                     </>
                   )}
                 </NavLink>
               </li>
             ))}
-            {isLoggedIn && (
-              <li>
-                <button
-                  onClick={onLogout}
-                  style={{ color: C_MUTED, fontSize: '0.78rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'none', border: 'none', cursor: 'pointer' }}
-                  className="transition-colors duration-200 hover:opacity-80"
-                >
-                  Logout
-                </button>
-              </li>
-            )}
           </ul>
 
           {/* Mobile hamburger ───────────────────────── */}
@@ -253,12 +293,33 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
                       </NavLink>
                     </motion.li>
                   ))}
+
+                  {/* Shop — Coming Soon */}
+                  <motion.li
+                    initial={{ opacity: 0, x: 32 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.08 + NAV_LINKS.length * 0.065, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex items-center gap-3"
+                  >
+                    <span
+                      className="py-3 font-display tracking-[0.15em] uppercase"
+                      style={{ fontSize: 'clamp(2.5rem, 7vw, 3.5rem)', color: 'rgba(248, 250, 252,0.28)', cursor: 'default' }}
+                    >
+                      Shop
+                    </span>
+                    <span
+                      className="font-mono text-[9px] tracking-widest uppercase px-2 py-1 rounded-full border self-center"
+                      style={{ borderColor: 'rgba(248,250,252,0.18)', color: 'rgba(248,250,252,0.35)' }}
+                    >
+                      Soon
+                    </span>
+                  </motion.li>
                 </ul>
 
                 {/* Footer note */}
                 <div className="pt-8 border-t" style={{ borderColor: 'rgba(248, 250, 252,0.08)' }}>
                   <p className="font-mono text-xs tracking-widest" style={{ color: 'rgba(248, 250, 252,0.22)' }}>
-                    SVA-1 · Chemical Safety Platform
+                    SVA · Chemical Safety Platform
                   </p>
                 </div>
               </div>
