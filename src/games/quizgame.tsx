@@ -134,7 +134,7 @@ export default function QuizGame() {
           {/* Question */}
           <div className="px-6 py-8 text-center border-b" style={{ borderColor: "rgba(15, 23, 42,0.06)" }}>
             <p className="font-mono text-[10px] tracking-[0.24em] uppercase mb-4" style={{ color: '#0891B2' }}>
-              Is this ingredient safe?
+              How does this ingredient rate?
             </p>
             <h3
               className="font-heading leading-snug"
@@ -163,8 +163,8 @@ export default function QuizGame() {
                     onMouseLeave={e => { e.currentTarget.style.background = "rgba(186, 230, 253,0.10)"; e.currentTarget.style.borderColor = "rgba(186, 230, 253,0.35)"; }}
                   >
                     <CheckCircle2 className="h-7 w-7 group-hover:scale-110 transition-transform" style={{ color: "#5A8A3C" }} strokeWidth={1.5} />
-                    <span className="font-display text-base" style={{ color: "#2F6A20" }}>SAFE TO USE</span>
-                    <span className="font-light text-xs" style={{ color: "rgba(47,106,32,0.60)" }}>Non-toxic and family-friendly</span>
+                    <span className="font-display text-base" style={{ color: "#2F6A20" }}>LOWER RISK</span>
+                    <span className="font-light text-xs" style={{ color: "rgba(47,106,32,0.60)" }}>Well-studied &amp; generally considered safe</span>
                   </button>
                   <button
                     onClick={() => handleQuizAnswer(false)}
@@ -174,8 +174,8 @@ export default function QuizGame() {
                     onMouseLeave={e => { e.currentTarget.style.background = "rgba(6, 182, 212,0.07)"; e.currentTarget.style.borderColor = "rgba(6, 182, 212,0.22)"; }}
                   >
                     <XCircle className="h-7 w-7 group-hover:scale-110 transition-transform" style={{ color: TERRACOTTA }} strokeWidth={1.5} />
-                    <span className="font-display text-base" style={{ color: TERRACOTTA }}>HARMFUL / AVOID</span>
-                    <span className="font-light text-xs" style={{ color: '#0891B2' }}>Contains toxic chemicals</span>
+                    <span className="font-display text-base" style={{ color: TERRACOTTA }}>USE WITH CAUTION</span>
+                    <span className="font-light text-xs" style={{ color: '#0891B2' }}>Uses high-concern ingredients</span>
                   </button>
                 </motion.div>
               ) : (

@@ -182,7 +182,7 @@ export default function ProductSortingGame() {
         >
           <h3 className="font-mono text-[10px] tracking-widest uppercase mb-4 flex items-center justify-center gap-2" style={{ color: TERRACOTTA }}>
             <AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.5} />
-            Harmful Products
+            High-Concern Products
           </h3>
           <div className="space-y-2">
             <AnimatePresence>
@@ -210,7 +210,7 @@ export default function ProductSortingGame() {
             </AnimatePresence>
             {harmfulZone.length === 0 && (
               <div className="py-8 text-center">
-                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: '#0891B2' }}>Drop harmful items here</p>
+                <p className="font-mono text-[9px] tracking-widest uppercase" style={{ color: '#0891B2' }}>Drop high-concern items here</p>
               </div>
             )}
           </div>

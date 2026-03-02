@@ -62,7 +62,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
     { to: '/', label: 'Home' },
     { to: '/about', label: 'About' },
     { to: '/learn', label: 'Hub' },
-    { to: '/sva', label: 'SVA-1' },
+    { to: '/sva', label: 'SVA' },
     { to: '/contact', label: 'Contact' },
   ];
 

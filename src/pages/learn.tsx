@@ -598,7 +598,6 @@ export default function Learn() {
                 <div className="space-y-3">
                   {[
                     'Don\'t trust "natural" or "eco" labels alone',
-                    'Avoid products with unknown long chemical names',
                     'Don\'t microwave food in plastic containers',
                     'Avoid antibacterial soaps with triclosan',
                     'Don\'t mix cleaning products',
