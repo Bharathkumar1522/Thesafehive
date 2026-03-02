@@ -227,9 +227,9 @@ const Home = () => {
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                   className="font-display leading-none text-charcoal whitespace-nowrap"
-                  style={{ fontSize: 'clamp(3.5rem, 8vw, 9rem)' }}
+                  style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)' }}
                 >
-                  SANCTUARY
+                  KNOW EXACTLY
                 </motion.h1>
               </div>
 
@@ -238,28 +238,29 @@ const Home = () => {
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.34 }}
                   className="font-display whitespace-nowrap"
-                  style={{ fontSize: 'clamp(1.4rem,3vw,3rem)', color: 'rgba(15, 23, 42,0.45)' }}
+                  style={{ fontSize: 'clamp(1.2rem,2.5vw,2.5rem)', color: 'rgba(15, 23, 42,0.45)' }}
                 >
-                  NOT
+                  WHAT'S IN YOUR
                 </motion.span>
                 <motion.span
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.44 }}
                   className="font-display text-terracotta whitespace-nowrap"
-                  style={{ fontSize: 'clamp(2.5rem,6vw,6rem)', lineHeight: 1 }}
+                  style={{ fontSize: 'clamp(2.2rem,5vw,5rem)', lineHeight: 1 }}
                 >
-                  SPECULATION
+                  PRODUCTS.
                 </motion.span>
               </div>
 
               <motion.p
-                initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="max-w-lg mx-auto lg:mx-0 text-lg md:text-xl leading-relaxed font-light mb-12"
-                style={{ color: 'rgba(15, 23, 42,0.58)' }}
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.55 }}
+                className="text-lg md:text-xl font-light leading-relaxed mb-12 mx-auto lg:mx-0 max-w-lg"
+                style={{ color: 'rgba(15, 23, 42,0.68)' }}
               >
-                Evidence-based chemical safety for everyday household and personal care products.
-                Science-backed. No greenwashing.
+                Stop guessing and hoping. TheSafeHive analyzes the ingredients in your everyday
+                household and personal care products. We cut through the greenwashing to tell
+                you what's actually safe for your family—backed by real science.
               </motion.p>
 
               <motion.div
@@ -370,10 +371,10 @@ const Home = () => {
             <div className="text-center mb-16">
               <h2
                 className="font-display text-charcoal leading-none mb-5"
-                style={{ fontSize: 'clamp(2.4rem,6vw,5.5rem)' }}
-              >VERIFY ANY <span className="text-terracotta">PRODUCT</span></h2>
-              <p className="max-w-md mx-auto font-light leading-relaxed text-lg" style={{ color: 'rgba(15, 23, 42,0.44)' }}>
-                Our SVA-1 verification tool is launching soon. Join the waitlist to get early access.
+                style={{ fontSize: 'clamp(2.2rem,5vw,4.5rem)' }}
+              >CHECK ANY <span className="text-terracotta">PRODUCT</span> IN SECONDS</h2>
+              <p className="max-w-xl mx-auto font-light leading-relaxed text-lg" style={{ color: 'rgba(15, 23, 42,0.60)' }}>
+                Type in your shampoo, cleaner, or lotion. We'll instantly score its ingredients against global safety standards. Coming soon—join the waitlist for early access.
               </p>
             </div>
           </ScrollReveal>

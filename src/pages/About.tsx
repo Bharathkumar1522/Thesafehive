@@ -65,23 +65,23 @@ const About = () => {
   const missionPoints: Array<{ icon: LucideIcon; title: string; description: string }> = useMemo(() => [
     {
       icon: Target,
-      title: 'Clear Safety Decisions',
-      description: `TheSafeHive translates complex chemical and ingredient data into clear, structured signals that help people make safer everyday choices with confidence.`,
+      title: 'No More Confusion',
+      description: `We translate complex chemical labels into simple grades like A, B, or F so you can shop with confidence.`,
     },
     {
       icon: ShieldCheck,
-      title: 'Evidence-Led Verification',
-      description: `TheSafeHive assesses ingredients using publicly available scientific and regulatory sources, prioritising evidence over marketing claims.`,
+      title: 'Science, Not Marketing',
+      description: `We don't care if a bottle says "organic." We check the actual ingredients against databases like EU REACH and the EPA.`,
     },
     {
       icon: ShoppingBag,
-      title: 'Practical Application',
-      description: `TheSafeHive demonstrates how safety intelligence can be applied in real purchasing decisions, reducing confusion and decision fatigue.`,
+      title: 'Better Alternatives',
+      description: `If your favorite product is toxic, we don't just tell you it's bad—we show you a rigorously verified safe alternative.`,
     },
     {
       icon: GraduationCap,
-      title: 'Education and Transparency',
-      description: `TheSafeHive helps people understand what's inside products, why ingredients matter, and where scientific certainty or uncertainty exists.`,
+      title: 'Radical Transparency',
+      description: `We show our work. You can see exactly which ingredient triggered a warning and why.`,
     },
   ], []);
 
@@ -95,18 +95,18 @@ const About = () => {
     },
     {
       icon: ClipboardCheck,
-      title: 'Physical Integrity Audit',
-      description: `An algorithm can detect toxins, but it cannot verify product quality. That is why every product that passes TheSafeHive digital screening undergoes a physical Golden Sample check — reducing formulation mismatch risk.`,
+      title: 'Real-World Testing',
+      description: `An algorithm can detect toxins, but it cannot verify product quality. That's why every product that passes our digital screening undergoes a physical Golden Sample check — ensuring you get exactly what's on the label.`,
     },
     {
       icon: BadgeCheck,
       title: 'No Fear Mongering, Just Facts',
-      description: `TheSafeHive does not use scary marketing. TheSafeHive uses data — telling you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.`,
+      description: `We don't use scary marketing. We use data — telling you what is in a product, why it is safe, and where the evidence comes from. Transparency is the ultimate trust.`,
     },
     {
       icon: Users,
-      title: 'Community-Led Validation',
-      description: `TheSafeHive listens to feedback from families, parents, and eco-conscious shoppers to continuously refine what "lower-risk" means in the real world.`,
+      title: 'Built for Real Families',
+      description: `We listen to feedback from families, parents, and eco-conscious shoppers to continuously refine what "safe" actually means in the real world.`,
     },
   ], []);
 
@@ -175,25 +175,31 @@ const About = () => {
                 About TheSafeHive
               </motion.p>
 
-              <div className="overflow-hidden mb-3">
+              <div className="overflow-hidden mb-3 flex flex-wrap gap-x-4">
                 <motion.h1
                   id="about-hero-heading"
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                   className="font-display leading-none text-charcoal"
-                  style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
+                  style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)' }}
                 >
-                  ABOUT
+                  WE BELIEVE
                 </motion.h1>
-              </div>
-              <div className="overflow-hidden mb-10">
                 <motion.h1
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.32 }}
                   className="font-display leading-none text-terracotta"
-                  style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}
+                  style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)' }}
                 >
-                  TheSafeHive
+                  YOU DESERVE
+                </motion.h1>
+                <motion.h1
+                  initial={{ y: '105%' }} animate={{ y: '0%' }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.44 }}
+                  className="font-display leading-none text-charcoal"
+                  style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)' }}
+                >
+                  THE TRUTH.
                 </motion.h1>
               </div>
 
@@ -203,9 +209,7 @@ const About = () => {
                 className="text-lg md:text-xl font-light leading-relaxed max-w-lg mb-10"
                 style={{ color: 'rgba(15, 23, 42,0.68)' }}
               >
-                TheSafeHive is a compliance-first technology platform building the digital
-                infrastructure for evidence-based product safety. We bridge the gap between
-                complex chemical data and everyday consumer decisions.
+                The term "clean" is completely unregulated. Brands use greenwashing to sell toxic products every day. TheSafeHive was built to stop the deception. We are building the world's most transparent product safety platform so you never have to guess what you're bringing into your home.
               </motion.p>
 
               <motion.div
