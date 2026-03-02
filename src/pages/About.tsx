@@ -175,7 +175,7 @@ const About = () => {
                 About TheSafeHive
               </motion.p>
 
-              <div className="overflow-hidden mb-3 flex flex-wrap gap-x-4">
+              <div className="overflow-hidden mb-2 flex flex-wrap gap-x-4">
                 <motion.h1
                   id="about-hero-heading"
                   initial={{ y: '105%' }} animate={{ y: '0%' }}
@@ -206,10 +206,10 @@ const About = () => {
               <motion.p
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.55 }}
-                className="text-lg md:text-xl font-light leading-relaxed max-w-lg mb-10"
-                style={{ color: 'rgba(15, 23, 42,0.68)' }}
+                className="text-base md:text-lg font-light leading-relaxed max-w-md mb-8"
+                style={{ color: 'rgba(15, 23, 42,0.65)' }}
               >
-                The term "clean" is completely unregulated. Brands use greenwashing to sell toxic products every day. TheSafeHive was built to stop the deception. We are building the world's most transparent product safety platform so you never have to guess what you're bringing into your home.
+                "Clean" is unregulated. Brands greenwash. We're building the world's most transparent product safety platform — so you always know what's in your home.
               </motion.p>
 
               <motion.div

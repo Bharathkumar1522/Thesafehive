@@ -1,7 +1,25 @@
 import { motion } from 'framer-motion';
 import { Database, Binary } from 'lucide-react';
+import { useState, useEffect } from 'react';
+
+const FULL_FORM = 'Safety Verification Agent';
 
 export default function SVAHero() {
+    const [typed, setTyped] = useState('');
+    const [started, setStarted] = useState(false);
+
+    useEffect(() => {
+        // Start typing after the headline fades in (~1s delay)
+        const startTimer = setTimeout(() => setStarted(true), 1100);
+        return () => clearTimeout(startTimer);
+    }, []);
+
+    useEffect(() => {
+        if (!started) return;
+        if (typed.length >= FULL_FORM.length) return;
+        const t = setTimeout(() => setTyped(FULL_FORM.slice(0, typed.length + 1)), 45);
+        return () => clearTimeout(t);
+    }, [started, typed]);
     return (
         <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-20 bg-transparent">
 
@@ -60,13 +78,29 @@ export default function SVAHero() {
                 >
                     <div className="flex items-center justify-center gap-3 text-terracotta mb-4">
                         <Database className="w-5 h-5 opacity-40" />
-                        <span className="font-mono text-xs tracking-[0.3em] uppercase opacity-80">Introducing SVA-1</span>
+                        <span className="font-mono text-xs tracking-[0.3em] uppercase opacity-80">Introducing SVA</span>
                         <Binary className="w-5 h-5 opacity-40" />
                     </div>
 
                     <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-none text-charcoal tracking-wider">
                         TRUST, <span className="text-terracotta">ENGINEERED.</span>
                     </h1>
+
+                    {/* SVA Full Form — typewriter */}
+                    <p className="font-mono text-xs md:text-sm tracking-[0.22em] uppercase mt-4" style={{ color: 'rgba(15,23,42,0.35)' }}>
+                        SVA &mdash;{' '}
+                        <span style={{ color: 'rgba(15,23,42,0.60)' }}>{typed}</span>
+                        {/* blinking cursor */}
+                        <span
+                            className="inline-block w-[2px] h-[0.85em] ml-0.5 align-middle"
+                            style={{
+                                background: 'rgba(15,23,42,0.40)',
+                                animation: typed.length < FULL_FORM.length ? 'none' : 'svaCursorBlink 1s step-end infinite',
+                                opacity: typed.length < FULL_FORM.length ? 1 : undefined,
+                            }}
+                        />
+                    </p>
+                    <style>{`@keyframes svaCursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }`}</style>
 
                     <p className="font-light text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto leading-relaxed mt-8">
                         The world’s first <span className="text-charcoal font-medium">Executable Safety Governance</span> layer—transforming regulatory logic into deterministic marketplace controls.

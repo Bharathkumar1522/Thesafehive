@@ -1,5 +1,5 @@
 import SVAHero from '../features/sva/components/SVAHero';
-import SVALogicVideo from '../features/sva/components/SVALogicVideo';
+// import SVALogicVideo from '../features/sva/components/SVALogicVideo'; // commented out — re-enable with section
 import SVAEngine from '../features/sva/components/SVAEngine';
 import SVAPassport from '../features/sva/components/SVAPassport';
 import SVAStakeholder from '../features/sva/components/SVAStakeholder';
@@ -14,11 +14,14 @@ export default function SVA() {
     return (
         <div className="w-full min-h-screen" style={{ backgroundColor: VANILLA, color: CHARCOAL }}>
             <SVAHero />
+            {/* — VERIFICATION IN ACTION — commented out, re-add when ready —
             <TornPaper from={VANILLA} to={SOFT_SAGE} height={72} />
             <div style={{ backgroundColor: SOFT_SAGE }}>
                 <SVALogicVideo />
             </div>
             <TornPaper from={SOFT_SAGE} to={SOFT_SAND} height={72} />
+            */}
+            <TornPaper from={VANILLA} to={SOFT_SAND} height={72} />
             <div style={{ backgroundColor: SOFT_SAND }}>
                 <SVAEngine />
             </div>

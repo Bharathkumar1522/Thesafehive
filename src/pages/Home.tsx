@@ -15,7 +15,7 @@
  *  - GameHub stays (real interactive content)
  */
 
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Shield, Search, ArrowRight, ChevronLeft, ChevronRight, CheckCircle2, Leaf } from 'lucide-react';
@@ -159,13 +159,7 @@ const Home = () => {
 
   // Removed duplicated mission points. They live on About.tsx.
 
-  // Regulatory references — real, linkable
-  const references = useMemo(() => [
-    { label: 'EU REACH', href: 'https://echa.europa.eu/regulations/reach/understanding-reach' },
-    { label: 'EWG', href: 'https://www.ewg.org/skindeep/' },
-    { label: 'IARC', href: 'https://www.iarc.who.int/' },
-    { label: 'FDA GRAS', href: 'https://www.fda.gov/food/food-ingredients-packaging/generally-recognized-safe-gras' },
-  ], []);
+
 
   return (
     <div style={{ backgroundColor: VANILLA }}>
@@ -371,10 +365,10 @@ const Home = () => {
             <div className="text-center mb-16">
               <h2
                 className="font-display text-charcoal leading-none mb-5"
-                style={{ fontSize: 'clamp(2.2rem,5vw,4.5rem)' }}
-              >CHECK ANY <span className="text-terracotta">PRODUCT</span> IN SECONDS</h2>
-              <p className="max-w-xl mx-auto font-light leading-relaxed text-lg" style={{ color: 'rgba(15, 23, 42,0.60)' }}>
-                Type in your shampoo, cleaner, or lotion. We'll instantly score its ingredients against global safety standards. Coming soon—join the waitlist for early access.
+                style={{ fontSize: 'clamp(2.5rem,6vw,6rem)' }}
+              >VERIFY <span className="text-terracotta">PRODUCT</span></h2>
+              <p className="max-w-md mx-auto font-light leading-relaxed text-lg" style={{ color: 'rgba(15, 23, 42,0.60)' }}>
+                Our SVA verification system is launching soon. Join the waitlist to get early access.
               </p>
             </div>
           </ScrollReveal>
@@ -416,28 +410,7 @@ const Home = () => {
                 </Link>
               </form>
 
-              {/* Regulatory basis */}
-              <div className="text-center">
-                <p className="font-mono text-xs mb-3" style={{ color: 'rgba(15, 23, 42,0.55)' }}>
-                  Aligned with
-                </p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {references.map(({ label, href }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-xs px-3 py-1.5 rounded-full border no-underline transition-colors duration-200"
-                      style={{ borderColor: 'rgba(15, 23, 42,0.12)', color: 'rgba(15, 23, 42,0.48)' }}
-                      onMouseEnter={e => (e.currentTarget.style.color = TERRACOTTA)}
-                      onMouseLeave={e => (e.currentTarget.style.color = 'rgba(15, 23, 42,0.48)')}
-                    >
-                      {label} ↗
-                    </a>
-                  ))}
-                </div>
-              </div>
+
 
               {/* SVA-1 Protocol Link */}
               <div className="mt-8 flex justify-center">
@@ -454,7 +427,7 @@ const Home = () => {
                     e.currentTarget.style.borderColor = 'rgba(15, 23, 42,0.12)';
                   }}
                 >
-                  Learn about SVA-1 Protocol <ArrowRight className="w-3.5 h-3.5" />
+                  LEARN ABOUT SVA PROTOCOL <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>

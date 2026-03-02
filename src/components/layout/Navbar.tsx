@@ -150,7 +150,7 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
             {/* Shop — Coming Soon (2nd position) */}
             <li className="relative" onMouseEnter={() => setShopHovered(true)} onMouseLeave={() => setShopHovered(false)}>
               <button
-                style={{ fontFamily: 'inherit', fontSize: '0.78rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500, color: shopHovered ? C_HOVER : C_MUTED, transition: 'color 0.25s', background: 'none', border: 'none', cursor: 'default', padding: 0 }}
+                style={{ fontFamily: 'inherit', fontSize: '0.78rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500, color: shopHovered ? C_HOVER : C_MUTED, transition: 'color 0.25s', background: 'none', border: 'none', cursor: 'default', padding: 0, lineHeight: 1, verticalAlign: 'middle', display: 'block' }}
                 aria-label="Shop — Coming Soon"
                 tabIndex={-1}
               >
@@ -260,45 +260,36 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
 
                 {/* Links */}
                 <ul className="space-y-1 list-none m-0 p-0 flex-1">
-                  {NAV_LINKS.map(({ to, label }, i) => (
-                    <motion.li
-                      key={to}
-                      initial={{ opacity: 0, x: 32 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.08 + i * 0.065, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  {/* Home — always first */}
+                  <motion.li
+                    key="/"
+                    initial={{ opacity: 0, x: 32 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.08, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <NavLink
+                      to="/"
+                      end
+                      onClick={closeMenu}
+                      className="relative inline-block no-underline py-3 font-display tracking-[0.15em] uppercase transition-colors duration-200"
+                      style={({ isActive }) => ({ fontSize: 'clamp(2.5rem, 7vw, 3.5rem)', color: isActive ? '#B85C38' : 'rgba(248, 250, 252,0.72)' })}
                     >
-                      <NavLink
-                        to={to}
-                        end={to === '/'}
-                        onClick={closeMenu}
-                        className="relative inline-block no-underline py-3 font-display tracking-[0.15em] uppercase transition-colors duration-200"
-                        style={({ isActive }) => ({
-                          fontSize: 'clamp(2.5rem, 7vw, 3.5rem)',
-                          color: isActive ? '#B85C38' : 'rgba(248, 250, 252,0.72)',
-                        })}
-                      >
-                        {({ isActive }) => (
-                          <>
-                            {label}
-                            {isActive && (
-                              <motion.div
-                                layoutId="nav-indicator-mobile"
-                                className="absolute left-0 right-0 bottom-1 h-[3px] rounded-full"
-                                style={{ background: '#B85C38' }}
-                                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                              />
-                            )}
-                          </>
-                        )}
-                      </NavLink>
-                    </motion.li>
-                  ))}
+                      {({ isActive }) => (
+                        <>
+                          Home
+                          {isActive && (
+                            <motion.div layoutId="nav-indicator-mobile" className="absolute left-0 right-0 bottom-1 h-[3px] rounded-full" style={{ background: '#B85C38' }} transition={{ type: 'spring', stiffness: 350, damping: 30 }} />
+                          )}
+                        </>
+                      )}
+                    </NavLink>
+                  </motion.li>
 
-                  {/* Shop — Coming Soon */}
+                  {/* Shop — Coming Soon (2nd position) */}
                   <motion.li
                     initial={{ opacity: 0, x: 32 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.08 + NAV_LINKS.length * 0.065, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ delay: 0.145, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                     className="flex items-center gap-3"
                   >
                     <span
@@ -314,6 +305,32 @@ const Navbar = ({ isLoggedIn, onLogout }: NavbarProps) => {
                       Soon
                     </span>
                   </motion.li>
+
+                  {/* Remaining links */}
+                  {NAV_LINKS.filter(l => l.to !== '/').map(({ to, label }, i) => (
+                    <motion.li
+                      key={to}
+                      initial={{ opacity: 0, x: 32 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.21 + i * 0.065, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <NavLink
+                        to={to}
+                        onClick={closeMenu}
+                        className="relative inline-block no-underline py-3 font-display tracking-[0.15em] uppercase transition-colors duration-200"
+                        style={({ isActive }) => ({ fontSize: 'clamp(2.5rem, 7vw, 3.5rem)', color: isActive ? '#B85C38' : 'rgba(248, 250, 252,0.72)' })}
+                      >
+                        {({ isActive }) => (
+                          <>
+                            {label}
+                            {isActive && (
+                              <motion.div layoutId="nav-indicator-mobile" className="absolute left-0 right-0 bottom-1 h-[3px] rounded-full" style={{ background: '#B85C38' }} transition={{ type: 'spring', stiffness: 350, damping: 30 }} />
+                            )}
+                          </>
+                        )}
+                      </NavLink>
+                    </motion.li>
+                  ))}
                 </ul>
 
                 {/* Footer note */}
